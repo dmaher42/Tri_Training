@@ -229,19 +229,21 @@ function renderWeek(plan, weekNum) {
     options.push(strengthLabel);
     strengthCount++;
 
-    const support = document.createElement("div");
+    const support = document.createElement("details");
     support.className = "support";
 
     support.innerHTML = `
-      <div class="top">
-        <strong>Optional Support Session</strong>
+      <summary>
+        <span><strong>Optional Support Session</strong></span>
         <span class="tag opt">Non-load</span>
+      </summary>
+      <div class="support-body">
+        <p class="muted">Choose ONE (keep it easy):</p>
+        <ul>
+          ${options.map(o => `<li>${o}</li>`).join("")}
+        </ul>
+        <p class="muted">Purpose: sleep, recovery, routine. Never add fatigue.</p>
       </div>
-      <p class="muted">Choose ONE (keep it easy):</p>
-      <ul>
-        ${options.map(o => `<li>${o}</li>`).join("")}
-      </ul>
-      <p class="muted">Purpose: sleep, recovery, routine. Never add fatigue.</p>
     `;
     day.appendChild(support);
 
