@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adaptive Triathlon Training Plan</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="page-header">
+    <div class="container">
+      <h1>Adaptive Triathlon Training Plan</h1>
+      <p class="subtitle">Static plan that adapts safely based on your daily check-in</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls" aria-label="Plan controls">
+      <div class="control-group">
+        <label for="week-select">Select week</label>
+        <select id="week-select"></select>
+        <button id="jump-week" type="button" aria-label="Jump to current week">Jump to current week</button>
+      </div>
+      <div class="control-group inline">
+        <button id="export-state" type="button">Export adaptations</button>
+        <button id="import-state" type="button">Import adaptations</button>
+        <input type="file" id="import-file" aria-label="Import JSON file" accept="application/json" />
+      </div>
+    </section>
+
+    <section id="week-info" class="week-info" aria-live="polite"></section>
+
+    <section class="adaptation-panel" aria-label="Adaptation inputs">
+      <h2>Daily check-in</h2>
+      <form id="adapt-form">
+        <div class="form-row">
+          <label for="fatigue">Fatigue</label>
+          <select id="fatigue" name="fatigue">
+            <option value="low">Low</option>
+            <option value="moderate">Moderate</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="sleep">Sleep quality</label>
+          <select id="sleep" name="sleep">
+            <option value="good">Good</option>
+            <option value="ok">OK</option>
+            <option value="poor">Poor</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="soreness">Soreness (comma-separated body parts)</label>
+          <input type="text" id="soreness" name="soreness" placeholder="e.g., quads, calves" />
+        </div>
+        <div class="form-row inline">
+          <label><input type="checkbox" id="illness" /> Illness warning</label>
+          <label><input type="checkbox" id="injury" /> Injury warning</label>
+        </div>
+        <div class="form-row">
+          <fieldset>
+            <legend>Missed key sessions</legend>
+            <div id="missed-sessions" class="missed-list" aria-live="polite"></div>
+          </fieldset>
+        </div>
+        <button type="submit" id="adapt-btn">Adapt week</button>
+      </form>
+    </section>
+
+    <section class="plan-view" aria-label="Week schedule">
+      <h2>Week schedule</h2>
+      <div id="week-grid" class="week-grid" role="grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <template id="session-template">
+    <div class="session">
+      <div class="session-type"></div>
+      <div class="session-details"></div>
+    </div>
+  </template>
+
+  <footer class="page-footer">
+    <div class="container">
+      <p>Adaptations are stored locally in your browser. Export before switching devices.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
