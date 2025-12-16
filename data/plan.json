@@ -136,6 +136,336 @@
           { "type": "Run", "duration": "65–75m", "priority": "medium", "details": "Easy endurance. If sore: elliptical 45–60m." }
         ]
       }
+    },
+      
+    {
+      "week": 5,
+      "phase": "Build",
+      "hoursTarget": "10–11h",
+      "notes": [
+        "Introduce more structured bike SE and controlled race-pace feel.",
+        "Runs remain protected and easy with a steady midweek run."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "50–60m", "priority": "medium", "details": "Aerobic with short moderate efforts (e.g., 6×200 steady)."}
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "80–100m", "priority": "high", "details": "SE: 5×6m @ 60–65rpm (steady). 3m easy between." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "50–60m", "priority": "high", "details": "Steady run; controlled pace, no sharp efforts." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "50–65m", "priority": "high", "details": "Race-pace feel: 10×100 steady, short rest." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "2:00–2:30", "priority": "high", "details": "Long ride easy; last 20m steady." },
+          { "type": "Run", "duration": "15–20m", "priority": "medium", "details": "Brick jog easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "60–70m", "priority": "medium", "details": "Easy endurance; keep pace conversational." }
+        ]
+      }
+    },
+    {
+      "week": 6,
+      "phase": "Build",
+      "hoursTarget": "11–12h",
+      "notes": [
+        "Increase long bike slightly; maintain SE session and swim pace work.",
+        "Run remains controlled with a short midweek longer run."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "50–70m", "priority": "medium", "details": "Aerobic focus with technique emphasis." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "90–105m", "priority": "high", "details": "SE: 6×6m @ 60–65rpm (steady). 3m easy between." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "55–65m", "priority": "high", "details": "Steady run with last 10m controlled at moderate effort." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "55–70m", "priority": "high", "details": "Pace session: 12×100 at strong, steady pace." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "2:30–2:40", "priority": "high", "details": "Long ride easy; last 25m steady." },
+          { "type": "Run", "duration": "20m", "priority": "medium", "details": "Brick jog easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "65–75m", "priority": "medium", "details": "Easy endurance; flat route." }
+        ]
+      }
+    },
+    {
+      "week": 7,
+      "phase": "Build",
+      "hoursTarget": "12–13h",
+      "notes": [
+        "Continue building durability with a stronger long bike and controlled SE work.",
+        "Runs remain consistent and steady."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "55–70m", "priority": "medium", "details": "Aerobic with moderate pickups (e.g., 8×100)."}
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "100–115m", "priority": "high", "details": "SE: 6×7m @ 60–65rpm (steady). 3m easy between." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "60–70m", "priority": "high", "details": "Steady; moderate pace with controlled finish." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "60–75m", "priority": "high", "details": "Pace work: 10×150m steady." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "2:45–3:00", "priority": "high", "details": "Long ride easy; last 30m steady." },
+          { "type": "Run", "duration": "20–25m", "priority": "medium", "details": "Brick jog easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "70–80m", "priority": "medium", "details": "Easy endurance; flat route." }
+        ]
+      }
+    },
+    {
+      "week": 8,
+      "phase": "Build",
+      "hoursTarget": "12–13h",
+      "notes": [
+        "Last full build week before peak. Keep intensity controlled and focus on strength-endurance.",
+        "Maintain run consistency and finish strong."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "55–75m", "priority": "medium", "details": "Aerobic + moderate continuous work." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "105–120m", "priority": "high", "details": "SE: 7×6m @ 60–65rpm (steady). 3m easy." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "60–75m", "priority": "high", "details": "Steady with a few moderate pickups (not hard)."}
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "60–75m", "priority": "high", "details": "Pace work: 12×100 steady." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "3:00–3:15", "priority": "high", "details": "Long ride easy; last 30m steady." },
+          { "type": "Run", "duration": "25m", "priority": "medium", "details": "Brick jog easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "75–85m", "priority": "medium", "details": "Easy endurance; keep steady." }
+        ]
+      }
+    },
+    {
+      "week": 9,
+      "phase": "Peak",
+      "hoursTarget": "12–13h",
+      "notes": [
+        "Start peak phase: lower volumes slightly but maintain specificity.",
+        "Introduce race-pace focus midweek."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "55–75m", "priority": "medium", "details": "Race-pace feel: moderate continuous work." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "90–110m", "priority": "high", "details": "Steady with 2×10m @ race-like effort (controlled)."}
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "60–75m", "priority": "high", "details": "Moderate run; last 10m at controlled race feel." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "60–75m", "priority": "high", "details": "Pace set: 10×150 steady." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "3:00–3:15", "priority": "high", "details": "Long ride; include 25–35m at controlled race pace." },
+          { "type": "Run", "duration": "25–30m", "priority": "medium", "details": "Brick easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "75–85m", "priority": "medium", "details": "Easy endurance." }
+        ]
+      }
+    },
+    {
+      "week": 10,
+      "phase": "Peak",
+      "hoursTarget": "13–14h",
+      "notes": [
+        "Final full week before taper. Introduce controlled race efforts.",
+        "Maintain endurance with race specificity."  
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "60–80m", "priority": "medium", "details": "Pace/jump sets moderate (e.g., 10×100)."}  
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "100–120m", "priority": "high", "details": "Steady ride; 2×10–15m @ controlled race pace." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "65–80m", "priority": "high", "details": "Race-pace feel mid-run (controlled)."}
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "60–80m", "priority": "high", "details": "Race-pace sets (e.g., 12×100 steady)."}
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "3:15–3:30", "priority": "high", "details": "Long ride with extended race-pace like blocks." },
+          { "type": "Run", "duration": "30m", "priority": "medium", "details": "Brick easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "80–90m", "priority": "medium", "details": "Easy endurance." }
+        ]
+      }
+    },
+    {
+      "week": 11,
+      "phase": "Taper",
+      "hoursTarget": "11–12h",
+      "notes": [
+        "Beginning taper: reduce volume, keep contact with race pace lightly.",
+        "Focus on freshness and controlled efforts."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "55–70m", "priority": "medium", "details": "Easy + a few steady efforts." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "80–100m", "priority": "high", "details": "Controlled ride with short race-pace touches (5–8m)."}
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "60–70m", "priority": "high", "details": "Steady run; controlled race feel." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "55–70m", "priority": "medium", "details": "Easy pace focus." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "2:30–2:45", "priority": "high", "details": "Long easy with a few short pickups." },
+          { "type": "Run", "duration": "20–25m", "priority": "medium", "details": "Brick easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "70–80m", "priority": "medium", "details": "Easy endurance." }
+        ]
+      }
+    },
+    {
+      "week": 12,
+      "phase": "Taper",
+      "hoursTarget": "9–10h",
+      "notes": [
+        "Reduce overall volume further; keep intensity brief and sharp.",
+        "Race proximity should feel easier physically."  
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "45–60m", "priority": "medium", "details": "Easy with minimal steady touches." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "60–80m", "priority": "high", "details": "Controlled pace with brief race-pace feels." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "50–60m", "priority": "high", "details": "Steady and sharp but not hard." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "45–60m", "priority": "medium", "details": "Easy pace." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "2:00–2:15", "priority": "high", "details": "Easy with a few controlled touches." },
+          { "type": "Run", "duration": "15–20m", "priority": "medium", "details": "Brick easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "60–70m", "priority": "medium", "details": "Easy endurance." }
+        ]
+      }
+    },
+    {
+      "week": 13,
+      "phase": "Race Taper",
+      "hoursTarget": "7–8h",
+      "notes": [
+        "Final taper week — reduce volume, keep rhythm.",
+        "Nothing new."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "40–50m", "priority": "medium", "details": "Easy with brief race-pace feels." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "60–75m", "priority": "high", "details": "Easy with a few short race-pace touches." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "45–55m", "priority": "high", "details": "Steady easy run." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "40–50m", "priority": "medium", "details": "Easy pace." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "1:30–1:45", "priority": "medium", "details": "Easy ride with brief steady touches." },
+          { "type": "Run", "duration": "15–20m", "priority": "medium", "details": "Brick easy." }
+        ],
+        "Sun": [
+          { "type": "Run", "duration": "50–60m", "priority": "medium", "details": "Easy endurance." }
+        ]
+      }
+    },
+    {
+      "week": 14,
+      "phase": "Race Week", 
+      "hoursTarget": "5–6h",
+      "notes": [
+        "Race week: very low volume, sharp feels only.",
+        "Rest and nutrition are priorities."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "Swim", "duration": "30–40m", "priority": "medium", "details": "Easy feel; no stress." }
+        ],
+        "Tue": [
+          { "type": "Bike", "duration": "45–60m", "priority": "medium", "details": "Easy with 3–5 brief pickups." }
+        ],
+        "Wed": [
+          { "type": "Run", "duration": "30–40m", "priority": "medium", "details": "Easy run with a few short strides." }
+        ],
+        "Thu": [
+          { "type": "Swim", "duration": "30–40m", "priority": "medium", "details": "Easy drill work." }
+        ],
+        "Fri": [
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest." }
+        ],
+        "Sat": [
+          { "type": "Bike", "duration": "20–30m", "priority": "medium", "details": "Short spin to stay loose." },
+          { "type": "Run", "duration": "10–15m", "priority": "medium", "details": "Easy jog if needed." }
+        ],
+        "Sun": [
+          { "type": "Race", "duration": "70.3 Race Day!", "priority": "high", "details": "Go execute your training!" }
+        ]
+      }
     }
-  ]
-}
+
