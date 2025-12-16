@@ -9,12 +9,12 @@ body {
   color: var(--text-primary);
 }
 
-.wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+.wrap { max-width: 1400px; margin: 0 auto; padding: 20px; }
 h1 { margin: 0 0 6px; font-size: 26px; }
 h2 { margin: 0 0 12px; font-size: 18px; }
 h3 { margin: 12px 0 8px; font-size: 14px; }
 .muted { color: var(--text-secondary); }
-.grid { display: grid; gap: 16px; grid-template-columns: 1.6fr 1fr; }
+.grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 2.2fr) minmax(320px, 1fr); }
 @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
 
 .card { border: 1px solid var(--border-default); border-radius: 12px; padding: 14px; background: var(--bg-card); }
@@ -160,4 +160,10 @@ details.support summary {
 .tag.not-ideal {
   background: var(--tag-not-ideal);
   color: #fff;
+}
+
+@media (min-width: 1600px) {
+  .wrap {
+    max-width: 1600px;
+  }
 }
