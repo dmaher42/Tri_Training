@@ -140,7 +140,25 @@ function renderWeek(plan, weekNum) {
       day.appendChild(box);
     });
 
-    // Optional support session block (non-load-bearing)
+    // Optional support session block (non-load-bearing, complementary)
+    const existingTypes = new Set(
+      sessions.map(s => s.type)
+    );
+
+    const options = [];
+
+    if (!existingTypes.has("Swim")) {
+      options.push("Easy swim 20–40 min");
+    }
+
+    if (!existingTypes.has("Bike")) {
+      options.push("Easy spin 30–45 min (high cadence)");
+    }
+
+    // Always allowed
+    options.push("Mobility reset 10–15 min");
+    options.push("Strength foundation 15–25 min (2–3×/week max)");
+
     const support = document.createElement("div");
     support.className = "support";
     support.innerHTML = `
@@ -150,12 +168,9 @@ function renderWeek(plan, weekNum) {
       </div>
       <p class="muted">Choose ONE (keep it easy):</p>
       <ul>
-        <li>Easy swim 20–40 min</li>
-        <li>Easy spin 30–45 min (high cadence)</li>
-        <li>Mobility reset 10–15 min</li>
-        <li>Strength foundation 15–25 min (2–3×/week max)</li>
+        ${options.map(o => `<li>${o}</li>`).join("")}
       </ul>
-      <p class="muted">If you feel worse after this, it was too hard.</p>
+      <p class="muted">Purpose: sleep, recovery, routine. Never add fatigue.</p>
     `;
     day.appendChild(support);
 
