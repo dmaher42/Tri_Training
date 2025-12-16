@@ -3,6 +3,9 @@ const STORAGE_KEY = "triPlanState_v1";
 let weekGridListenerAttached = false;
 let basePlanGlobal = null;
 
+const ROLE_PRIMARY = "primary";
+const ROLE_SUPPORT = "support";
+
 function parseIsoDate(s) {
   const [y,m,d] = s.split("-").map(Number);
   return new Date(Date.UTC(y, m-1, d));
@@ -39,6 +42,73 @@ function setSessionCheck(weekNum, day, idx, val) {
 }
 
 function deepClone(x) { return JSON.parse(JSON.stringify(x)); }
+
+function inferRoleFromLegacy(session, hasPrimary) {
+  if (session.role === ROLE_PRIMARY || session.role === ROLE_SUPPORT) {
+    return session.role;
+  }
+  if (!hasPrimary && session.priority === "high" && !session.optional && session.type !== "Off") {
+    return ROLE_PRIMARY;
+  }
+  if (!hasPrimary && session.priority === "medium" && !session.optional && session.type !== "Off") {
+    return ROLE_PRIMARY;
+  }
+  return ROLE_SUPPORT;
+}
+
+function normalizeDaySessions(sessions = []) {
+  let primaryFound = false;
+  return sessions.map((s) => {
+    const role = inferRoleFromLegacy(s, primaryFound);
+    if (role === ROLE_PRIMARY) primaryFound = true;
+    return { ...s, role };
+  }).map((s, idx, arr) => {
+    if (s.type === "Off") {
+      return { ...s, role: ROLE_SUPPORT };
+    }
+    if (s.role === ROLE_PRIMARY) return s;
+    if (!arr.some((x) => x.role === ROLE_PRIMARY && x.type !== "Off")) {
+      return { ...s, role: idx === 0 ? ROLE_PRIMARY : ROLE_SUPPORT };
+    }
+    return { ...s, role: ROLE_SUPPORT };
+  });
+}
+
+function normalizeWeekRoles(week) {
+  const w = deepClone(week);
+  for (const d of DAYS) {
+    w.days[d] = normalizeDaySessions(w.days[d] || []);
+  }
+  return w;
+}
+
+function softenSupportSession(session) {
+  const easyLabel = session.type === "Swim" ? "Easy float / drills" : "Mobility / easy aerobic";
+  const fallbackType = session.type === "Swim" ? "Swim" : "Mobility";
+  const baseDuration = session.type === "Swim" ? "20–30m" : "15–25m";
+  return {
+    ...session,
+    type: fallbackType,
+    role: ROLE_SUPPORT,
+    priority: "low",
+    optional: session.optional ?? false,
+    duration: baseDuration,
+    details: `${easyLabel}. Keep it restorative only.`
+  };
+}
+
+function softenPrimarySession(session, reduction = 0.25) {
+  if (session.type === "Off") return { ...session, role: ROLE_SUPPORT };
+  const mins = durationToMinutes(session.duration);
+  const newDur = mins ? minutesToRange(mins, reduction) : session.duration;
+  return {
+    ...session,
+    role: ROLE_PRIMARY,
+    priority: session.priority === "high" ? "medium" : session.priority,
+    duration: newDur,
+    details: `Keep it easy/steady; no intensity. ${session.details || ""}`.trim()
+  };
+}
 
 function durationToMinutes(s) {
   if (!s || s === "-") return 0;
@@ -142,9 +212,12 @@ function renderMeta(plan) {
 
 function getWorkingPlan(plan) {
   const local = loadLocal();
-  if (!local) return deepClone(plan);
-  // local stores per-week overridden days + notes
   const p = deepClone(plan);
+  if (!local) {
+    p.weeks = p.weeks.map(normalizeWeekRoles);
+    return p;
+  }
+  // local stores per-week overridden days + notes
   if (local.weekOverrides) {
     for (const [weekNum, override] of Object.entries(local.weekOverrides)) {
       const w = p.weeks.find(x => String(x.week) === String(weekNum));
@@ -153,6 +226,7 @@ function getWorkingPlan(plan) {
       if (override.coachNote) w._coachNote = override.coachNote;
     }
   }
+  p.weeks = p.weeks.map(normalizeWeekRoles);
   return p;
 }
 
@@ -242,14 +316,14 @@ function updateWeeklyProgress(weekNum) {
 }
 
 function renderWeek(plan, weekNum) {
-  const w = plan.weeks.find(x => x.week === weekNum);
+  const rawWeek = plan.weeks.find(x => x.week === weekNum);
+  if (!rawWeek) return;
+  const w = normalizeWeekRoles(rawWeek);
   const summary = document.getElementById("weekSummary");
   const grid = document.getElementById("weekGrid");
   const coachNote = document.getElementById("coachNote");
   const missedList = document.getElementById("missedList");
   const weekChecks = getSessionChecks()[String(weekNum)] || {};
-
-  let strengthCount = 0;
 
   summary.innerHTML = `
     <div><strong>Phase:</strong> ${w.phase}</div>
@@ -257,59 +331,19 @@ function renderWeek(plan, weekNum) {
     <div><strong>Notes:</strong> ${w.notes.map(n => `<div>• ${n}</div>`).join("")}</div>
   `;
 
+  const routineNote = document.getElementById("routineNote") || document.createElement("div");
+  routineNote.id = "routineNote";
+  routineNote.className = "routine-note";
+  routineNote.textContent = "Two sessions per day are intentional. Support sessions aid recovery and mental routine, not fitness load.";
+  if (summary.parentNode && routineNote.parentNode !== summary.parentNode) {
+    summary.insertAdjacentElement("afterend", routineNote);
+  }
+
   coachNote.textContent = w._coachNote ? `Coach note: ${w._coachNote}` : "";
 
   renderWeeklyProgress(w, weekNum);
 
   grid.innerHTML = "";
-
-  // Strength recommendation pre-pass
-  const strengthScores = {};
-  const candidates = [];
-  DAYS.forEach((d, idx) => {
-    const sessions = w.days[d] || [];
-    let score = 0;
-    const hasBike = sessions.some(s => s.type === "Bike");
-    const hasRun = sessions.some(s => s.type === "Run");
-    const hasSwim = sessions.some(s => s.type === "Swim");
-    const hasOff = sessions.some(s => s.type === "Off");
-
-    if (sessions.some(s => s.type === "Bike" && (s.priority === "high" || durationToMinutes(s.duration) >= 120))) {
-      score -= 3;
-    }
-
-    if (sessions.some(s => s.type === "Run" && s.priority === "high")) {
-      score -= 2;
-    }
-
-    if (hasSwim && !hasBike && !hasRun) {
-      score += 3;
-    }
-
-    if (hasOff) {
-      score += 2;
-    }
-
-    if (sessions.length >= 2) {
-      score -= 1;
-    }
-
-    if (sessions.length > 0 && sessions.every(s => s.optional)) {
-      score += 1;
-    }
-
-    strengthScores[d] = score;
-    candidates.push({ day: d, score, idx });
-  });
-
-  const goodDays = candidates.filter(c => c.score >= 2);
-  const recommendCount = goodDays.length >= 2 ? 3 : 2;
-  const recommendedStrengthDays = new Set(
-    [...candidates]
-      .sort((a, b) => b.score - a.score || a.idx - b.idx)
-      .slice(0, recommendCount)
-      .map(c => c.day)
-  );
 
   for (const d of DAYS) {
     const day = document.createElement("div");
@@ -322,8 +356,11 @@ function renderWeek(plan, weekNum) {
       const box = document.createElement("div");
       const isDone = !!(weekChecks[d] && weekChecks[d][String(idx)]);
       const isOff = s.type === "Off";
-      box.className = `session${isDone ? " done" : ""}`;
+      const roleClass = s.role === ROLE_SUPPORT ? "support" : "primary";
+      const roleLabel = roleClass === "support" ? "Support" : "Primary";
+      box.className = `session ${roleClass}${isDone ? " done" : ""}`;
       box.dataset.type = s.type;
+      box.dataset.role = roleClass;
       const pr = s.optional ? "opt" : (s.priority === "high" ? "high" : "");
       const tagText = s.optional ? "Optional" : (s.priority || "medium");
       const doneToggle = isOff ? "" : `
@@ -333,7 +370,10 @@ function renderWeek(plan, weekNum) {
         </label>`;
       box.innerHTML = `
         <div class="top">
-          <strong>${s.type}</strong>
+          <div class="session-title">
+            <span class="role-badge ${roleClass}">${roleLabel}</span>
+            <strong>${s.type}</strong>
+          </div>
           <div class="top-right">
             <span class="tag ${pr}">${tagText}</span>
             ${doneToggle}
@@ -353,62 +393,6 @@ function renderWeek(plan, weekNum) {
     progress.className = "day-progress muted";
     progress.textContent = `Done: ${doneSessions} / ${totalSessions}`;
     day.appendChild(progress);
-
-    // Optional support session block (non-load-bearing, complementary)
-    const existingTypes = new Set(
-      sessions.map(s => s.type)
-    );
-
-    const options = [];
-
-    if (!existingTypes.has("Swim")) {
-      options.push("Easy swim 20–40 min");
-    }
-
-    if (!existingTypes.has("Bike")) {
-      options.push("Easy spin 30–45 min (high cadence)");
-    }
-
-    // Always allowed
-    options.push("Mobility reset 10–15 min");
-
-    const strengthScore = strengthScores[d] ?? 0;
-    let strengthLabel = "Strength foundation 15–25 min (recommended)";
-
-    if (recommendedStrengthDays.has(d)) {
-      strengthLabel = "✅ Strength foundation 15–25 min (best day)";
-    } else if (strengthScore <= -2) {
-      strengthLabel = "⚠️ Strength (not ideal today — keep it very light or skip)";
-    }
-
-    if (strengthCount === 2) {
-      strengthLabel = "Strength foundation 15–25 min (optional – limit reached)";
-    }
-
-    if (strengthCount >= 3) {
-      strengthLabel = "Strength foundation (skip today – already 3× this week)";
-    }
-
-    options.push(strengthLabel);
-    strengthCount++;
-
-    const support = document.createElement("details");
-    support.className = "support";
-
-    support.innerHTML = `
-      <summary>
-        <span><strong>Optional Support Session</strong></span>
-        <span class="tag opt">Non-load</span>
-      </summary>
-      <div class="support-body">
-        <p class="muted">Choose ONE (keep it easy):</p>
-        <ul>
-          ${options.map(o => `<li>${o}</li>`).join("")}
-        </ul>
-        <p class="muted">Purpose: sleep, recovery, routine. Never add fatigue.</p>
-      </div>
-    `;
-    day.appendChild(support);
 
     grid.appendChild(day);
 
@@ -504,7 +488,7 @@ function updateWeeklyProgressForSelectedWeek(plan) {
 }
 
 function applyRulesToWeek(week, state, missedKey) {
-  const w = deepClone(week);
+  const w = deepClone(normalizeWeekRoles(week));
   const soreness = (state.soreness || "")
     .split(",")
     .map(x => x.trim().toLowerCase())
@@ -521,13 +505,16 @@ function applyRulesToWeek(week, state, missedKey) {
     coachNote.push("Sick flag: remove intensity. Keep only easy swim/bike if symptoms are mild and improving; otherwise rest.");
     for (const d of DAYS) {
       w.days[d] = (w.days[d] || []).map(s => {
-        if (s.type === "Off") return s;
+        if (s.type === "Off") return { ...s, role: ROLE_SUPPORT };
+        if (s.role === ROLE_SUPPORT) {
+          const softened = softenSupportSession(s);
+          return { ...softened, optional: s.optional ?? false, details: `SICK MODE SUPPORT: mobility / float only.` };
+        }
         return {
-          ...s,
-          priority: "low",
+          ...softenPrimarySession(s, 0.35),
           optional: true,
-          details: `SICK MODE: easy only. ${s.details || ""}`.trim(),
-          duration: s.type === "Swim" ? "20–30m" : "30–45m"
+          priority: "low",
+          details: `SICK MODE: easy only. ${s.details || ""}`.trim()
         };
       });
     }
@@ -539,12 +526,15 @@ function applyRulesToWeek(week, state, missedKey) {
     for (const d of DAYS) {
       w.days[d] = (w.days[d] || []).map(s => {
         if (s.type === "Run") {
-          return { ...s, type: "Elliptical / Walk", priority: "low", optional: true, details: `INJURY MODE: replace running. ${s.details || ""}` };
+          return { ...s, type: "Elliptical / Walk", role: s.role, priority: "low", optional: true, details: `INJURY MODE: replace running. ${s.details || ""}` };
         }
         if (s.type === "Bike") {
-          return { ...s, priority: "low", optional: true, details: `INJURY MODE: easy spin only. ${s.details || ""}` };
+          return { ...s, role: s.role, priority: "low", optional: true, details: `INJURY MODE: easy spin only. ${s.details || ""}` };
         }
-        return s;
+        if (s.role === ROLE_SUPPORT) {
+          return softenSupportSession(s);
+        }
+        return { ...s, role: s.role };
       });
     }
   }
@@ -555,9 +545,12 @@ function applyRulesToWeek(week, state, missedKey) {
     for (const d of DAYS) {
       w.days[d] = (w.days[d] || []).map(s => {
         if (s.type === "Off") return s;
+        if (s.role === ROLE_SUPPORT) {
+          return softenSupportSession(s);
+        }
         const mins = durationToMinutes(s.duration);
         const newDur = mins ? minutesToRange(mins, 0.25) : s.duration;
-        const softened = { ...s, duration: newDur };
+        const softened = { ...s, duration: newDur, role: s.role };
         softened.details = `FATIGUE ADAPT: keep it easy/steady, no pushing. ${s.details || ""}`.trim();
         if (s.priority === "high") softened.priority = "medium";
         return softened;
@@ -572,7 +565,7 @@ function applyRulesToWeek(week, state, missedKey) {
     missedKey.forEach(({ day, idx }) => {
       const ses = w.days[day]?.[idx];
       if (ses) {
-        w.days[day][idx] = { ...ses, optional: true, details: `MISSED: dropped to avoid stacking. ${ses.details || ""}`.trim() };
+        w.days[day][idx] = { ...ses, role: ses.role, optional: true, details: `MISSED: dropped to avoid stacking. ${ses.details || ""}`.trim() };
       }
     });
   }
@@ -586,9 +579,9 @@ function applyRulesToWeek(week, state, missedKey) {
         if (s.type !== "Run") return s;
         runCount++;
         if (runCount >= 2) {
-          return { ...s, type: "Elliptical", optional: true, priority: "low", details: `SORENESS SWAP: replace run if niggle persists. ${s.details || ""}` };
+          return { ...s, type: "Elliptical", role: s.role, optional: true, priority: "low", details: `SORENESS SWAP: replace run if niggle persists. ${s.details || ""}` };
         }
-        return { ...s, details: `SORENESS: keep flat and easy. ${s.details || ""}`.trim() };
+        return { ...s, role: s.role, details: `SORENESS: keep flat and easy. ${s.details || ""}`.trim() };
       });
     }
   }
