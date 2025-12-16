@@ -1,0 +1,272 @@
+:root {
+  --bg: #0f172a;
+  --card: #111827;
+  --accent: #22d3ee;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --border: #1f2937;
+  --success: #34d399;
+  --warning: #fbbf24;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.05), transparent 25%),
+    radial-gradient(circle at 80% 0%, rgba(52, 211, 153, 0.08), transparent 25%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 1rem 0 2rem;
+}
+
+.page-header,
+.page-footer {
+  border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.page-header h1 {
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.control-group label {
+  font-weight: 600;
+}
+
+.control-group.inline button,
+.control-group.inline input {
+  margin-right: 0.5rem;
+}
+
+select,
+input,
+button,
+textarea {
+  font: inherit;
+  color: var(--text);
+}
+
+select,
+input[type="text"],
+input[type="file"],
+textarea {
+  background: #0b1221;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  min-width: 200px;
+}
+
+button {
+  background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+  color: #0b1221;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.week-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.week-info h2 {
+  margin: 0 0 0.5rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--muted);
+}
+
+.notes {
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+.adaptation-panel,
+.plan-view {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.form-row {
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row.inline {
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+fieldset {
+  border: 1px dashed var(--border);
+  padding: 0.75rem;
+  border-radius: 10px;
+}
+
+.legend {
+  font-weight: 700;
+}
+
+.missed-list label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.day-card {
+  background: #0b1221;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.day-card h3 {
+  margin: 0;
+}
+
+.session {
+  padding: 0.5rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+}
+
+.session-type {
+  font-weight: 700;
+}
+
+.session-details {
+  color: var(--muted);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  margin-left: 0.35rem;
+}
+
+.badge.high {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.badge.moderate {
+  background: rgba(250, 204, 21, 0.15);
+  color: #fcd34d;
+}
+
+.badge.low {
+  background: rgba(52, 211, 153, 0.12);
+  color: #a7f3d0;
+}
+
+.badge.optional {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--muted);
+}
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.alert {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid var(--border);
+}
+
+.export-preview {
+  width: 100%;
+  min-height: 120px;
+}
+
+@media (max-width: 640px) {
+  .form-row.inline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  select,
+  input[type="text"],
+  input[type="file"],
+  button {
+    width: 100%;
+  }
+}

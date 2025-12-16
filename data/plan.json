@@ -1,0 +1,135 @@
+{
+  "title": "12-Week Olympic Triathlon (Koorey On-Ramp)",
+  "startDate": "2024-07-01",
+  "raceDate": "2024-09-22",
+  "weeks": [
+    {
+      "week": 1,
+      "phase": "Foundation",
+      "hoursTarget": 5,
+      "notes": [
+        "Focus on easy aerobic volume and consistent frequency.",
+        "All paces conversational; form before speed."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Drills + easy 4x200 pull", "optional": false }
+        ],
+        "Tue": [
+          { "type": "bike", "duration": 45, "priority": "high", "details": "Cadence focus 3x6' high spin / 3' easy" }
+        ],
+        "Wed": [
+          { "type": "run", "duration": 30, "priority": "moderate", "details": "Easy shuffle + 4x20s strides" }
+        ],
+        "Thu": [
+          { "type": "swim", "duration": 35, "priority": "moderate", "details": "Kicking + 6x100 steady" }
+        ],
+        "Fri": [
+          { "type": "rest", "duration": 0, "priority": "low", "details": "Active recovery walk" }
+        ],
+        "Sat": [
+          { "type": "bike", "duration": 70, "priority": "high", "details": "Endurance ride with 4x5' tempo" }
+        ],
+        "Sun": [
+          { "type": "run", "duration": 35, "priority": "high", "details": "Long easy aerobic" }
+        ]
+      }
+    },
+    {
+      "week": 2,
+      "phase": "Foundation",
+      "hoursTarget": 6,
+      "notes": [
+        "Slight bump in duration; maintain easy intensity.",
+        "Add strides to reinforce economy."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Drills + 6x150 steady" }
+        ],
+        "Tue": [
+          { "type": "run", "duration": 35, "priority": "high", "details": "Easy + 6x20s strides" }
+        ],
+        "Wed": [
+          { "type": "bike", "duration": 60, "priority": "high", "details": "Endurance ride with 2x8' tempo" }
+        ],
+        "Thu": [
+          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Pull + 8x100 steady" }
+        ],
+        "Fri": [
+          { "type": "rest", "duration": 0, "priority": "low", "details": "Mobility and activation" }
+        ],
+        "Sat": [
+          { "type": "run", "duration": 45, "priority": "high", "details": "Long aerobic" }
+        ],
+        "Sun": [
+          { "type": "bike", "duration": 75, "priority": "high", "details": "Endurance with low-cadence strength blocks" }
+        ]
+      }
+    },
+    {
+      "week": 3,
+      "phase": "Foundation",
+      "hoursTarget": 6.5,
+      "notes": [
+        "Introduce light brick feel without load.",
+        "Hold technique focus in swim."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "swim", "duration": 45, "priority": "moderate", "details": "Drills + 6x200 pull" }
+        ],
+        "Tue": [
+          { "type": "bike", "duration": 65, "priority": "high", "details": "3x10' tempo / 5' easy" }
+        ],
+        "Wed": [
+          { "type": "run", "duration": 35, "priority": "moderate", "details": "Easy + 6x20s strides" }
+        ],
+        "Thu": [
+          { "type": "swim", "duration": 40, "priority": "moderate", "details": "8x100 steady + technique" }
+        ],
+        "Fri": [
+          { "type": "bike", "duration": 45, "priority": "moderate", "details": "Easy spin + drills", "optional": true }
+        ],
+        "Sat": [
+          { "type": "bike", "duration": 80, "priority": "high", "details": "Endurance ride with 3x6' tempo" }
+        ],
+        "Sun": [
+          { "type": "run", "duration": 45, "priority": "high", "details": "Long aerobic" }
+        ]
+      }
+    },
+    {
+      "week": 4,
+      "phase": "Foundation (Cutback)",
+      "hoursTarget": 5.5,
+      "notes": [
+        "Absorb work with lower long-day volumes.",
+        "Technique + form strides only."
+      ],
+      "days": {
+        "Mon": [
+          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Drills + 6x100 easy" }
+        ],
+        "Tue": [
+          { "type": "run", "duration": 30, "priority": "moderate", "details": "Easy + 4x20s strides" }
+        ],
+        "Wed": [
+          { "type": "bike", "duration": 55, "priority": "high", "details": "Endurance with 2x6' tempo" }
+        ],
+        "Thu": [
+          { "type": "swim", "duration": 35, "priority": "moderate", "details": "Technique focus" }
+        ],
+        "Fri": [
+          { "type": "rest", "duration": 0, "priority": "low", "details": "Off or light mobility" }
+        ],
+        "Sat": [
+          { "type": "bike", "duration": 65, "priority": "high", "details": "Endurance smooth, no pushes" }
+        ],
+        "Sun": [
+          { "type": "run", "duration": 35, "priority": "high", "details": "Long easy" }
+        ]
+      }
+    }
+  ]
+}
