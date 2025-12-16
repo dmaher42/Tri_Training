@@ -124,7 +124,7 @@ function renderWeek(plan, weekNum) {
     day.className = "day";
     day.innerHTML = `<h4>${d}</h4>`;
     const sessions = w.days[d] || [];
-    sessions.forEach((s, idx) => {
+       sessions.forEach((s, idx) => {
       const box = document.createElement("div");
       box.className = "session";
       const pr = s.optional ? "opt" : (s.priority === "high" ? "high" : "");
@@ -139,7 +139,28 @@ function renderWeek(plan, weekNum) {
       `;
       day.appendChild(box);
     });
+
+    // Optional support session block (non-load-bearing)
+    const support = document.createElement("div");
+    support.className = "support";
+    support.innerHTML = `
+      <div class="top">
+        <strong>Optional Support Session</strong>
+        <span class="tag opt">Non-load</span>
+      </div>
+      <p class="muted">Choose ONE (keep it easy):</p>
+      <ul>
+        <li>Easy swim 20–40 min</li>
+        <li>Easy spin 30–45 min (high cadence)</li>
+        <li>Mobility reset 10–15 min</li>
+        <li>Strength foundation 15–25 min (2–3×/week max)</li>
+      </ul>
+      <p class="muted">If you feel worse after this, it was too hard.</p>
+    `;
+    day.appendChild(support);
+
     grid.appendChild(day);
+
   }
 
   // Build missed key-session checklist
