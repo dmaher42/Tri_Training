@@ -248,37 +248,9 @@ function renderWeeklyProgress(w, weekNum) {
     grid.parentNode.insertBefore(summaryBox, grid);
   }
 
-  const local = loadLocal() || {};
-  const checks = (local.sessionChecks && local.sessionChecks[String(weekNum)]) || {};
+  const { plannedSessions, completedSessions, plannedMinutes, completedMinutes, keyPlanned, keyDone } = computeWeeklyTotals(w, weekNum);
 
-  let plannedSessions = 0;
-  let completedSessions = 0;
-  let plannedMinutes = 0;
-  let doneMinutes = 0;
-  let keyPlanned = 0;
-  let keyDone = 0;
-
-  DAYS.forEach((d) => {
-    const sessions = w.days[d] || [];
-    sessions.forEach((s, idx) => {
-      if (s.type === "Off") return;
-      plannedSessions += 1;
-      const dur = durationToMinutes(s.duration);
-      plannedMinutes += dur;
-      const isDone = checks?.[d]?.[String(idx)] === true;
-      if (isDone) {
-        completedSessions += 1;
-        doneMinutes += dur;
-      }
-      const isKey = s.priority === "high" && !s.optional;
-      if (isKey) {
-        keyPlanned += 1;
-        if (isDone) keyDone += 1;
-      }
-    });
-  });
-
-  const barPct = plannedMinutes ? Math.min(100, Math.round((doneMinutes / plannedMinutes) * 100)) : 0;
+  const barPct = plannedMinutes ? Math.min(100, Math.round((completedMinutes / plannedMinutes) * 100)) : 0;
   const fatigue = document.getElementById("fatigue")?.value;
   const sleep = document.getElementById("sleep")?.value;
   const cautionNote = (fatigue === "high" || sleep === "poor")
@@ -289,7 +261,7 @@ function renderWeeklyProgress(w, weekNum) {
     <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
     <div class="weekly-progress__grid">
       <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
-      <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(doneMinutes)}</div></div>
+      <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
       <div><div class="k">Key sessions</div><div class="v">${keyDone} / ${keyPlanned} done</div></div>
     </div>
     <div class="weekly-progress__bar" aria-hidden="true">
@@ -442,33 +414,6 @@ function renderWeek(plan, weekNum) {
     });
     weekGridListenerAttached = true;
   }
-}
-
-function renderWeeklyProgress(weekObj, weekNum) {
-  const summary = document.getElementById("weekSummary");
-  if (!summary) return;
-
-  let wp = document.getElementById("weeklyProgress");
-  if (!wp) {
-    wp = document.createElement("div");
-    wp.id = "weeklyProgress";
-    wp.className = "weekly-progress";
-    summary.insertAdjacentElement("afterend", wp);
-  }
-
-  const { plannedSessions, completedSessions, plannedMinutes, completedMinutes, keyPlanned, keyDone } = computeWeeklyTotals(weekObj, weekNum);
-  const barPct = plannedMinutes > 0 ? Math.min(100, Math.round((completedMinutes / plannedMinutes) * 100)) : 0;
-
-  wp.innerHTML = `
-  <div class="weekly-progress__grid">
-    <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
-    <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
-    <div><div class="k">Key sessions</div><div class="v">${keyDone} / ${keyPlanned}</div></div>
-  </div>
-  <div class="weekly-progress__bar" aria-hidden="true">
-    <div class="weekly-progress__barFill" style="width:${barPct}%"></div>
-  </div>
-`;
 }
 
 function updateWeeklyProgressForSelectedWeek(plan) {
