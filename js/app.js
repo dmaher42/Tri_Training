@@ -142,11 +142,6 @@ function minutesToRange(mins, pct = 0) {
   return `${m}m`;
 }
 
-function minutesToHHMM(mins) {
-  const hh = Math.floor(mins/60), mm = mins%60;
-  return `${hh}:${String(mm).padStart(2,"0")}`;
-}
-
 function computeWeeklyTotals(weekObj, weekNum) {
   const local = loadLocal() || {};
   const checks = local.sessionChecks?.[String(weekNum)] || {};
