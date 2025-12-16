@@ -121,12 +121,61 @@ function renderWeek(plan, weekNum) {
   coachNote.textContent = w._coachNote ? `Coach note: ${w._coachNote}` : "";
 
   grid.innerHTML = "";
+
+  // Strength recommendation pre-pass
+  const strengthScores = {};
+  const candidates = [];
+  DAYS.forEach((d, idx) => {
+    const sessions = w.days[d] || [];
+    let score = 0;
+    const hasBike = sessions.some(s => s.type === "Bike");
+    const hasRun = sessions.some(s => s.type === "Run");
+    const hasSwim = sessions.some(s => s.type === "Swim");
+    const hasOff = sessions.some(s => s.type === "Off");
+
+    if (sessions.some(s => s.type === "Bike" && (s.priority === "high" || durationToMinutes(s.duration) >= 120))) {
+      score -= 3;
+    }
+
+    if (sessions.some(s => s.type === "Run" && s.priority === "high")) {
+      score -= 2;
+    }
+
+    if (hasSwim && !hasBike && !hasRun) {
+      score += 3;
+    }
+
+    if (hasOff) {
+      score += 2;
+    }
+
+    if (sessions.length >= 2) {
+      score -= 1;
+    }
+
+    if (sessions.length > 0 && sessions.every(s => s.optional)) {
+      score += 1;
+    }
+
+    strengthScores[d] = score;
+    candidates.push({ day: d, score, idx });
+  });
+
+  const goodDays = candidates.filter(c => c.score >= 2);
+  const recommendCount = goodDays.length >= 2 ? 3 : 2;
+  const recommendedStrengthDays = new Set(
+    [...candidates]
+      .sort((a, b) => b.score - a.score || a.idx - b.idx)
+      .slice(0, recommendCount)
+      .map(c => c.day)
+  );
+
   for (const d of DAYS) {
     const day = document.createElement("div");
     day.className = "day";
     day.innerHTML = `<h4>${d}</h4>`;
     const sessions = w.days[d] || [];
-       sessions.forEach((s, idx) => {
+    sessions.forEach((s, idx) => {
       const box = document.createElement("div");
       box.className = "session";
       const pr = s.optional ? "opt" : (s.priority === "high" ? "high" : "");
@@ -159,7 +208,14 @@ function renderWeek(plan, weekNum) {
 
     // Always allowed
     options.push("Mobility reset 10–15 min");
-    options.push("Strength foundation 15–25 min (2–3×/week max)");
+    const strengthScore = strengthScores[d] ?? 0;
+    let strengthLabel = "Strength foundation 15–25 min (optional)";
+    if (recommendedStrengthDays.has(d)) {
+      strengthLabel = "✅ Strength foundation 15–25 min (best day)";
+    } else if (strengthScore <= -2) {
+      strengthLabel = "⚠️ Strength (not ideal today — keep it very light or skip)";
+    }
+    options.push(strengthLabel);
 
     const support = document.createElement("div");
     support.className = "support";
