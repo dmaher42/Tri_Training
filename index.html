@@ -1,91 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adaptive Triathlon Training Plan</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tri Plan – Koorey Philosophy On-Ramp</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="page-header">
-    <div class="container">
-      <h1>Adaptive Triathlon Training Plan</h1>
-      <p class="subtitle">Static plan that adapts safely based on your daily check-in</p>
-    </div>
+  <header class="wrap">
+    <h1>On-Ramp Plan → March 70.3</h1>
+    <p class="muted" id="meta"></p>
   </header>
 
-  <main class="container">
-    <section class="controls" aria-label="Plan controls">
-      <div class="control-group">
-        <label for="week-select">Select week</label>
-        <select id="week-select"></select>
-        <button id="jump-week" type="button" aria-label="Jump to current week">Jump to current week</button>
+  <main class="wrap grid">
+    <section class="card">
+      <h2>This week</h2>
+
+      <div class="row">
+        <label for="weekSelect" class="muted">Week</label>
+        <select id="weekSelect"></select>
+        <button id="jumpToCurrent">Jump to current</button>
       </div>
-      <div class="control-group inline">
-        <button id="export-state" type="button">Export adaptations</button>
-        <button id="import-state" type="button">Import adaptations</button>
-        <input type="file" id="import-file" aria-label="Import JSON file" accept="application/json" />
+
+      <div id="weekSummary" class="muted"></div>
+      <div id="weekGrid" class="week-grid" aria-label="Weekly schedule"></div>
+
+      <div class="row">
+        <button id="exportState">Export</button>
+        <label class="file">
+          Import
+          <input id="importState" type="file" accept="application/json" />
+        </label>
+        <button id="resetState" class="danger">Reset saved changes</button>
       </div>
     </section>
 
-    <section id="week-info" class="week-info" aria-live="polite"></section>
+    <aside class="card">
+      <h2>How are you feeling?</h2>
 
-    <section class="adaptation-panel" aria-label="Adaptation inputs">
-      <h2>Daily check-in</h2>
-      <form id="adapt-form">
-        <div class="form-row">
-          <label for="fatigue">Fatigue</label>
-          <select id="fatigue" name="fatigue">
-            <option value="low">Low</option>
-            <option value="moderate">Moderate</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="sleep">Sleep quality</label>
-          <select id="sleep" name="sleep">
-            <option value="good">Good</option>
-            <option value="ok">OK</option>
-            <option value="poor">Poor</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label for="soreness">Soreness (comma-separated body parts)</label>
-          <input type="text" id="soreness" name="soreness" placeholder="e.g., quads, calves" />
-        </div>
-        <div class="form-row inline">
-          <label><input type="checkbox" id="illness" /> Illness warning</label>
-          <label><input type="checkbox" id="injury" /> Injury warning</label>
-        </div>
-        <div class="form-row">
-          <fieldset>
-            <legend>Missed key sessions</legend>
-            <div id="missed-sessions" class="missed-list" aria-live="polite"></div>
-          </fieldset>
-        </div>
-        <button type="submit" id="adapt-btn">Adapt week</button>
-      </form>
-    </section>
+      <div class="field">
+        <label for="fatigue">Fatigue</label>
+        <select id="fatigue">
+          <option value="low">Low</option>
+          <option value="moderate" selected>Moderate</option>
+          <option value="high">High</option>
+        </select>
+      </div>
 
-    <section class="plan-view" aria-label="Week schedule">
-      <h2>Week schedule</h2>
-      <div id="week-grid" class="week-grid" role="grid" aria-live="polite"></div>
-    </section>
+      <div class="field">
+        <label for="sleep">Sleep</label>
+        <select id="sleep">
+          <option value="good">Good</option>
+          <option value="ok" selected>OK</option>
+          <option value="poor">Poor</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="soreness">Soreness (comma separated)</label>
+        <input id="soreness" placeholder="e.g. calf, hip, shoulder" />
+      </div>
+
+      <div class="field">
+        <label class="checkbox">
+          <input id="illness" type="checkbox" />
+          Sick / fever / chest symptoms
+        </label>
+      </div>
+
+      <div class="field">
+        <label class="checkbox">
+          <input id="injury" type="checkbox" />
+          Injury warning (sharp pain / worsening niggle)
+        </label>
+      </div>
+
+      <hr />
+
+      <h3>What happened this week?</h3>
+      <p class="muted">Tick any key sessions you missed (optional sessions don’t matter).</p>
+      <div id="missedList" class="missed"></div>
+
+      <button id="adaptWeek" class="primary">Adapt this week</button>
+
+      <div class="note" id="coachNote"></div>
+    </aside>
   </main>
 
-  <template id="session-template">
-    <div class="session">
-      <div class="session-type"></div>
-      <div class="session-details"></div>
-    </div>
-  </template>
-
-  <footer class="page-footer">
-    <div class="container">
-      <p>Adaptations are stored locally in your browser. Export before switching devices.</p>
-    </div>
+  <footer class="wrap muted">
+    <p>
+      Rules-first adaptive plan. Saved locally in your browser (no account required).
+    </p>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
