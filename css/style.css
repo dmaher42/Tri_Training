@@ -223,6 +223,42 @@ details.support summary strong {
   color: #fff;
 }
 
+.weekly-progress {
+  margin-top: 12px;
+  border: 1px solid var(--border, rgba(15,23,42,.08));
+  background: rgba(255,255,255,0.85);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.weekly-progress__title { margin-bottom: 8px; }
+.weekly-progress__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (max-width: 700px) {
+  .weekly-progress__grid { grid-template-columns: 1fr; }
+}
+
+.weekly-progress .k { font-size: 11px; color: var(--muted, #475569); text-transform: uppercase; letter-spacing: .04em; }
+.weekly-progress .v { font-size: 13px; color: var(--text, #0F172A); }
+
+.weekly-progress__bar {
+  margin-top: 10px;
+  height: 6px;
+  background: rgba(15,23,42,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.weekly-progress__barFill {
+  height: 100%;
+  background: rgba(29,78,216,0.55);
+  border-radius: 999px;
+}
+
+.weekly-progress__note { margin-top: 8px; font-size: 12px; }
+
 @media (min-width: 1600px) {
   .wrap {
     max-width: 1600px;
