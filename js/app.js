@@ -208,25 +208,15 @@ function renderWeek(plan, weekNum) {
 
     // Always allowed
     options.push("Mobility reset 10–15 min");
+
     const strengthScore = strengthScores[d] ?? 0;
-    let strengthLabel = "Strength foundation 15–25 min (optional)";
+    let strengthLabel = "Strength foundation 15–25 min (recommended)";
+
     if (recommendedStrengthDays.has(d)) {
       strengthLabel = "✅ Strength foundation 15–25 min (best day)";
     } else if (strengthScore <= -2) {
       strengthLabel = "⚠️ Strength (not ideal today — keep it very light or skip)";
     }
-    options.push(strengthLabel);
-
-    const support = document.createElement("div");
-    support.className = "support";
-
-    const options = [
-      "Easy swim 20–40 min",
-      "Easy spin 30–45 min (high cadence)",
-      "Mobility reset 10–15 min"
-    ];
-
-    let strengthLabel = "Strength foundation 15–25 min (recommended)";
 
     if (strengthCount === 2) {
       strengthLabel = "Strength foundation 15–25 min (optional – limit reached)";
@@ -238,6 +228,9 @@ function renderWeek(plan, weekNum) {
 
     options.push(strengthLabel);
     strengthCount++;
+
+    const support = document.createElement("div");
+    support.className = "support";
 
     support.innerHTML = `
       <div class="top">
@@ -374,7 +367,11 @@ function applyRulesToWeek(week, state, missedKey) {
 }
 
 async function main() {
-  const basePlan = await fetch("data/plan.json").then(r => r.json());
+  const res = await fetch("./data/plan.json");
+  if (!res.ok) {
+    throw new Error(`Failed to fetch plan.json: ${res.status} ${res.statusText}`);
+  }
+  const basePlan = await res.json();
   renderMeta(basePlan);
 
   const working = getWorkingPlan(basePlan);
