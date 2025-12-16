@@ -366,6 +366,14 @@ function applyRulesToWeek(week, state, missedKey) {
   return { week: w, coachNote: coachNote.join(" ") };
 }
 
+async function loadPlan() {
+  const res = await fetch("./data/plan.json");
+  if (!res.ok) {
+    throw new Error(`Failed to fetch plan.json: ${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
 async function main() {
   const res = await fetch("./data/plan.json");
   if (!res.ok) {
