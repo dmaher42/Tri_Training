@@ -56,6 +56,12 @@ function durationToMinutes(s) {
   return Math.round((parseOne(parts[0]) + parseOne(parts[1])) / 2);
 }
 
+function minutesToHHMM(mins) {
+  const hh = Math.floor(mins / 60);
+  const mm = mins % 60;
+  return `${hh}:${String(mm).padStart(2, "0")}`;
+}
+
 function minutesToRange(mins, pct = 0) {
   // pct reduces minutes (e.g. 0.3 => -30%)
   const m = Math.max(0, Math.round(mins * (1 - pct)));
@@ -159,6 +165,80 @@ function setWeekOverride(weekNum, days, coachNote) {
 
 function resetOverrides() {
   localStorage.removeItem(STORAGE_KEY);
+}
+
+function renderWeeklyProgress(w, weekNum) {
+  const grid = document.getElementById("weekGrid");
+  if (!grid) return;
+
+  const summaryBox = document.getElementById("weeklyProgress") || document.createElement("div");
+  summaryBox.id = "weeklyProgress";
+  summaryBox.className = "weekly-progress";
+
+  if (grid.parentNode && summaryBox.parentNode !== grid.parentNode) {
+    grid.parentNode.insertBefore(summaryBox, grid);
+  }
+
+  const local = loadLocal() || {};
+  const checks = (local.sessionChecks && local.sessionChecks[String(weekNum)]) || {};
+
+  let plannedSessions = 0;
+  let completedSessions = 0;
+  let plannedMinutes = 0;
+  let doneMinutes = 0;
+  let keyPlanned = 0;
+  let keyDone = 0;
+
+  DAYS.forEach((d) => {
+    const sessions = w.days[d] || [];
+    sessions.forEach((s, idx) => {
+      if (s.type === "Off") return;
+      plannedSessions += 1;
+      const dur = durationToMinutes(s.duration);
+      plannedMinutes += dur;
+      const isDone = checks?.[d]?.[String(idx)] === true;
+      if (isDone) {
+        completedSessions += 1;
+        doneMinutes += dur;
+      }
+      const isKey = s.priority === "high" && !s.optional;
+      if (isKey) {
+        keyPlanned += 1;
+        if (isDone) keyDone += 1;
+      }
+    });
+  });
+
+  const barPct = plannedMinutes ? Math.min(100, Math.round((doneMinutes / plannedMinutes) * 100)) : 0;
+  const fatigue = document.getElementById("fatigue")?.value;
+  const sleep = document.getElementById("sleep")?.value;
+  const cautionNote = (fatigue === "high" || sleep === "poor")
+    ? `<div class="weekly-progress__note muted">Focus this week: reduce load, protect key sessions.</div>`
+    : "";
+
+  summaryBox.innerHTML = `
+    <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
+    <div class="weekly-progress__grid">
+      <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
+      <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(doneMinutes)}</div></div>
+      <div><div class="k">Key sessions</div><div class="v">${keyDone} / ${keyPlanned} done</div></div>
+    </div>
+    <div class="weekly-progress__bar" aria-hidden="true">
+      <div class="weekly-progress__barFill" style="width:${barPct}%"></div>
+    </div>
+    <div class="weekly-progress__note muted">
+      Aim: consistency. Don’t stack sessions to “make up” missed work.
+    </div>
+    ${cautionNote}
+  `;
+}
+
+function updateWeeklyProgress(weekNum) {
+  if (!basePlanGlobal) return;
+  const plan = getWorkingPlan(basePlanGlobal);
+  const w = plan.weeks.find((x) => x.week === weekNum);
+  if (!w) return;
+  renderWeeklyProgress(w, weekNum);
 }
 
 function renderWeek(plan, weekNum) {
