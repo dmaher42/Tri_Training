@@ -1,133 +1,139 @@
 {
-  "title": "12-Week Olympic Triathlon (Koorey On-Ramp)",
-  "startDate": "2024-07-01",
-  "raceDate": "2024-09-22",
+  "title": "On-Ramp to March 70.3 (Koorey Philosophy)",
+  "startDate": "2025-12-16",
+  "raceDate": "2026-03-29",
   "weeks": [
     {
       "week": 1,
-      "phase": "Foundation",
-      "hoursTarget": 5,
+      "phase": "Reconditioning",
+      "hoursTarget": "7–8h",
       "notes": [
-        "Focus on easy aerobic volume and consistent frequency.",
-        "All paces conversational; form before speed."
+        "Keep everything easy. Build frequency and tolerance.",
+        "No NMS (40–50rpm). Cadence strength stays >=65rpm."
       ],
       "days": {
         "Mon": [
-          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Drills + easy 4x200 pull", "optional": false }
+          { "type": "Swim", "duration": "30–40m", "priority": "medium", "details": "Easy technique + feel (drills, relaxed aerobic)." }
         ],
         "Tue": [
-          { "type": "bike", "duration": 45, "priority": "high", "details": "Cadence focus 3x6' high spin / 3' easy" }
+          { "type": "Bike", "duration": "60–75m", "priority": "high", "details": "Aerobic + 4×5m @ 65–70rpm (easy effort). 2–3m easy between." }
         ],
         "Wed": [
-          { "type": "run", "duration": 30, "priority": "moderate", "details": "Easy shuffle + 4x20s strides" }
+          { "type": "Run", "duration": "30–40m", "priority": "high", "details": "Easy, flat. Finish feeling like you could do more." }
         ],
         "Thu": [
-          { "type": "swim", "duration": 35, "priority": "moderate", "details": "Kicking + 6x100 steady" }
+          { "type": "Swim", "duration": "40–50m", "priority": "medium", "details": "Aerobic intervals (e.g., 12×100 easy/mod, short rest)." },
+          { "type": "Bike", "duration": "45–60m", "priority": "low", "details": "Easy spin, high cadence." , "optional": true }
         ],
         "Fri": [
-          { "type": "rest", "duration": 0, "priority": "low", "details": "Active recovery walk" }
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
         ],
         "Sat": [
-          { "type": "bike", "duration": 70, "priority": "high", "details": "Endurance ride with 4x5' tempo" }
+          { "type": "Bike", "duration": "75–90m", "priority": "high", "details": "Long easy endurance. Last 10m steady but controlled." }
         ],
         "Sun": [
-          { "type": "run", "duration": 35, "priority": "high", "details": "Long easy aerobic" }
+          { "type": "Run", "duration": "40–50m", "priority": "medium", "details": "Easy endurance. If niggles: swap to elliptical." }
         ]
       }
     },
     {
       "week": 2,
-      "phase": "Foundation",
-      "hoursTarget": 6,
+      "phase": "Reconditioning",
+      "hoursTarget": "8–9h",
       "notes": [
-        "Slight bump in duration; maintain easy intensity.",
-        "Add strides to reinforce economy."
+        "Slightly extend long ride. Keep run easy.",
+        "If fatigue rises: cut duration 20–30%, keep frequency."
       ],
       "days": {
         "Mon": [
-          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Drills + 6x150 steady" }
+          { "type": "Swim", "duration": "35–45m", "priority": "medium", "details": "Easy + 8×50 smooth build (not hard)." }
         ],
         "Tue": [
-          { "type": "run", "duration": 35, "priority": "high", "details": "Easy + 6x20s strides" }
+          { "type": "Bike", "duration": "70–80m", "priority": "high", "details": "Aerobic + 5×5m @ 65–70rpm (easy effort)." }
         ],
         "Wed": [
-          { "type": "bike", "duration": 60, "priority": "high", "details": "Endurance ride with 2x8' tempo" }
+          { "type": "Run", "duration": "35–45m", "priority": "high", "details": "Easy, flat. Add 4×20s relaxed strides if feeling good." }
         ],
         "Thu": [
-          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Pull + 8x100 steady" }
+          { "type": "Swim", "duration": "40–55m", "priority": "medium", "details": "Aerobic set (e.g., 6×200 easy/mod)." },
+          { "type": "Bike", "duration": "45–60m", "priority": "low", "details": "Easy spin." , "optional": true }
         ],
         "Fri": [
-          { "type": "rest", "duration": 0, "priority": "low", "details": "Mobility and activation" }
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
         ],
         "Sat": [
-          { "type": "run", "duration": 45, "priority": "high", "details": "Long aerobic" }
+          { "type": "Bike", "duration": "90–105m", "priority": "high", "details": "Long easy endurance. Last 15m steady." }
         ],
         "Sun": [
-          { "type": "bike", "duration": 75, "priority": "high", "details": "Endurance with low-cadence strength blocks" }
+          { "type": "Run", "duration": "45–55m", "priority": "medium", "details": "Easy endurance. Swap to elliptical if any niggle." }
         ]
       }
     },
+
     {
       "week": 3,
-      "phase": "Foundation",
-      "hoursTarget": 6.5,
+      "phase": "Transition to Build",
+      "hoursTarget": "9–10h",
       "notes": [
-        "Introduce light brick feel without load.",
-        "Hold technique focus in swim."
+        "Introduce gentle brick. Still no true NMS grinding.",
+        "One steady run (still controlled)."
       ],
       "days": {
         "Mon": [
-          { "type": "swim", "duration": 45, "priority": "moderate", "details": "Drills + 6x200 pull" }
+          { "type": "Swim", "duration": "40–50m", "priority": "medium", "details": "Easy + pull buoy aerobic work." }
         ],
         "Tue": [
-          { "type": "bike", "duration": 65, "priority": "high", "details": "3x10' tempo / 5' easy" }
+          { "type": "Bike", "duration": "75–90m", "priority": "high", "details": "SE intro: 4×6m @ 60–65rpm (MED effort). 3m easy between." }
         ],
         "Wed": [
-          { "type": "run", "duration": 35, "priority": "moderate", "details": "Easy + 6x20s strides" }
+          { "type": "Run", "duration": "40–50m", "priority": "high", "details": "Easy with 15m steady (not hard)." }
         ],
         "Thu": [
-          { "type": "swim", "duration": 40, "priority": "moderate", "details": "8x100 steady + technique" }
+          { "type": "Swim", "duration": "45–60m", "priority": "medium", "details": "PACE feel: 12×100 steady, short rest." }
         ],
         "Fri": [
-          { "type": "bike", "duration": 45, "priority": "moderate", "details": "Easy spin + drills", "optional": true }
+          { "type": "Off", "duration": "-", "priority": "medium", "details": "Rest or mobility." }
         ],
         "Sat": [
-          { "type": "bike", "duration": 80, "priority": "high", "details": "Endurance ride with 3x6' tempo" }
+          { "type": "Bike", "duration": "105–120m", "priority": "high", "details": "Long easy + last 20m steady." },
+          { "type": "Run", "duration": "10–15m", "priority": "medium", "details": "Brick jog easy (pure transition)." }
         ],
         "Sun": [
-          { "type": "run", "duration": 45, "priority": "high", "details": "Long aerobic" }
+          { "type": "Run", "duration": "55–65m", "priority": "medium", "details": "Easy endurance. Keep it boring." }
         ]
       }
     },
+
     {
       "week": 4,
-      "phase": "Foundation (Cutback)",
-      "hoursTarget": 5.5,
+      "phase": "Transition to Build",
+      "hoursTarget": "10–11h",
       "notes": [
-        "Absorb work with lower long-day volumes.",
-        "Technique + form strides only."
+        "Start looking like the Koorey plan: long bike + SE + swim pace.",
+        "Run remains protected."
       ],
       "days": {
         "Mon": [
-          { "type": "swim", "duration": 40, "priority": "moderate", "details": "Drills + 6x100 easy" }
+          { "type": "Swim", "duration": "45–55m", "priority": "medium", "details": "Easy + 16×50 build smooth." }
         ],
         "Tue": [
-          { "type": "run", "duration": 30, "priority": "moderate", "details": "Easy + 4x20s strides" }
+          { "type": "Bike", "duration": "80–95m", "priority": "high", "details": "SE: 5×6m @ 60–65rpm (MED). 3m easy." }
         ],
         "Wed": [
-          { "type": "bike", "duration": 55, "priority": "high", "details": "Endurance with 2x6' tempo" }
+          { "type": "Run", "duration": "45–55m", "priority": "high", "details": "Easy with 2×8m steady (70.3 feel but controlled)." }
         ],
         "Thu": [
-          { "type": "swim", "duration": 35, "priority": "moderate", "details": "Technique focus" }
+          { "type": "Swim", "duration": "50–65m", "priority": "high", "details": "PACE: 10–14×100 at strong steady, short rest." }
         ],
         "Fri": [
-          { "type": "rest", "duration": 0, "priority": "low", "details": "Off or light mobility" }
+          { "type": "Bike", "duration": "45–60m", "priority": "low", "details": "Easy spin OR off if fatigue is rising.", "optional": true }
         ],
         "Sat": [
-          { "type": "bike", "duration": 65, "priority": "high", "details": "Endurance smooth, no pushes" }
+          { "type": "Bike", "duration": "2:00–2:20", "priority": "high", "details": "Long easy + last 25m steady." },
+          { "type": "Run", "duration": "15–20m", "priority": "medium", "details": "Brick jog easy." }
         ],
         "Sun": [
-          { "type": "run", "duration": 35, "priority": "high", "details": "Long easy" }
+          { "type": "Run", "duration": "65–75m", "priority": "medium", "details": "Easy endurance. If sore: elliptical 45–60m." }
         ]
       }
     }
