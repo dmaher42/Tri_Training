@@ -264,3 +264,47 @@ details.support summary strong {
     max-width: 1600px;
   }
 }
+
+.weekly-progress {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--border, rgba(15,23,42,.08));
+  border-radius: 12px;
+  background: rgba(255,255,255,0.9);
+}
+
+.weekly-progress__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (max-width: 700px) {
+  .weekly-progress__grid { grid-template-columns: 1fr; }
+}
+
+.weekly-progress .k {
+  font-size: 11px;
+  color: var(--muted, #475569);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.weekly-progress .v {
+  font-size: 13px;
+  color: var(--text, #0F172A);
+}
+
+.weekly-progress__bar {
+  margin-top: 10px;
+  height: 6px;
+  background: rgba(15,23,42,0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.weekly-progress__barFill {
+  height: 100%;
+  background: rgba(29,78,216,0.45);
+  border-radius: 999px;
+}

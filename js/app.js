@@ -72,6 +72,48 @@ function minutesToRange(mins, pct = 0) {
   return `${m}m`;
 }
 
+function minutesToHHMM(mins) {
+  const hh = Math.floor(mins/60), mm = mins%60;
+  return `${hh}:${String(mm).padStart(2,"0")}`;
+}
+
+function computeWeeklyTotals(weekObj, weekNum) {
+  const local = loadLocal() || {};
+  const checks = local.sessionChecks?.[String(weekNum)] || {};
+
+  let plannedSessions = 0;
+  let completedSessions = 0;
+  let plannedMinutes = 0;
+  let completedMinutes = 0;
+  let keyPlanned = 0;
+  let keyDone = 0;
+
+  for (const d of DAYS) {
+    const sessions = weekObj.days[d] || [];
+    sessions.forEach((s, idx) => {
+      const isOff = s.type === "Off";
+      const isChecked = !!(checks[d]?.[String(idx)]);
+      const mins = durationToMinutes(s.duration);
+      if (!isOff) {
+        plannedSessions += 1;
+        plannedMinutes += mins;
+        if (isChecked) {
+          completedSessions += 1;
+          completedMinutes += mins;
+        }
+      }
+
+      const isKey = s.priority === "high" && !s.optional && s.type !== "Off";
+      if (isKey) {
+        keyPlanned += 1;
+        if (isChecked) keyDone += 1;
+      }
+    });
+  }
+
+  return { plannedSessions, completedSessions, plannedMinutes, completedMinutes, keyPlanned, keyDone };
+}
+
 function computeCurrentWeek(plan) {
   const start = parseIsoDate(plan.startDate);
   const today = new Date();
@@ -417,10 +459,48 @@ function renderWeek(plan, weekNum) {
           progressEl.textContent = `Done: ${doneCount} / ${cards.length}`;
         }
       }
-      updateWeeklyProgress(week);
+      updateWeeklyProgressForSelectedWeek(basePlanGlobal);
     });
     weekGridListenerAttached = true;
   }
+}
+
+function renderWeeklyProgress(weekObj, weekNum) {
+  const summary = document.getElementById("weekSummary");
+  if (!summary) return;
+
+  let wp = document.getElementById("weeklyProgress");
+  if (!wp) {
+    wp = document.createElement("div");
+    wp.id = "weeklyProgress";
+    wp.className = "weekly-progress";
+    summary.insertAdjacentElement("afterend", wp);
+  }
+
+  const { plannedSessions, completedSessions, plannedMinutes, completedMinutes, keyPlanned, keyDone } = computeWeeklyTotals(weekObj, weekNum);
+  const barPct = plannedMinutes > 0 ? Math.min(100, Math.round((completedMinutes / plannedMinutes) * 100)) : 0;
+
+  wp.innerHTML = `
+  <div class="weekly-progress__grid">
+    <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
+    <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
+    <div><div class="k">Key sessions</div><div class="v">${keyDone} / ${keyPlanned}</div></div>
+  </div>
+  <div class="weekly-progress__bar" aria-hidden="true">
+    <div class="weekly-progress__barFill" style="width:${barPct}%"></div>
+  </div>
+`;
+}
+
+function updateWeeklyProgressForSelectedWeek(plan) {
+  if (!plan) return;
+  const sel = document.getElementById("weekSelect");
+  if (!sel) return;
+  const weekNum = Number(sel.value);
+  const working = getWorkingPlan(plan);
+  const w = working.weeks.find(x => x.week === weekNum);
+  if (!w) return;
+  renderWeeklyProgress(w, weekNum);
 }
 
 function applyRulesToWeek(week, state, missedKey) {
