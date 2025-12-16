@@ -375,7 +375,11 @@ async function loadPlan() {
 }
 
 async function main() {
-  const basePlan = await loadPlan();
+  const res = await fetch("./data/plan.json");
+  if (!res.ok) {
+    throw new Error(`Failed to fetch plan.json: ${res.status} ${res.statusText}`);
+  }
+  const basePlan = await res.json();
   renderMeta(basePlan);
 
   const working = getWorkingPlan(basePlan);
