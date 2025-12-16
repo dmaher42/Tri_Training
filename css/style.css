@@ -1,3 +1,96 @@
+/* =========================
+   Soft Pastel Contrast Theme
+   ========================= */
+
+:root {
+  /* Core palette */
+  --bg-page: #F3F4F6;        /* Very light cool gray */
+  --bg-card: #FFFFFF;        /* White for cards */
+  --text-primary: #1C1C1C;   /* Dark text for clarity */
+  --text-secondary: #555555; /* Muted text */
+  --border-default: #D9D9D9; /* Soothing, soft border */
+
+  /* Session title & tag colors */
+  --session-high: #1F3A93;   /* Calm blue for main sessions */
+  --session-medium: #435470; /* Softer blue-gray */
+  --tag-optional: #777777;   /* Soft gray for optional */
+  
+  /* Optional support session (pastel) */
+  --support-bg: #EBF6EB;     /* Light green pastel */
+  --support-border: #C5DCC5; /* Slightly stronger pastel border */
+
+  /* Recommended / not ideal indicators */
+  --tag-recommended: #4CAF50; /* Strong green */
+  --tag-not-ideal: #DAA520;   /* Amber for caution */
+}
+
+/* Page & layout */
+body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.wrap, .grid, .card {
+  background: var(--bg-card);
+}
+
+/* Text */
+.muted {
+  color: var(--text-secondary);
+}
+
+/* Borders */
+.card, .day {
+  border-color: var(--border-default);
+}
+
+/* Day card */
+.day {
+  background: var(--bg-card);
+  padding: 10px;
+}
+
+/* Session tags */
+.session .tag.high {
+  color: var(--session-high);
+  border-color: var(--session-high);
+}
+.session .tag {
+  border-color: var(--border-default);
+}
+.session .tag.opt {
+  color: var(--tag-optional);
+  border-color: var(--tag-optional);
+}
+
+/* Optional support block */
+details.support {
+  background: var(--support-bg);
+  border: 1px solid var(--support-border);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 12px;
+  margin-top: 8px;
+}
+details.support summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.support-body {
+  margin-top: 6px;
+}
+
+/* Recommended / not ideal tags */
+.tag.recommended {
+  background: var(--tag-recommended);
+  color: #fff;
+}
+.tag.not-ideal {
+  background: var(--tag-not-ideal);
+  color: #fff;
+}
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.35; }
