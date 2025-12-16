@@ -110,6 +110,8 @@ function renderWeek(plan, weekNum) {
   const coachNote = document.getElementById("coachNote");
   const missedList = document.getElementById("missedList");
 
+  let strengthCount = 0;
+
   summary.innerHTML = `
     <div><strong>Phase:</strong> ${w.phase}</div>
     <div><strong>Target:</strong> ${w.hoursTarget}</div>
@@ -143,6 +145,26 @@ function renderWeek(plan, weekNum) {
     // Optional support session block (non-load-bearing)
     const support = document.createElement("div");
     support.className = "support";
+
+    const options = [
+      "Easy swim 20–40 min",
+      "Easy spin 30–45 min (high cadence)",
+      "Mobility reset 10–15 min"
+    ];
+
+    let strengthLabel = "Strength foundation 15–25 min (recommended)";
+
+    if (strengthCount === 2) {
+      strengthLabel = "Strength foundation 15–25 min (optional – limit reached)";
+    }
+
+    if (strengthCount >= 3) {
+      strengthLabel = "Strength foundation (skip today – already 3× this week)";
+    }
+
+    options.push(strengthLabel);
+    strengthCount++;
+
     support.innerHTML = `
       <div class="top">
         <strong>Optional Support Session</strong>
@@ -150,10 +172,7 @@ function renderWeek(plan, weekNum) {
       </div>
       <p class="muted">Choose ONE (keep it easy):</p>
       <ul>
-        <li>Easy swim 20–40 min</li>
-        <li>Easy spin 30–45 min (high cadence)</li>
-        <li>Mobility reset 10–15 min</li>
-        <li>Strength foundation 15–25 min (2–3×/week max)</li>
+        ${options.map(o => `<li>${o}</li>`).join("")}
       </ul>
       <p class="muted">If you feel worse after this, it was too hard.</p>
     `;
