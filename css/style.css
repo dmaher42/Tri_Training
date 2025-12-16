@@ -1,108 +1,23 @@
-/* =========================
-   Soft Pastel Contrast Theme
-   ========================= */
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
 
-:root {
-  /* Core palette */
-  --bg-page: #F3F4F6;        /* Very light cool gray */
-  --bg-card: #FFFFFF;        /* White for cards */
-  --text-primary: #1C1C1C;   /* Dark text for clarity */
-  --text-secondary: #555555; /* Muted text */
-  --border-default: #D9D9D9; /* Soothing, soft border */
-
-  /* Session title & tag colors */
-  --session-high: #1F3A93;   /* Calm blue for main sessions */
-  --session-medium: #435470; /* Softer blue-gray */
-  --tag-optional: #777777;   /* Soft gray for optional */
-  
-  /* Optional support session (pastel) */
-  --support-bg: #EBF6EB;     /* Light green pastel */
-  --support-border: #C5DCC5; /* Slightly stronger pastel border */
-
-  /* Recommended / not ideal indicators */
-  --tag-recommended: #4CAF50; /* Strong green */
-  --tag-not-ideal: #DAA520;   /* Amber for caution */
-}
-
-/* Page & layout */
 body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.35;
   background: var(--bg-page);
   color: var(--text-primary);
 }
 
-.wrap, .grid, .card {
-  background: var(--bg-card);
-}
-
-/* Text */
-.muted {
-  color: var(--text-secondary);
-}
-
-/* Borders */
-.card, .day {
-  border-color: var(--border-default);
-}
-
-/* Day card */
-.day {
-  background: var(--bg-card);
-  padding: 10px;
-}
-
-/* Session tags */
-.session .tag.high {
-  color: var(--session-high);
-  border-color: var(--session-high);
-}
-.session .tag {
-  border-color: var(--border-default);
-}
-.session .tag.opt {
-  color: var(--tag-optional);
-  border-color: var(--tag-optional);
-}
-
-/* Optional support block */
-details.support {
-  background: var(--support-bg);
-  border: 1px solid var(--support-border);
-  border-radius: 10px;
-  padding: 6px 10px;
-  font-size: 12px;
-  margin-top: 8px;
-}
-details.support summary {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.support-body {
-  margin-top: 6px;
-}
-
-/* Recommended / not ideal tags */
-.tag.recommended {
-  background: var(--tag-recommended);
-  color: #fff;
-}
-.tag.not-ideal {
-  background: var(--tag-not-ideal);
-  color: #fff;
-}
-:root { color-scheme: light; }
-* { box-sizing: border-box; }
-body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.35; }
 .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
 h1 { margin: 0 0 6px; font-size: 26px; }
 h2 { margin: 0 0 12px; font-size: 18px; }
 h3 { margin: 12px 0 8px; font-size: 14px; }
-.muted { color: #555; }
+.muted { color: var(--text-secondary); }
 .grid { display: grid; gap: 16px; grid-template-columns: 1.6fr 1fr; }
 @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
 
-.card { border: 1px solid #ddd; border-radius: 12px; padding: 14px; background: #fff; }
+.card { border: 1px solid var(--border-default); border-radius: 12px; padding: 14px; background: var(--bg-card); }
 .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
 .row label { min-width: 50px; }
 select, input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 10px; }
@@ -117,13 +32,13 @@ hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
 
 .week-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 12px; align-items: start; }
 @media (max-width: 520px) { .week-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); } }
-.day { border: 1px solid #eee; border-radius: 12px; padding: 14px; min-height: 140px; background: #fff; line-height: 1.45; }
-.day h4 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #555; }
-.session { border: 1px solid #e3e3e3; border-radius: 10px; padding: 10px; margin: 8px 0; background: #fafafa; }
+.day { border: 1px solid var(--border-default); border-radius: 12px; padding: 14px; min-height: 140px; background: var(--bg-card); line-height: 1.45; }
+.day h4 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-secondary); }
+.session { border: 1px solid var(--border-default); border-radius: 10px; padding: 10px; margin: 8px 0; background: #F9FAFB; }
 .session .top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
-.tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid #ddd; color: #555; white-space: nowrap; }
-.tag.high { border-color: #111; color: #111; }
-.tag.opt { border-color: #bbb; color: #777; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border-default); color: var(--text-secondary); white-space: nowrap; }
+.tag.high { border-color: var(--session-high); color: var(--session-high); }
+.tag.opt { border-color: var(--tag-optional); color: var(--tag-optional); }
 .session p { margin: 8px 0 0; font-size: 13px; color: #444; }
 
 .note { margin-top: 12px; border: 1px dashed #ccc; border-radius: 12px; padding: 10px; background: #fcfcfc; font-size: 13px; }
@@ -146,13 +61,86 @@ hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
   text-decoration: underline;
 }
 
-/* Optional support session box */
+.support-body { margin-top: 6px; }
+.support-body ul { margin: 6px 0 0 18px; padding: 0; }
+
+details.support summary::-webkit-details-marker { display: none; }
+
+/* =========================
+   Soft Pastel Contrast Theme
+   ========================= */
+
+:root {
+  /* Core palette */
+  --bg-page: #F3F4F6;        /* Very light cool gray */
+  --bg-card: #FFFFFF;        /* White for cards */
+  --text-primary: #1C1C1C;   /* Dark text for clarity */
+  --text-secondary: #555555; /* Muted text */
+  --border-default: #D9D9D9; /* Soothing, soft border */
+
+  /* Session title & tag colors */
+  --session-high: #AEC6CF;   /* Soft pastel blue accent */
+  --session-medium: #7FA3B4; /* Coordinated pastel medium tone */
+  --tag-optional: #777777;   /* Soft gray for optional */
+
+  /* Optional support session (pastel) */
+  --support-bg: #EBF6EB;     /* Light green pastel */
+  --support-border: #C5DCC5; /* Slightly stronger pastel border */
+
+  /* Recommended / not ideal indicators */
+  --tag-recommended: #4CAF50; /* Strong green */
+  --tag-not-ideal: #DAA520;   /* Amber for caution */
+}
+
+/* Page & layout */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.35;
+  background: var(--bg-page);
+  color: var(--text-primary);
+}
+
+.wrap, .grid, .card {
+  background: var(--bg-card);
+}
+
+/* Text */
+.muted {
+  color: var(--text-secondary);
+}
+
+/* Borders */
+.card, .day {
+  border-color: var(--border-default);
+}
+
+/* Day card */
+.day {
+  background: var(--bg-card);
+  padding: 14px;
+}
+
+/* Session tags */
+.session .tag.high {
+  color: var(--session-high);
+  border-color: var(--session-high);
+}
+.session .tag {
+  border-color: var(--border-default);
+}
+.session .tag.opt {
+  color: var(--tag-optional);
+  border-color: var(--tag-optional);
+}
+
+/* Optional support block */
 details.support {
-  border: 1px dashed #ddd;
+  background: var(--support-bg);
+  border: 1px dashed var(--support-border);
   border-radius: 10px;
-  padding: 6px 8px;
-  margin: 8px 0 0;
-  background: #fcfcfc;
+  padding: 8px;
+  margin-top: 8px;
   font-size: 12px;
 }
 details.support summary {
@@ -163,6 +151,13 @@ details.support summary {
   gap: 8px;
   list-style: none;
 }
-details.support summary::-webkit-details-marker { display: none; }
-.support-body { margin-top: 6px; }
-.support-body ul { margin: 6px 0 0 18px; padding: 0; }
+
+/* Recommended / not ideal tags */
+.tag.recommended {
+  background: var(--tag-recommended);
+  color: #fff;
+}
+.tag.not-ideal {
+  background: var(--tag-not-ideal);
+  color: #fff;
+}
