@@ -1,5 +1,6 @@
 const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const STORAGE_KEY = "triPlanState_v1";
+let weekGridListenerAttached = false;
 
 function parseIsoDate(s) {
   const [y,m,d] = s.split("-").map(Number);
@@ -20,6 +21,20 @@ function loadLocal() {
 
 function saveLocal(obj) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+
+function getSessionChecks() {
+  return (loadLocal()?.sessionChecks || {});
+}
+
+function setSessionCheck(weekNum, day, idx, val) {
+  const local = loadLocal() || {};
+  local.sessionChecks = local.sessionChecks || {};
+  const weekKey = String(weekNum);
+  local.sessionChecks[weekKey] = local.sessionChecks[weekKey] || {};
+  local.sessionChecks[weekKey][day] = local.sessionChecks[weekKey][day] || {};
+  local.sessionChecks[weekKey][day][String(idx)] = !!val;
+  saveLocal(local);
 }
 
 function deepClone(x) { return JSON.parse(JSON.stringify(x)); }
@@ -109,6 +124,7 @@ function renderWeek(plan, weekNum) {
   const grid = document.getElementById("weekGrid");
   const coachNote = document.getElementById("coachNote");
   const missedList = document.getElementById("missedList");
+  const weekChecks = getSessionChecks()[String(weekNum)] || {};
 
   let strengthCount = 0;
 
@@ -175,21 +191,43 @@ function renderWeek(plan, weekNum) {
     day.className = "day";
     day.innerHTML = `<h4>${d}</h4>`;
     const sessions = w.days[d] || [];
+    let totalSessions = 0;
+    let doneSessions = 0;
     sessions.forEach((s, idx) => {
       const box = document.createElement("div");
-      box.className = "session";
+      const isDone = !!(weekChecks[d] && weekChecks[d][String(idx)]);
+      const isOff = s.type === "Off";
+      box.className = `session${isDone ? " done" : ""}`;
+      box.dataset.type = s.type;
       const pr = s.optional ? "opt" : (s.priority === "high" ? "high" : "");
       const tagText = s.optional ? "Optional" : (s.priority || "medium");
+      const doneToggle = isOff ? "" : `
+        <label class="done-toggle">
+          <input type="checkbox" data-week="${weekNum}" data-day="${d}" data-idx="${idx}" ${isDone ? "checked" : ""}>
+          <span>Done</span>
+        </label>`;
       box.innerHTML = `
         <div class="top">
           <strong>${s.type}</strong>
-          <span class="tag ${pr}">${tagText}</span>
+          <div class="top-right">
+            <span class="tag ${pr}">${tagText}</span>
+            ${doneToggle}
+          </div>
         </div>
         <div class="muted">${s.duration}</div>
         <p>${s.details || ""}</p>
       `;
+      if (!isOff) {
+        totalSessions += 1;
+        if (isDone) doneSessions += 1;
+      }
       day.appendChild(box);
     });
+
+    const progress = document.createElement("div");
+    progress.className = "day-progress muted";
+    progress.textContent = `Done: ${doneSessions} / ${totalSessions}`;
+    day.appendChild(progress);
 
     // Optional support session block (non-load-bearing, complementary)
     const existingTypes = new Set(
@@ -272,6 +310,32 @@ function renderWeek(plan, weekNum) {
       row.innerHTML = `<input type="checkbox" id="${id}" data-day="${k.day}" data-idx="${k.idx}"> ${k.label}`;
       missedList.appendChild(row);
     });
+  }
+
+  if (!weekGridListenerAttached) {
+    grid.addEventListener("change", (e) => {
+      const target = e.target;
+      if (!target || !(target instanceof HTMLInputElement)) return;
+      if (!target.matches(".done-toggle input")) return;
+      const week = Number(target.dataset.week);
+      const dayName = target.dataset.day;
+      const idx = Number(target.dataset.idx);
+      setSessionCheck(week, dayName, idx, target.checked);
+      const card = target.closest('.session');
+      if (card) {
+        card.classList.toggle('done', target.checked);
+      }
+      const dayEl = target.closest('.day');
+      if (dayEl) {
+        const progressEl = dayEl.querySelector('.day-progress');
+        if (progressEl) {
+          const cards = [...dayEl.querySelectorAll('.session')].filter(c => c.dataset.type !== "Off");
+          const doneCount = cards.filter(c => c.classList.contains('done')).length;
+          progressEl.textContent = `Done: ${doneCount} / ${cards.length}`;
+        }
+      }
+    });
+    weekGridListenerAttached = true;
   }
 }
 
