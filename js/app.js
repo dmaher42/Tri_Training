@@ -72,11 +72,17 @@ function durationToMinutes(s) {
   if (!s || s === "-") return 0;
   const parts = String(s).split("–").map(p => p.trim());
   const parseOne = (t) => {
-    if (t.includes(":")) {
-      const [hh, mm] = t.split(":").map(Number);
-      return hh * 60 + mm;
+    const s = String(t).trim();
+    if (!s) return 0;
+
+    // HH:MM format
+    if (s.includes(":")) {
+      const [hh, mm] = s.split(":").map(Number);
+      return (hh * 60) + mm;
     }
-    const m = t.match(/(\d+)\s*m/i);
+
+    // Minutes, allow both "40m" and "40"
+    const m = s.match(/(\d+)/);
     return m ? Number(m[1]) : 0;
   };
   if (parts.length === 1) return parseOne(parts[0]);
