@@ -1,5 +1,5 @@
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const STORAGE_KEY = "triPlanState_v1";
+const STORAGE_KEY = "triPlanState_v2";
 let weekGridListenerAttached = false;
 let basePlanGlobal = null;
 
@@ -70,7 +70,9 @@ function deepClone(x) { return JSON.parse(JSON.stringify(x)); }
 
 function durationToMinutes(s) {
   if (!s || s === "-") return 0;
-  const parts = String(s).split("–").map(p => p.trim());
+  const raw = String(s).trim();
+  const parts = raw.includes("–") ? raw.split("–") : raw.split("-");
+  const cleanedParts = parts.map(p => p.trim()).filter(Boolean);
   const parseOne = (t) => {
     const s = String(t).trim();
     if (!s) return 0;
@@ -85,8 +87,8 @@ function durationToMinutes(s) {
     const m = s.match(/(\d+)/);
     return m ? Number(m[1]) : 0;
   };
-  if (parts.length === 1) return parseOne(parts[0]);
-  return Math.round((parseOne(parts[0]) + parseOne(parts[1])) / 2);
+  if (cleanedParts.length === 1) return parseOne(cleanedParts[0]);
+  return Math.round((parseOne(cleanedParts[0]) + parseOne(cleanedParts[1])) / 2);
 }
 
 function minutesToHHMM(mins) {
@@ -118,32 +120,41 @@ function defaultSession(day, slot) {
 
 function normalizeDaySessions(dayName, sessions = [], weekNum) {
   const slotMap = { AM: null, PM: null };
+  const extras = [];
 
-  sessions.forEach((s, idx) => {
-    const explicitSlot = s.slot === "PM" || s.slot === "AM" ? s.slot : null;
-    const slot = explicitSlot || (!slotMap.AM ? "AM" : (!slotMap.PM ? "PM" : null));
+  const assignToSlot = (s, slot) => {
+    slotMap[slot] = {
+      slot,
+      type: s.type || PATTERN[dayName]?.[slot] || "Mobility",
+      duration: s.duration || DEFAULT_DURATION[s.type] || DEFAULT_DURATION[slotMap[slot]?.type] || "-",
+      details: s.details || DEFAULT_DETAILS[s.type] || DEFAULT_DETAILS[slotMap[slot]?.type] || ""
+    };
+  };
 
-    if (slot && !slotMap[slot]) {
-      slotMap[slot] = {
-        slot,
-        type: s.type || PATTERN[dayName]?.[slot] || "Mobility",
-        duration: s.duration || DEFAULT_DURATION[s.type] || "-",
-        details: s.details || DEFAULT_DETAILS[s.type] || ""
-      };
+  sessions.forEach((s) => {
+    const explicitSlot = s.slot === "AM" || s.slot === "PM" ? s.slot : null;
+
+    if (explicitSlot && !slotMap[explicitSlot]) {
+      assignToSlot(s, explicitSlot);
       return;
     }
 
-    // Unused extra session for this day; keep it in the warning only.
+    const fallback = !slotMap.AM ? "AM" : (!slotMap.PM ? "PM" : null);
+    if (fallback) {
+      assignToSlot(s, fallback);
+    } else {
+      extras.push(s);
+    }
   });
-
-  if (sessions.length > 2) {
-    console.warn(`[plan] ${weekNum ?? "?"} ${dayName}: found ${sessions.length} sessions; keeping AM/PM and ignoring extras`, sessions);
-  }
 
   for (const slot of ["AM", "PM"]) {
     if (!slotMap[slot]) {
       slotMap[slot] = defaultSession(dayName, slot);
     }
+  }
+
+  if (extras.length) {
+    console.warn(`[plan] Week ${weekNum ?? "?"} ${dayName}: ignoring extra sessions beyond AM/PM`, extras);
   }
 
   return [slotMap.AM, slotMap.PM];
@@ -175,7 +186,8 @@ function computeWeeklyTotals(weekObj, weekNum) {
     sessions.forEach((s, idx) => {
       const isOff = isNonTrainingType(s.type);
       const isChecked = !!(checks[d]?.[String(idx)]);
-      const mins = durationToMinutes(s.duration);
+      // Race days count as planned sessions but do not add to weekly minute totals.
+      const mins = s.type === "Race" ? 0 : durationToMinutes(s.duration);
       if (!isOff) {
         plannedSessions += 1;
         plannedMinutes += mins;
@@ -327,11 +339,13 @@ function renderWeek(plan, weekNum) {
           <span>Done</span>
         </label>`;
       const slotLabel = s.slot === "PM" ? "Session 2 · PM" : "Session 1 · AM";
+      const adaptedBadge = s._adapted ? `<span class="adapted-badge">Adapted</span>` : "";
       box.innerHTML = `
         <div class="top">
           <div class="session-title">
-            <span class="role-badge">${slotLabel}</span>
+            <span class="slot-badge">${slotLabel}</span>
             <strong>${s.type}</strong>
+            ${adaptedBadge}
           </div>
           <div class="top-right">
             ${doneToggle}
@@ -394,16 +408,23 @@ function stripIntensityText(details, mode = "easy") {
   return simplifyDetails(details, mode);
 }
 
-function convertRunForInjury(session, dayName, slot) {
-  const isShortPmRun = slot === "PM" && (dayName === "Tue" || dayName === "Sat");
-  const type = isShortPmRun ? "Mobility" : "Bike";
-  const duration = DEFAULT_DURATION[type] || session.duration || "-";
-  const baseDetails = stripIntensityText(session.details, "easy");
+function convertRunForInjury(session, dayName, slot, reducePct) {
+  const isBrickRun = slot === "PM" && (dayName === "Tue" || dayName === "Sat");
+  const type = isBrickRun ? "Mobility" : "Bike";
+  const substituteDetail = isBrickRun
+    ? "Mobility/Elliptical. Keep cadence relaxed."
+    : "Easy aerobic bike. No load.";
+  const baseMins = durationToMinutes(session.duration) || durationToMinutes(DEFAULT_DURATION[type]);
+  const duration = baseMins ? minutesToRange(baseMins, reducePct || 0.35) : (DEFAULT_DURATION[type] || session.duration || "-");
+  const baseDetails = stripIntensityText(DEFAULT_DETAILS[type] || session.details, "easy");
   return {
     ...session,
+    slot,
     type,
     duration,
-    details: `No running. Substitute easy aerobic only. ${baseDetails}`.trim()
+    details: `No running. Substitute easy aerobic only. ${substituteDetail} ${baseDetails}`.trim(),
+    _adapted: true,
+    _alreadyReduced: true
   };
 }
 
@@ -429,28 +450,38 @@ function applyRulesToWeek(week, state) {
   for (const d of DAYS) {
     w.days[d] = (w.days[d] || []).map((s) => {
       let session = { ...s };
+      let adapted = false;
 
       if (protectRun && session.type === "Run") {
-        session = convertRunForInjury(session, d, session.slot);
+        session = convertRunForInjury(session, d, session.slot, reducePct);
+        adapted = true;
       }
 
-      if (!isNonTrainingType(session.type) && reducePct && session.duration !== "-") {
-        const mins = durationToMinutes(session.duration);
-        session.duration = mins ? minutesToRange(mins, reducePct) : session.duration;
+      if (!isNonTrainingType(session.type) && reducePct && session.duration !== "-" && !session._alreadyReduced) {
+        const mins = session.type === "Race" ? 0 : durationToMinutes(session.duration);
+        if (mins) {
+          session.duration = minutesToRange(mins, reducePct);
+          adapted = true;
+        }
       }
 
       if (sick) {
-        session.details = stripIntensityText(session.details, "rest");
+        session.details = simplifyDetails(session.details, "rest");
+        adapted = true;
       } else if (protectRun && s.type === "Run") {
-        session.details = session.details || stripIntensityText(s.details, "easy");
+        session.details = simplifyDetails(session.details, "easy");
+        adapted = true;
       } else if (heavy) {
-        session.details = stripIntensityText(session.details, "easy");
+        const base = DEFAULT_DETAILS[session.type] || "";
+        session.details = simplifyDetails(base || session.details, "easy");
+        adapted = true;
       }
 
       if (session.type === "Off") {
         session.details = DEFAULT_DETAILS.Off;
       }
 
+      if (adapted) session._adapted = true;
       return session;
     });
   }
@@ -461,16 +492,17 @@ function applyRulesToWeek(week, state) {
 async function loadPlan() {
   const pageUrl = new URL(window.location.href);
   const candidates = [
-    new URL("data/plan.json", pageUrl).href,
-    `${pageUrl.origin}${pageUrl.pathname.replace(/\/[^/]*$/, "")}/data/plan.json`,
-    "data/plan.json"
+    `${new URL("data/plan.json", pageUrl).href}?t=${Date.now()}`,
+    `${pageUrl.origin}${pageUrl.pathname.replace(/\/[^/]*$/, "")}/data/plan.json?t=${Date.now()}`,
+    `data/plan.json?t=${Date.now()}`
   ];
 
   const errors = [];
+  const ts = Date.now();
 
   for (const url of candidates) {
     try {
-      const res = await fetch(url, { cache: "no-store" });
+      const res = await fetch(url.replace(/t=\d+$/, `t=${ts}`), { cache: "no-store" });
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return await res.json();
     } catch (err) {

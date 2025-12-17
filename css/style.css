@@ -57,11 +57,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
 .session { border: 1px solid var(--border-default); border-radius: var(--radius-sm); padding: 12px; margin: 12px 0; background: #F9FAFB; transition: box-shadow 100ms ease-out, border-color 100ms ease-out; }
 .session .top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
 .session-title { display: flex; align-items: center; gap: 8px; }
-.role-badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border-default); text-transform: uppercase; letter-spacing: .04em; }
-.role-badge.primary { background: #E5EDFF; color: #1D4ED8; border-color: #BFD4FF; }
-.role-badge.support { background: #F5F7FA; color: #4B5563; border-color: #D8DEE5; }
-.session.primary { border-width: 2px; background: #F1F5FF; box-shadow: var(--shadow-sm); }
-.session.support { background: #FBFCFE; opacity: 0.96; }
+.slot-badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border-default); text-transform: uppercase; letter-spacing: .04em; }
+.adapted-badge { font-size: 11px; padding: 2px 6px; border-radius: 6px; background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
 .tag { font-size: 11px; padding: 2px 7px; border-radius: var(--radius-sm); border: 1px solid var(--border-default); color: var(--text-secondary); white-space: nowrap; }
 .tag.high { border-color: var(--session-high); color: var(--session-high); }
 .tag.opt { border-color: var(--border-default); color: var(--text-secondary); background: transparent; }
@@ -110,11 +107,6 @@ hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
   border-radius: 999px;
 }
 
-.support-body { margin-top: 6px; }
-.support-body ul { margin: 6px 0 0 18px; padding: 0; }
-
-details.support summary::-webkit-details-marker { display: none; }
-
 /* =========================
    Soft Pastel Contrast Theme
    ========================= */
@@ -138,10 +130,6 @@ details.support summary::-webkit-details-marker { display: none; }
   --session-high: #AEC6CF;   /* Soft pastel blue accent */
   --session-medium: #7FA3B4; /* Coordinated pastel medium tone */
   --tag-optional: #777777;   /* Soft gray for optional */
-
-  /* Optional support session (pastel) */
-  --support-bg: #EBF6EB;     /* Light green pastel */
-  --support-border: #C5DCC5; /* Slightly stronger pastel border */
 
   /* Recommended / not ideal indicators */
   --tag-recommended: #4CAF50; /* Strong green */
@@ -192,25 +180,6 @@ body {
   background: transparent;
 }
 
-/* Optional support block */
-details.support {
-  background: var(--support-bg);
-  border: 1px dashed var(--support-border);
-  border-radius: var(--radius-sm);
-  padding: 7px 8px;
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-details.support summary {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-  font-weight: 500;
-}
 
 @media (hover: hover) {
   .day:hover {
@@ -225,10 +194,6 @@ details.support summary {
     filter: brightness(0.97);
   }
 }
-details.support summary strong {
-  color: var(--text);
-}
-
 .tag.recommended {
   background: var(--accent);
   color: #fff;
