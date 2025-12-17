@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tri Plan – Koorey Philosophy</title>
+  <title>Tri Plan</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="wrap">
-    <h1>On-Ramp Plan → March 70.3</h1>
+    <h1>March 70.3</h1>
     <p class="muted" id="meta"></p>
     <nav class="nav">
       <a href="index.html" class="active">Training Plan</a>
@@ -34,7 +34,7 @@
       <h2>How are you feeling?</h2>
 
       <div class="field">
-        <label>Fatigue</label>
+        <label for="fatigue">Fatigue</label>
         <select id="fatigue">
           <option value="low">Low</option>
           <option value="moderate" selected>Moderate</option>
@@ -43,7 +43,7 @@
       </div>
 
       <div class="field">
-        <label>Sleep</label>
+        <label for="sleep">Sleep</label>
         <select id="sleep">
           <option value="good">Good</option>
           <option value="ok" selected>OK</option>
@@ -52,7 +52,7 @@
       </div>
 
       <div class="field">
-        <label>Soreness</label>
+        <label for="soreness">Soreness</label>
         <input id="soreness" placeholder="e.g. calf, hip flexor" />
       </div>
 
@@ -68,6 +68,17 @@
       <div id="missedList"></div>
 
       <button id="adaptWeek" class="primary">Adapt this week</button>
+
+      <hr />
+
+      <div class="row">
+        <button id="resetState" class="danger">Reset adaptations</button>
+        <button id="exportState">Export state</button>
+        <label class="file">
+          <span>Import state</span>
+          <input id="importState" type="file" accept="application/json" />
+        </label>
+      </div>
       <div class="note" id="coachNote"></div>
     </aside>
   </main>
