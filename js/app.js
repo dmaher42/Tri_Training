@@ -309,6 +309,27 @@ function renderWeek(plan, weekNum) {
 
   grid.innerHTML = "";
 
+  // Track strength guidance within the week to avoid stacking it every day
+  const recommendedStrengthDays = new Set();
+  const strengthScores = {};
+  let strengthCount = 0;
+
+  const scoreDayForStrength = (sessions) => sessions.reduce((acc, s) => {
+    if (s.type === "Off") return acc + 2;
+    if (s.role === ROLE_SUPPORT) return acc + 1;
+    if (s.priority === "high") return acc - 2;
+    if (s.priority === "medium") return acc - 1;
+    return acc;
+  }, 0);
+
+  for (const d of DAYS) {
+    const sessions = w.days[d] || [];
+    strengthScores[d] = scoreDayForStrength(sessions);
+  }
+
+  const sortedStrengthDays = [...DAYS].sort((a, b) => strengthScores[b] - strengthScores[a]);
+  sortedStrengthDays.slice(0, 2).forEach(d => recommendedStrengthDays.add(d));
+
   for (const d of DAYS) {
     const day = document.createElement("div");
     day.className = "day";
@@ -371,10 +392,11 @@ function renderWeek(plan, weekNum) {
     // Always allowed
     options.push("Mobility reset 10–15 min");
 
+    const isRecommendedStrengthDay = recommendedStrengthDays.has(d);
     const strengthScore = strengthScores[d] ?? 0;
     let strengthLabel = "Strength foundation 15–25 min (recommended)";
 
-    if (recommendedStrengthDays.has(d)) {
+    if (isRecommendedStrengthDay) {
       strengthLabel = "✅ Strength foundation 15–25 min (best day)";
     } else if (strengthScore <= -2) {
       strengthLabel = "⚠️ Strength (not ideal today — keep it very light or skip)";
@@ -389,7 +411,9 @@ function renderWeek(plan, weekNum) {
     }
 
     options.push(strengthLabel);
-    strengthCount++;
+    if (isRecommendedStrengthDay && strengthCount < 3) {
+      strengthCount++;
+    }
 
     const support = document.createElement("div");
     support.className = "support";
