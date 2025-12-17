@@ -75,6 +75,22 @@ hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
   background: #F2F3F5;
 }
 
+.session[data-type="Swim"] {
+  border-left: 5px solid blue;
+}
+
+.session[data-type="Bike"] {
+  border-left: 5px solid orange;
+}
+
+.session[data-type="Run"] {
+  border-left: 5px solid green;
+}
+
+.session[data-type="Mobility"] {
+  border-left: 5px solid purple;
+}
+
 .session[data-type="Off"] {
   opacity: 0.65;
   background: #F7F7F7;
