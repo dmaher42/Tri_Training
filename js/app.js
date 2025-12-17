@@ -267,6 +267,12 @@ function renderWeeklyProgressCard(w, weekNum) {
   }
 
   const { plannedSessions, completedSessions, plannedMinutes, completedMinutes } = computeWeeklyTotals(w, weekNum);
+  const completionPct = plannedSessions ? Math.round((completedSessions / plannedSessions) * 100) : 0;
+  const barMarkup = plannedSessions ? `
+    <div class="weekly-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${completionPct}">
+      <div class="weekly-progress__barFill" style="width: ${completionPct}%"></div>
+    </div>
+  ` : "";
 
   summaryBox.innerHTML = `
   <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
@@ -274,7 +280,9 @@ function renderWeeklyProgressCard(w, weekNum) {
   <div class="weekly-progress__grid">
     <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
     <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
+    <div><div class="k">Completion</div><div class="v">${completionPct}%</div></div>
   </div>
+  ${barMarkup}
   `;
 }
 
@@ -293,6 +301,17 @@ function ensureRoutineNote(summary) {
   routineNote.textContent = "Each day includes two planned sessions (AM and PM). Load is defined by the session description. If a session would compromise the next day, keep it easier.";
   if (summary.parentNode && routineNote.parentNode !== summary.parentNode) {
     summary.insertAdjacentElement("afterend", routineNote);
+  }
+}
+
+function updateDayProgress(dayEl) {
+  if (!dayEl) return;
+  const sessions = Array.from(dayEl.querySelectorAll('.session:not([data-type="Off"])'));
+  const total = sessions.length;
+  const done = sessions.filter((s) => s.classList.contains('done')).length;
+  const progressEl = dayEl.querySelector('.day__progress');
+  if (progressEl) {
+    progressEl.textContent = total ? `Done: ${done} / ${total}` : 'Done: 0 / 0';
   }
 }
 
@@ -323,7 +342,11 @@ function renderWeek(plan, weekNum) {
   for (const d of DAYS) {
     const day = document.createElement("div");
     day.className = "day";
-    day.innerHTML = `<h4>${d}</h4>`;
+    day.innerHTML = `
+      <div class="day__header">
+        <h4>${d}</h4>
+        <div class="day__progress" aria-live="polite"></div>
+      </div>`;
     const sessions = (w.days[d] || []).slice().sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot));
 
     sessions.forEach((s, idx) => {
@@ -344,18 +367,20 @@ function renderWeek(plan, weekNum) {
         <div class="top">
           <div class="session-title">
             <span class="slot-badge">${slotLabel}</span>
-            <strong>${s.type}</strong>
+            <strong class="session-type">${s.type}</strong>
             ${adaptedBadge}
           </div>
           <div class="top-right">
             ${doneToggle}
           </div>
         </div>
-        <div class="muted">${s.duration}</div>
-        <p>${s.details || ""}</p>
+        <div class="session-duration muted">${s.duration}</div>
+        <p class="session-details">${s.details || ""}</p>
       `;
       day.appendChild(box);
     });
+
+    updateDayProgress(day);
 
     grid.appendChild(day);
   }
@@ -374,6 +399,7 @@ function renderWeek(plan, weekNum) {
       const card = target.closest('.session');
       if (card) {
         card.classList.toggle('done', target.checked);
+        updateDayProgress(card.closest('.day'));
       }
       updateWeeklyProgressForSelectedWeek(basePlanGlobal);
     });
