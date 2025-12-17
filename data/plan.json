@@ -6,117 +6,1231 @@
     {
       "week": 1,
       "phase": "Reconditioning",
-      "hoursTarget": "7–8h",
+      "hoursTarget": "7\u20138h",
       "notes": [
-        "Ease into frequency with calm pacing.",
-        "Cadence stays smooth; everything finishes with fuel in reserve."
+        "Keep everything easy. Build frequency and tolerance.",
+        "No NMS (40\u201350rpm). Cadence strength stays >=65rpm."
       ],
       "days": {
         "Mon": [
-          { "slot": "AM", "type": "Swim", "duration": "30–35m", "details": "Technique focus. Drills and relaxed aerobic." },
-          { "slot": "PM", "type": "Mobility", "duration": "15–20m", "details": "Easy reset for hips and shoulders." }
+          {
+            "type": "Swim",
+            "duration": "30\u201340m",
+            "priority": "medium",
+            "details": "Easy technique + feel (drills, relaxed aerobic)."
+          }
         ],
         "Tue": [
-          { "slot": "AM", "type": "Bike", "duration": "60–70m", "details": "Aerobic spin with light cadence changes." },
-          { "slot": "PM", "type": "Run", "duration": "25–30m", "details": "Easy jog. Add 3–4 relaxed strides if smooth." }
+          {
+            "type": "Bike",
+            "duration": "60\u201375m",
+            "priority": "high",
+            "details": "Aerobic + 4\u00d75m @ 65\u201370rpm (easy effort). 2\u20133m easy between."
+          }
         ],
         "Wed": [
-          { "slot": "AM", "type": "Run", "duration": "35–40m", "details": "Flat, easy. Keep breathing calm." },
-          { "slot": "PM", "type": "Mobility", "duration": "20m", "details": "Stretch and foam roll. No strain." }
+          {
+            "type": "Run",
+            "duration": "30\u201340m",
+            "priority": "high",
+            "details": "Easy, flat. Finish feeling like you could do more."
+          }
         ],
         "Thu": [
-          { "slot": "AM", "type": "Swim", "duration": "40–45m", "details": "8×100 easy/steady with short rest." },
-          { "slot": "PM", "type": "Bike", "duration": "45–50m", "details": "Easy spin. Keep cadence light and smooth." }
+          {
+            "type": "Swim",
+            "duration": "40\u201350m",
+            "priority": "medium",
+            "details": "Aerobic intervals (e.g., 12\u00d7100 easy/mod, short rest)."
+          },
+          {
+            "type": "Bike",
+            "duration": "45\u201360m",
+            "priority": "low",
+            "details": "Easy spin, high cadence.",
+            "optional": true
+          }
         ],
         "Fri": [
-          { "slot": "AM", "type": "Mobility", "duration": "20m", "details": "Gentle reset. Focus on breathing." },
-          { "slot": "PM", "type": "Off", "duration": "-", "details": "Rest." }
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
         ],
         "Sat": [
-          { "slot": "AM", "type": "Bike", "duration": "80–95m", "details": "Long easy endurance. Last 10m steady but calm." },
-          { "slot": "PM", "type": "Run", "duration": "20m", "details": "Brick jog easy. Keep strides short." }
+          {
+            "type": "Bike",
+            "duration": "75\u201390m",
+            "priority": "high",
+            "details": "Long easy endurance. Last 10m steady but controlled."
+          }
         ],
         "Sun": [
-          { "slot": "AM", "type": "Run", "duration": "45–55m", "details": "Easy endurance. Flat route." },
-          { "slot": "PM", "type": "Swim", "duration": "25–30m", "details": "Easy float. Relaxed strokes." }
+          {
+            "type": "Run",
+            "duration": "40\u201350m",
+            "priority": "medium",
+            "details": "Easy endurance. If niggles: swap to elliptical."
+          }
         ]
       }
     },
     {
       "week": 2,
       "phase": "Reconditioning",
-      "hoursTarget": "8–9h",
+      "hoursTarget": "8\u20139h",
       "notes": [
-        "Slight bump in volume while keeping pace gentle.",
-        "Brick stays short; cadence strength remains smooth."
+        "Slightly extend long ride. Keep run easy.",
+        "If fatigue rises: cut duration 20\u201330%, keep frequency."
       ],
       "days": {
         "Mon": [
-          { "slot": "AM", "type": "Swim", "duration": "35–40m", "details": "Technique and light pull work." },
-          { "slot": "PM", "type": "Mobility", "duration": "20m", "details": "Easy stretch and breathwork." }
+          {
+            "type": "Swim",
+            "duration": "35\u201345m",
+            "priority": "medium",
+            "details": "Easy + 8\u00d750 smooth build (not hard)."
+          }
         ],
         "Tue": [
-          { "slot": "AM", "type": "Bike", "duration": "70–80m", "details": "Aerobic ride. Include a few low-cadence drifts without strain." },
-          { "slot": "PM", "type": "Run", "duration": "30–35m", "details": "Easy jog; 4 relaxed strides if feeling good." }
+          {
+            "type": "Bike",
+            "duration": "70\u201380m",
+            "priority": "high",
+            "details": "Aerobic + 5\u00d75m @ 65\u201370rpm (easy effort)."
+          }
         ],
         "Wed": [
-          { "slot": "AM", "type": "Run", "duration": "40–45m", "details": "Easy with 10m steady in the middle." },
-          { "slot": "PM", "type": "Mobility", "duration": "20m", "details": "Foam roll calves and hips." }
+          {
+            "type": "Run",
+            "duration": "35\u201345m",
+            "priority": "high",
+            "details": "Easy, flat. Add 4\u00d720s relaxed strides if feeling good."
+          }
         ],
         "Thu": [
-          { "slot": "AM", "type": "Swim", "duration": "45–50m", "details": "10×100 smooth steady, short rest." },
-          { "slot": "PM", "type": "Bike", "duration": "50–55m", "details": "Easy spin; keep cadence lively." }
+          {
+            "type": "Swim",
+            "duration": "40\u201355m",
+            "priority": "medium",
+            "details": "Aerobic set (e.g., 6\u00d7200 easy/mod)."
+          },
+          {
+            "type": "Bike",
+            "duration": "45\u201360m",
+            "priority": "low",
+            "details": "Easy spin.",
+            "optional": true
+          }
         ],
         "Fri": [
-          { "slot": "AM", "type": "Mobility", "duration": "20m", "details": "Gentle reset. Include ankle work." },
-          { "slot": "PM", "type": "Off", "duration": "-", "details": "Rest." }
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
         ],
         "Sat": [
-          { "slot": "AM", "type": "Bike", "duration": "95–110m", "details": "Long easy endurance. Finish controlled steady." },
-          { "slot": "PM", "type": "Run", "duration": "20–25m", "details": "Brick jog easy, relaxed cadence." }
+          {
+            "type": "Bike",
+            "duration": "90\u2013105m",
+            "priority": "high",
+            "details": "Long easy endurance. Last 15m steady."
+          }
         ],
         "Sun": [
-          { "slot": "AM", "type": "Run", "duration": "50–60m", "details": "Easy endurance. Conversational pace." },
-          { "slot": "PM", "type": "Swim", "duration": "30–35m", "details": "Easy float or pull buoy." }
+          {
+            "type": "Run",
+            "duration": "45\u201355m",
+            "priority": "medium",
+            "details": "Easy endurance. Swap to elliptical if any niggle."
+          }
         ]
       }
     },
     {
       "week": 3,
       "phase": "Transition to Build",
-      "hoursTarget": "9–10h",
+      "hoursTarget": "9\u201310h",
       "notes": [
-        "Gentle step toward structured work while keeping restraint.",
-        "Steady portions appear but stay controlled."
+        "Introduce gentle brick. Still no true NMS grinding.",
+        "One steady run (still controlled)."
       ],
       "days": {
         "Mon": [
-          { "slot": "AM", "type": "Swim", "duration": "40–50m", "details": "Pull + aerobic mix. Relaxed strokes." },
-          { "slot": "PM", "type": "Mobility", "duration": "20m", "details": "Shoulders and hips reset." }
+          {
+            "type": "Swim",
+            "duration": "40\u201350m",
+            "priority": "medium",
+            "details": "Easy + pull buoy aerobic work."
+          }
         ],
         "Tue": [
-          { "slot": "AM", "type": "Bike", "duration": "80–90m", "details": "4×6m steady low-cadence with easy recoveries." },
-          { "slot": "PM", "type": "Run", "duration": "30–35m", "details": "Easy jog. Keep strides light." }
+          {
+            "type": "Bike",
+            "duration": "75\u201390m",
+            "priority": "high",
+            "details": "SE intro: 4\u00d76m @ 60\u201365rpm (MED effort). 3m easy between."
+          }
         ],
         "Wed": [
-          { "slot": "AM", "type": "Run", "duration": "45–50m", "details": "Easy with 12–15m steady." },
-          { "slot": "PM", "type": "Mobility", "duration": "20m", "details": "Glute activation and stretching." }
+          {
+            "type": "Run",
+            "duration": "40\u201350m",
+            "priority": "high",
+            "details": "Easy with 15m steady (not hard)."
+          }
         ],
         "Thu": [
-          { "slot": "AM", "type": "Swim", "duration": "50–55m", "details": "12×100 steady rhythm, short rest." },
-          { "slot": "PM", "type": "Bike", "duration": "50–60m", "details": "Easy spin. High cadence focus." }
+          {
+            "type": "Swim",
+            "duration": "45\u201360m",
+            "priority": "medium",
+            "details": "PACE feel: 12\u00d7100 steady, short rest."
+          }
         ],
         "Fri": [
-          { "slot": "AM", "type": "Mobility", "duration": "20m", "details": "Gentle full-body reset." },
-          { "slot": "PM", "type": "Off", "duration": "-", "details": "Rest." }
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
         ],
         "Sat": [
-          { "slot": "AM", "type": "Bike", "duration": "105–120m", "details": "Long endurance. Final 20m steady but smooth." },
-          { "slot": "PM", "type": "Run", "duration": "20–25m", "details": "Brick jog relaxed." }
+          {
+            "type": "Bike",
+            "duration": "105\u2013120m",
+            "priority": "high",
+            "details": "Long easy + last 20m steady."
+          },
+          {
+            "type": "Run",
+            "duration": "10\u201315m",
+            "priority": "medium",
+            "details": "Brick jog easy (pure transition)."
+          }
         ],
         "Sun": [
-          { "slot": "AM", "type": "Run", "duration": "55–65m", "details": "Easy endurance. Keep form tall." },
-          { "slot": "PM", "type": "Swim", "duration": "30–35m", "details": "Easy float or snorkel work." }
+          {
+            "type": "Run",
+            "duration": "55\u201365m",
+            "priority": "medium",
+            "details": "Easy endurance. Keep it boring."
+          }
+        ]
+      }
+    },
+    {
+      "week": 4,
+      "phase": "Transition to Build",
+      "hoursTarget": "10\u201311h",
+      "notes": [
+        "Start looking like the Koorey plan: long bike + SE + swim pace.",
+        "Run remains protected."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "45\u201355m",
+            "priority": "medium",
+            "details": "Easy + 16\u00d750 build smooth."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "80\u201395m",
+            "priority": "high",
+            "details": "SE: 5\u00d76m @ 60\u201365rpm (MED). 3m easy."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "45\u201355m",
+            "priority": "high",
+            "details": "Easy with 2\u00d78m steady (70.3 feel but controlled)."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "50\u201365m",
+            "priority": "high",
+            "details": "PACE: 10\u201314\u00d7100 at strong steady, short rest."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Bike",
+            "duration": "45\u201360m",
+            "priority": "low",
+            "details": "Easy spin OR off if fatigue is rising.",
+            "optional": true
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "2:00\u20132:20",
+            "priority": "high",
+            "details": "Long easy + last 25m steady."
+          },
+          {
+            "type": "Run",
+            "duration": "15\u201320m",
+            "priority": "medium",
+            "details": "Brick jog easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "65\u201375m",
+            "priority": "medium",
+            "details": "Easy endurance. If sore: elliptical 45\u201360m."
+          }
+        ]
+      }
+    },
+    {
+      "week": 5,
+      "phase": "Build",
+      "hoursTarget": "10\u201311h",
+      "notes": [
+        "Introduce more structured bike SE and controlled race-pace feel.",
+        "Runs remain protected and easy with a steady midweek run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "50\u201360m",
+            "priority": "medium",
+            "details": "Aerobic with short moderate efforts (e.g., 6\u00d7200 steady)."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "80\u2013100m",
+            "priority": "high",
+            "details": "SE: 5\u00d76m @ 60\u201365rpm (steady). 3m easy between."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "50\u201360m",
+            "priority": "high",
+            "details": "Steady run; controlled pace, no sharp efforts."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "50\u201365m",
+            "priority": "high",
+            "details": "Race-pace feel: 10\u00d7100 steady, short rest."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "2:00\u20132:30",
+            "priority": "high",
+            "details": "Long ride easy; last 20m steady."
+          },
+          {
+            "type": "Run",
+            "duration": "15\u201320m",
+            "priority": "medium",
+            "details": "Brick jog easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "60\u201370m",
+            "priority": "medium",
+            "details": "Easy endurance; keep pace conversational."
+          }
+        ]
+      }
+    },
+    {
+      "week": 6,
+      "phase": "Build",
+      "hoursTarget": "11\u201312h",
+      "notes": [
+        "Increase long bike slightly; maintain SE session and swim pace work.",
+        "Run remains controlled with a short midweek longer run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "50\u201370m",
+            "priority": "medium",
+            "details": "Aerobic focus with technique emphasis."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "90\u2013105m",
+            "priority": "high",
+            "details": "SE: 6\u00d76m @ 60\u201365rpm (steady). 3m easy between."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "55\u201365m",
+            "priority": "high",
+            "details": "Steady run with last 10m controlled at moderate effort."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "55\u201370m",
+            "priority": "high",
+            "details": "Pace session: 12\u00d7100 at strong, steady pace."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "2:30\u20132:40",
+            "priority": "high",
+            "details": "Long ride easy; last 25m steady."
+          },
+          {
+            "type": "Run",
+            "duration": "20m",
+            "priority": "medium",
+            "details": "Brick jog easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "65\u201375m",
+            "priority": "medium",
+            "details": "Easy endurance; flat route."
+          }
+        ]
+      }
+    },
+    {
+      "week": 7,
+      "phase": "Build",
+      "hoursTarget": "12\u201313h",
+      "notes": [
+        "Continue building durability with a stronger long bike and controlled SE work.",
+        "Runs remain consistent and steady."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "55\u201370m",
+            "priority": "medium",
+            "details": "Aerobic with moderate pickups (e.g., 8\u00d7100)."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "100\u2013115m",
+            "priority": "high",
+            "details": "SE: 6\u00d77m @ 60\u201365rpm (steady). 3m easy between."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "60\u201370m",
+            "priority": "high",
+            "details": "Steady; moderate pace with controlled finish."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "60\u201375m",
+            "priority": "high",
+            "details": "Pace work: 10\u00d7150m steady."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "2:45\u20133:00",
+            "priority": "high",
+            "details": "Long ride easy; last 30m steady."
+          },
+          {
+            "type": "Run",
+            "duration": "20\u201325m",
+            "priority": "medium",
+            "details": "Brick jog easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "70\u201380m",
+            "priority": "medium",
+            "details": "Easy endurance; flat route."
+          }
+        ]
+      }
+    },
+    {
+      "week": 8,
+      "phase": "Build",
+      "hoursTarget": "12\u201313h",
+      "notes": [
+        "Last full build week before peak. Keep intensity controlled and focus on strength-endurance.",
+        "Maintain run consistency and finish strong."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "55\u201375m",
+            "priority": "medium",
+            "details": "Aerobic + moderate continuous work."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "105\u2013120m",
+            "priority": "high",
+            "details": "SE: 7\u00d76m @ 60\u201365rpm (steady). 3m easy."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "60\u201375m",
+            "priority": "high",
+            "details": "Steady with a few moderate pickups (not hard)."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "60\u201375m",
+            "priority": "high",
+            "details": "Pace work: 12\u00d7100 steady."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "3:00\u20133:15",
+            "priority": "high",
+            "details": "Long ride easy; last 30m steady."
+          },
+          {
+            "type": "Run",
+            "duration": "25m",
+            "priority": "medium",
+            "details": "Brick jog easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "75\u201385m",
+            "priority": "medium",
+            "details": "Easy endurance; keep steady."
+          }
+        ]
+      }
+    },
+    {
+      "week": 9,
+      "phase": "Peak",
+      "hoursTarget": "12\u201313h",
+      "notes": [
+        "Start peak phase: lower volumes slightly but maintain specificity.",
+        "Introduce race-pace focus midweek."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "55\u201375m",
+            "priority": "medium",
+            "details": "Race-pace feel: moderate continuous work."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "90\u2013110m",
+            "priority": "high",
+            "details": "Steady with 2\u00d710m @ race-like effort (controlled)."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "60\u201375m",
+            "priority": "high",
+            "details": "Moderate run; last 10m at controlled race feel."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "60\u201375m",
+            "priority": "high",
+            "details": "Pace set: 10\u00d7150 steady."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "3:00\u20133:15",
+            "priority": "high",
+            "details": "Long ride; include 25\u201335m at controlled race pace."
+          },
+          {
+            "type": "Run",
+            "duration": "25\u201330m",
+            "priority": "medium",
+            "details": "Brick easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "75\u201385m",
+            "priority": "medium",
+            "details": "Easy endurance."
+          }
+        ]
+      }
+    },
+    {
+      "week": 10,
+      "phase": "Peak",
+      "hoursTarget": "13\u201314h",
+      "notes": [
+        "Final full week before taper. Introduce controlled race efforts.",
+        "Maintain endurance with race specificity."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "60\u201380m",
+            "priority": "medium",
+            "details": "Pace/jump sets moderate (e.g., 10\u00d7100)."
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "100\u2013120m",
+            "priority": "high",
+            "details": "Steady ride; 2\u00d710\u201315m @ controlled race pace."
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "65\u201380m",
+            "priority": "high",
+            "details": "Race-pace feel mid-run (controlled)."
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "60\u201380m",
+            "priority": "high",
+            "details": "Race-pace sets (e.g., 12\u00d7100 steady)."
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "Rest or mobility."
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "3:15\u20133:30",
+            "priority": "high",
+            "details": "Long ride with extended race-pace like blocks."
+          },
+          {
+            "type": "Run",
+            "duration": "30m",
+            "priority": "medium",
+            "details": "Brick easy."
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "80\u201390m",
+            "priority": "medium",
+            "details": "Easy endurance."
+          }
+        ]
+      }
+    },
+    {
+      "week": 11,
+      "phase": "Taper",
+      "hoursTarget": "11\u201312h",
+      "notes": [
+        "Beginning taper: reduce volume, keep contact with race pace lightly.",
+        "Focus on freshness and controlled efforts."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "50\u201360m",
+            "priority": "medium",
+            "details": "Easy aerobic + relaxed technique.",
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "20\u201330m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Easy tissue prep and core only.",
+            "role": "support"
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "85\u2013100m",
+            "priority": "high",
+            "details": "SE / aerobic strength: controlled low-cadence efforts, no strain.",
+            "role": "primary"
+          },
+          {
+            "type": "Swim",
+            "duration": "20\u201335m",
+            "priority": "low",
+            "details": "Support \u2013 easy swim or 30\u201335m very easy spin to stay loose.",
+            "role": "support"
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "55\u201365m",
+            "priority": "high",
+            "details": "Easy\u2013steady endurance; relaxed cadence.",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility / Easy Spin",
+            "duration": "30\u201335m",
+            "priority": "low",
+            "details": "Support \u2013 mobility emphasis or easy spin only.",
+            "role": "support"
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "55\u201365m",
+            "priority": "medium",
+            "details": "Aerobic + controlled pace feels (no hard sets).",
+            "role": "primary"
+          },
+          {
+            "type": "Bike",
+            "duration": "30\u201340m",
+            "priority": "low",
+            "details": "Support \u2013 easy bike, high cadence, purely aerobic.",
+            "role": "support"
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Swim",
+            "duration": "30\u201340m",
+            "priority": "medium",
+            "details": "Primary easy swim or OFF if tired.",
+            "optional": true,
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "20\u201325m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Keep gentle and joint-friendly.",
+            "role": "support"
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "2:20\u20132:40",
+            "priority": "high",
+            "details": "Long ride easy; finish steady but controlled.",
+            "role": "primary"
+          },
+          {
+            "type": "Run",
+            "duration": "15\u201320m",
+            "priority": "low",
+            "details": "Support \u2013 Brick run very easy, relaxed strides only.",
+            "role": "support"
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "60\u201370m",
+            "priority": "medium",
+            "details": "Easy endurance (not a long run).",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility",
+            "duration": "10\u201315m",
+            "priority": "low",
+            "details": "Support \u2013 light mobility or OFF.",
+            "optional": true,
+            "role": "support"
+          }
+        ]
+      }
+    },
+    {
+      "week": 12,
+      "phase": "Taper",
+      "hoursTarget": "9\u201310h",
+      "notes": [
+        "Reduce overall volume further; keep intensity brief and sharp.",
+        "Race proximity should feel easier physically."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "45\u201355m",
+            "priority": "medium",
+            "details": "Easy aerobic with light drills.",
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "20\u201325m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Keep it restorative.",
+            "role": "support"
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "65\u201380m",
+            "priority": "high",
+            "details": "SE / aerobic strength with short controlled efforts.",
+            "role": "primary"
+          },
+          {
+            "type": "Swim",
+            "duration": "20\u201330m",
+            "priority": "low",
+            "details": "Support \u2013 easy swim or 30\u201335m gentle spin only.",
+            "role": "support"
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "50\u201360m",
+            "priority": "high",
+            "details": "Easy\u2013steady endurance; no strides needed.",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility / Easy Spin",
+            "duration": "30\u201335m",
+            "priority": "low",
+            "details": "Support \u2013 mobility or easy spin to aid recovery.",
+            "role": "support"
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "45\u201355m",
+            "priority": "medium",
+            "details": "Aerobic + controlled pace touches.",
+            "role": "primary"
+          },
+          {
+            "type": "Bike",
+            "duration": "30\u201340m",
+            "priority": "low",
+            "details": "Support \u2013 easy bike, high cadence, no load.",
+            "role": "support"
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Swim",
+            "duration": "30\u201340m",
+            "priority": "medium",
+            "details": "Primary easy swim or OFF if freshness is low.",
+            "optional": true,
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "20\u201325m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Focus on mobility, not load.",
+            "role": "support"
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "1:50\u20132:10",
+            "priority": "high",
+            "details": "Long easy; short steady finish only.",
+            "role": "primary"
+          },
+          {
+            "type": "Run",
+            "duration": "15\u201320m",
+            "priority": "low",
+            "details": "Support \u2013 Brick run very easy, relaxed cadence.",
+            "role": "support"
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "55\u201365m",
+            "priority": "medium",
+            "details": "Easy endurance (keep it smooth).",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility",
+            "duration": "10\u201315m",
+            "priority": "low",
+            "details": "Support \u2013 light mobility or OFF.",
+            "optional": true,
+            "role": "support"
+          }
+        ]
+      }
+    },
+    {
+      "week": 13,
+      "phase": "Race Taper",
+      "hoursTarget": "7\u20138h",
+      "notes": [
+        "Final taper week \u2014 reduce volume, keep rhythm.",
+        "Nothing new."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "40\u201350m",
+            "priority": "medium",
+            "details": "Easy aerobic with a couple of pace touches.",
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "20\u201325m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Gentle activation only.",
+            "role": "support"
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "55\u201370m",
+            "priority": "high",
+            "details": "Easy with 2\u20133 \u00d7 short race-pace spins, full recovery.",
+            "role": "primary"
+          },
+          {
+            "type": "Swim",
+            "duration": "20\u201330m",
+            "priority": "low",
+            "details": "Support \u2013 easy swim or 30m soft spin to stay loose.",
+            "role": "support"
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "45\u201355m",
+            "priority": "high",
+            "details": "Easy\u2013steady with 2\u20133 short strides only if fresh.",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility / Easy Spin",
+            "duration": "25\u201335m",
+            "priority": "low",
+            "details": "Support \u2013 mobility or very easy spin, no load.",
+            "role": "support"
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "35\u201345m",
+            "priority": "medium",
+            "details": "Easy feel; a few controlled pace 50s.",
+            "role": "primary"
+          },
+          {
+            "type": "Bike",
+            "duration": "25\u201335m",
+            "priority": "low",
+            "details": "Support \u2013 easy bike, high cadence, keep heart rate low.",
+            "role": "support"
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "OFF or 20\u201325m easy swim only if you need to loosen up.",
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "15\u201320m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Keep it light, mostly mobility.",
+            "role": "support"
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "1:20\u20131:35",
+            "priority": "medium",
+            "details": "Easy ride with a few 30\u201345s steady pickups; finish relaxed.",
+            "role": "primary"
+          },
+          {
+            "type": "Run",
+            "duration": "10\u201315m",
+            "priority": "low",
+            "details": "Support \u2013 Brick shuffle, very easy cadence only.",
+            "role": "support"
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Run",
+            "duration": "45\u201355m",
+            "priority": "medium",
+            "details": "Easy endurance with gentle form focus.",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility",
+            "duration": "10\u201315m",
+            "priority": "low",
+            "details": "Support \u2013 OFF or light mobility only.",
+            "optional": true,
+            "role": "support"
+          }
+        ]
+      }
+    },
+    {
+      "week": 14,
+      "phase": "Race Week",
+      "hoursTarget": "5\u20136h",
+      "notes": [
+        "Race week: very low volume, sharp feels only.",
+        "Rest and nutrition are priorities."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "type": "Swim",
+            "duration": "25\u201335m",
+            "priority": "medium",
+            "details": "Easy feel; relaxed strokes only.",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility",
+            "duration": "15\u201320m",
+            "priority": "low",
+            "details": "Support \u2013 light mobility to stay loose.",
+            "role": "support"
+          }
+        ],
+        "Tue": [
+          {
+            "type": "Bike",
+            "duration": "35\u201350m",
+            "priority": "medium",
+            "details": "Easy spin with 3\u20134 brief pickups; all controlled.",
+            "role": "primary"
+          },
+          {
+            "type": "Swim",
+            "duration": "20\u201325m",
+            "priority": "low",
+            "details": "Support \u2013 easy swim or short easy spin only.",
+            "role": "support"
+          }
+        ],
+        "Wed": [
+          {
+            "type": "Run",
+            "duration": "25\u201335m",
+            "priority": "medium",
+            "details": "Easy run with 2\u20133 short strides if feeling great.",
+            "role": "primary"
+          },
+          {
+            "type": "Mobility / Easy Spin",
+            "duration": "20\u201325m",
+            "priority": "low",
+            "details": "Support \u2013 mobility or leg-loosener spin; no load.",
+            "role": "support"
+          }
+        ],
+        "Thu": [
+          {
+            "type": "Swim",
+            "duration": "25\u201335m",
+            "priority": "medium",
+            "details": "Easy drill work; keep strokes long.",
+            "role": "primary"
+          },
+          {
+            "type": "Bike",
+            "duration": "20\u201330m",
+            "priority": "low",
+            "details": "Support \u2013 easy bike, a few high-cadence spins only.",
+            "role": "support"
+          }
+        ],
+        "Fri": [
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "medium",
+            "details": "OFF or 20\u201325m easy swim only if you need to loosen up.",
+            "role": "primary"
+          },
+          {
+            "type": "Strength & Mobility",
+            "duration": "15\u201320m",
+            "priority": "low",
+            "details": "Support \u2013 Strength & Mobility. Gentle movement, no load.",
+            "role": "support"
+          }
+        ],
+        "Sat": [
+          {
+            "type": "Bike",
+            "duration": "20\u201330m",
+            "priority": "medium",
+            "details": "Short spin to stay loose; include 2\u20133 30s steady pickups.",
+            "role": "primary"
+          },
+          {
+            "type": "Run",
+            "duration": "10\u201315m",
+            "priority": "low",
+            "details": "Support \u2013 very easy jog, no effort. Keep strides relaxed.",
+            "role": "support"
+          }
+        ],
+        "Sun": [
+          {
+            "type": "Race",
+            "duration": "70.3 Race Day!",
+            "priority": "high",
+            "details": "Go execute your training!",
+            "role": "primary"
+          },
+          {
+            "type": "Off",
+            "duration": "-",
+            "priority": "low",
+            "details": "Support \u2013 light mobility only after race if needed.",
+            "optional": true,
+            "role": "support"
+          }
         ]
       }
     }
