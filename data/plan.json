@@ -1155,7 +1155,7 @@
             "slot": "PM",
             "type": "Bike",
             "duration": "30\u201340m",
-            "details": "Support \u2013 easy bike, high cadence, purely aerobic."
+            "details": "easy bike, high cadence, purely aerobic."
           }
         ],
         "Fri": [
@@ -1183,7 +1183,7 @@
             "slot": "PM",
             "type": "Run",
             "duration": "15\u201320m",
-            "details": "Support \u2013 Brick run very easy, relaxed strides only."
+            "details": "Brick run very easy, relaxed strides only."
           }
         ],
         "Sun": [
@@ -1264,7 +1264,7 @@
             "slot": "PM",
             "type": "Bike",
             "duration": "30\u201340m",
-            "details": "Support \u2013 easy bike, high cadence, no load."
+            "details": "easy bike, high cadence, no load."
           }
         ],
         "Fri": [
@@ -1292,7 +1292,7 @@
             "slot": "PM",
             "type": "Run",
             "duration": "15\u201320m",
-            "details": "Support \u2013 Brick run very easy, relaxed cadence."
+            "details": "Brick run very easy, relaxed cadence."
           }
         ],
         "Sun": [
@@ -1373,7 +1373,7 @@
             "slot": "PM",
             "type": "Bike",
             "duration": "25\u201335m",
-            "details": "Support \u2013 easy bike, high cadence, keep heart rate low."
+            "details": "easy bike, high cadence, keep heart rate low."
           }
         ],
         "Fri": [
@@ -1401,7 +1401,7 @@
             "slot": "PM",
             "type": "Run",
             "duration": "10\u201315m",
-            "details": "Support \u2013 Brick shuffle, very easy cadence only."
+            "details": "Brick shuffle, very easy cadence only."
           }
         ],
         "Sun": [
@@ -1440,7 +1440,7 @@
             "slot": "PM",
             "type": "Mobility",
             "duration": "15\u201320m",
-            "details": "Support \u2013 light mobility to stay loose."
+            "details": "light mobility to stay loose."
           }
         ],
         "Tue": [
@@ -1482,7 +1482,7 @@
             "slot": "PM",
             "type": "Bike",
             "duration": "20\u201330m",
-            "details": "Support \u2013 easy bike, a few high-cadence spins only."
+            "details": "easy bike, a few high-cadence spins only."
           }
         ],
         "Fri": [
@@ -1510,7 +1510,7 @@
             "slot": "PM",
             "type": "Run",
             "duration": "10\u201315m",
-            "details": "Support \u2013 very easy jog, no effort. Keep strides relaxed."
+            "details": "very easy jog, no effort. Keep strides relaxed."
           }
         ],
         "Sun": [
