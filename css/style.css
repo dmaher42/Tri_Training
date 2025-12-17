@@ -321,3 +321,11 @@ body {
   background: rgba(29,78,216,0.45);
   border-radius: 999px;
 }
+
+#todayCard {
+  grid-column: 1 / -1;
+}
+
+.highlight-card {
+  border-left: 5px solid var(--accent);
+}
