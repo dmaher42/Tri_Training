@@ -202,7 +202,7 @@ function buildWeekSelect(plan, currentWeek) {
 
 function renderMeta(plan) {
   const el = document.getElementById("meta");
-  el.textContent = `Start: ${plan.startDate} • Race: ${plan.raceDate} •';
+  el.textContent = `Start: ${plan.startDate} • Race: ${plan.raceDate}';
 }
 
 function getWorkingPlan(plan) {
