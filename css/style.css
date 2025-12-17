@@ -34,8 +34,7 @@ h1 { margin: 0 0 6px; font-size: 26px; }
 h2 { margin: 0 0 12px; font-size: 18px; }
 h3 { margin: 12px 0 8px; font-size: 14px; }
 .muted { color: var(--muted); }
-.grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 2.2fr) minmax(320px, 1fr); }
-@media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+.grid { display: grid; gap: 24px; }
 
 .card { border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 14px; background: var(--bg-card); }
 .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 10px 0; }
@@ -385,4 +384,18 @@ body {
 /* Adjust spacing for top row in compact view */
 #todaySessions .session .top + .session-duration {
   margin-top: 8px;
+}
+
+dialog {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  width: 90%;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
 }
