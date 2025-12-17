@@ -5,6 +5,7 @@
   --card: #FFFFFF;
   --text: #0F172A;
   --muted: #475569;
+  --tag-optional: #94A3B8;
 
   --border: rgba(15, 23, 42, 0.08);
 
@@ -14,6 +15,8 @@
   --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
   --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
 
+  --support-bg: rgba(59, 130, 246, 0.08);
+  --support-border: rgba(59, 130, 246, 0.22);
 }
 * { box-sizing: border-box; }
 
@@ -54,7 +57,14 @@ hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
 .session { border: 1px solid var(--border-default); border-radius: var(--radius-sm); padding: 12px; margin: 12px 0; background: #F9FAFB; transition: box-shadow 100ms ease-out, border-color 100ms ease-out; }
 .session .top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
 .session-title { display: flex; align-items: center; gap: 8px; }
-.session-label { font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border-default); background: #EFF2F7; text-transform: uppercase; letter-spacing: .04em; color: var(--text-secondary); }
+.role-badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border-default); text-transform: uppercase; letter-spacing: .04em; }
+.role-badge.primary { background: #E5EDFF; color: #1D4ED8; border-color: #BFD4FF; }
+.role-badge.support { background: #F5F7FA; color: #4B5563; border-color: #D8DEE5; }
+.session.primary { border-width: 2px; background: #F1F5FF; box-shadow: var(--shadow-sm); }
+.session.support { background: #FBFCFE; opacity: 0.96; }
+.tag { font-size: 11px; padding: 2px 7px; border-radius: var(--radius-sm); border: 1px solid var(--border-default); color: var(--text-secondary); white-space: nowrap; }
+.tag.high { border-color: var(--session-high); color: var(--session-high); }
+.tag.opt { border-color: var(--border-default); color: var(--text-secondary); background: transparent; }
 .session p { margin: 8px 0 0; font-size: 13px; color: #444; line-height: 1.5; }
 
 .session.done {
@@ -100,6 +110,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
   border-radius: 999px;
 }
 
+.support-body { margin-top: 6px; }
+.support-body ul { margin: 6px 0 0 18px; padding: 0; }
+
+details.support summary::-webkit-details-marker { display: none; }
+
 /* =========================
    Soft Pastel Contrast Theme
    ========================= */
@@ -122,7 +137,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
   /* Session title & tag colors */
   --session-high: #AEC6CF;   /* Soft pastel blue accent */
   --session-medium: #7FA3B4; /* Coordinated pastel medium tone */
+  --tag-optional: #777777;   /* Soft gray for optional */
 
+  /* Optional support session (pastel) */
+  --support-bg: #EBF6EB;     /* Light green pastel */
+  --support-border: #C5DCC5; /* Slightly stronger pastel border */
 
   /* Recommended / not ideal indicators */
   --tag-recommended: #4CAF50; /* Strong green */
@@ -159,6 +178,40 @@ body {
   transition: box-shadow 100ms ease-out, border-color 100ms ease-out;
 }
 
+/* Session tags */
+.session .tag.high {
+  color: var(--session-high);
+  border-color: var(--session-high);
+}
+.session .tag {
+  border-color: var(--border-default);
+}
+.session .tag.opt {
+  color: var(--text-secondary);
+  border-color: var(--border-default);
+  background: transparent;
+}
+
+/* Optional support block */
+details.support {
+  background: var(--support-bg);
+  border: 1px dashed var(--support-border);
+  border-radius: var(--radius-sm);
+  padding: 7px 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+details.support summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  font-weight: 500;
+}
+
 @media (hover: hover) {
   .day:hover {
     box-shadow: var(--shadow);
@@ -171,6 +224,18 @@ body {
   button:hover {
     filter: brightness(0.97);
   }
+}
+details.support summary strong {
+  color: var(--text);
+}
+
+.tag.recommended {
+  background: var(--accent);
+  color: #fff;
+}
+.tag.not-ideal {
+  background: var(--accent-2);
+  color: #fff;
 }
 
 .weekly-progress {
