@@ -34,11 +34,11 @@ The schedule lives in `data/plan.json` and uses this shape:
 - `raceDate`: ISO date string for the target event
 - `weeks`: Array of week objects
   - `week`: Week number (1-based)
-  - `phase`: Descriptive phase (e.g., "Foundation")
+  - `phase`: Descriptive phase (e.g., "Reconditioning")
   - `hoursTarget`: Planned hours for the week
   - `notes`: Array of bullet strings to display under the week header
   - `days`: Object with keys `Mon` through `Sun`, each containing an array of sessions
-    - Each session includes `type`, `duration` (minutes), `priority` (`low`|`moderate`|`high`), `details`, and optional `optional` flag.
+    - Each session includes `slot` (`AM`|`PM`), `type`, `duration` (string), and `details` (string).
 
 To add more weeks:
 1. Open `data/plan.json` in the GitHub web editor.
@@ -47,11 +47,10 @@ To add more weeks:
 4. Commit the change. The site will automatically use the new data on next load.
 
 ## Adaptation logic (browser-side)
-- Illness flag: makes all sessions optional, trims durations ~30%, and tags details to stay easy.
-- Injury flag: replaces runs with elliptical/walk and softens bike sessions.
-- High fatigue or poor sleep: reduces durations ~25% and softens intensity wording (priority capped at moderate).
-- Missed key sessions (high priority, non-optional): removed so they are not crammed into the week.
-- Lower-body soreness (legs, quads, calves, hamstrings, etc.): caps run duration and swaps one run for low-impact cardio.
+- Illness flag: shortens both sessions each day and rewrites details to stay easy/steady.
+- Injury flag: trims duration and removes interval language while keeping AM/PM slots intact.
+- High fatigue or poor sleep: reduces durations ~25% and keeps guidance neutral and steady.
+- Soreness entry: softens every session to smooth, even pacing.
 - Adaptations persist in `localStorage`; you can export/import the JSON state via the buttons in the UI.
 
 ## Notes
