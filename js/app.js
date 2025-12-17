@@ -356,10 +356,59 @@ function renderWeek(plan, weekNum) {
       day.appendChild(box);
     });
 
-    const progress = document.createElement("div");
-    progress.className = "day-progress muted";
-    progress.textContent = `Done: ${doneSessions} / ${totalSessions}`;
-    day.appendChild(progress);
+    // Optional support session block (non-load-bearing, complementary)
+    const existingTypes = new Set(
+      sessions.map(s => s.type)
+    );
+
+    const options = [];
+
+    if (!existingTypes.has("Swim")) {
+      options.push("Easy swim 20–40 min");
+    }
+
+    if (!existingTypes.has("Bike")) {
+      options.push("Easy spin 30–45 min (high cadence)");
+    }
+
+    // Always allowed
+    options.push("Mobility reset 10–15 min");
+
+    const strengthScore = strengthScores[d] ?? 0;
+    let strengthLabel = "Strength foundation 15–25 min (recommended)";
+
+    if (recommendedStrengthDays.has(d)) {
+      strengthLabel = "✅ Strength foundation 15–25 min (best day)";
+    } else if (strengthScore <= -2) {
+      strengthLabel = "⚠️ Strength (not ideal today — keep it very light or skip)";
+    }
+
+    if (strengthCount === 2) {
+      strengthLabel = "Strength foundation 15–25 min (optional – limit reached)";
+    }
+
+    if (strengthCount >= 3) {
+      strengthLabel = "Strength foundation (skip today – already 3× this week)";
+    }
+
+    options.push(strengthLabel);
+    strengthCount++;
+
+    const support = document.createElement("div");
+    support.className = "support";
+
+    support.innerHTML = `
+      <div class="top">
+        <strong>Optional Support Session</strong>
+        <span class="tag opt">Non-load</span>
+      </div>
+      <p class="muted">Choose ONE (keep it easy):</p>
+      <ul>
+        ${options.map(o => `<li>${o}</li>`).join("")}
+      </ul>
+      <p class="muted">Purpose: sleep, recovery, routine. Never add fatigue.</p>
+    `;
+    day.appendChild(support);
 
     grid.appendChild(day);
 
@@ -530,20 +579,28 @@ function applyRulesToWeek(week, state, missedKey) {
 }
 
 async function loadPlan() {
-  const res = await fetch("./data/plan.json");
-  if (!res.ok) {
-    throw new Error(`Failed to fetch plan.json: ${res.status} ${res.statusText}`);
+  const candidates = [
+    "./data/plan.json",
+    new URL("../data/plan.json", import.meta.url).href
+  ];
+
+  const errors = [];
+
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+      return await res.json();
+    } catch (err) {
+      errors.push(`${url}: ${err.message}`);
+    }
   }
-  return res.json();
+
+  throw new Error(`Failed to fetch plan.json. Attempts: ${errors.join(" | ")}`);
 }
 
 async function main() {
-  const res = await fetch("./data/plan.json");
-  if (!res.ok) {
-    throw new Error(`Failed to fetch plan.json: ${res.status} ${res.statusText}`);
-  }
-  const basePlan = await res.json();
-  basePlanGlobal = basePlan;
+  const basePlan = await loadPlan();
   renderMeta(basePlan);
 
   const working = getWorkingPlan(basePlan);
