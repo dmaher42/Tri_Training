@@ -315,6 +315,36 @@ function updateDayProgress(dayEl) {
   }
 }
 
+function createSessionCard(s, weekNum, dayName, idx, isDone) {
+  const box = document.createElement("div");
+  const isOff = s.type === "Off";
+  box.className = `session${isDone ? " done" : ""}`;
+  box.dataset.type = s.type;
+  box.dataset.slot = s.slot;
+  const doneToggle = isOff ? "" : `
+    <label class="done-toggle">
+      <input type="checkbox" data-week="${weekNum}" data-day="${dayName}" data-idx="${idx}" ${isDone ? "checked" : ""}>
+      <span>Done</span>
+    </label>`;
+  const slotLabel = s.slot === "PM" ? "Session 2 · PM" : "Session 1 · AM";
+  const adaptedBadge = s._adapted ? `<span class="adapted-badge">Adapted</span>` : "";
+  box.innerHTML = `
+    <div class="top">
+      <div class="session-title">
+        <span class="slot-badge">${slotLabel}</span>
+        <strong class="session-type">${s.type}</strong>
+        ${adaptedBadge}
+      </div>
+      <div class="top-right">
+        ${doneToggle}
+      </div>
+    </div>
+    <div class="session-duration muted">${s.duration}</div>
+    <p class="session-details">${s.details || ""}</p>
+  `;
+  return box;
+}
+
 function renderWeek(plan, weekNum) {
   const rawWeek = plan.weeks.find(x => x.week === weekNum);
   if (!rawWeek) return;
@@ -350,33 +380,8 @@ function renderWeek(plan, weekNum) {
     const sessions = (w.days[d] || []).slice().sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot));
 
     sessions.forEach((s, idx) => {
-      const box = document.createElement("div");
       const isDone = !!(weekChecks[d] && weekChecks[d][String(idx)]);
-      const isOff = s.type === "Off";
-      box.className = `session${isDone ? " done" : ""}`;
-      box.dataset.type = s.type;
-      box.dataset.slot = s.slot;
-      const doneToggle = isOff ? "" : `
-        <label class="done-toggle">
-          <input type="checkbox" data-week="${weekNum}" data-day="${d}" data-idx="${idx}" ${isDone ? "checked" : ""}>
-          <span>Done</span>
-        </label>`;
-      const slotLabel = s.slot === "PM" ? "Session 2 · PM" : "Session 1 · AM";
-      const adaptedBadge = s._adapted ? `<span class="adapted-badge">Adapted</span>` : "";
-      box.innerHTML = `
-        <div class="top">
-          <div class="session-title">
-            <span class="slot-badge">${slotLabel}</span>
-            <strong class="session-type">${s.type}</strong>
-            ${adaptedBadge}
-          </div>
-          <div class="top-right">
-            ${doneToggle}
-          </div>
-        </div>
-        <div class="session-duration muted">${s.duration}</div>
-        <p class="session-details">${s.details || ""}</p>
-      `;
+      const box = createSessionCard(s, weekNum, d, idx, isDone);
       day.appendChild(box);
     });
 
@@ -402,6 +407,17 @@ function renderWeek(plan, weekNum) {
         updateDayProgress(card.closest('.day'));
       }
       updateWeeklyProgressForSelectedWeek(basePlanGlobal);
+
+      if (basePlanGlobal) {
+        const p = getWorkingPlan(basePlanGlobal);
+        const cw = computeCurrentWeek(p);
+        const now = new Date();
+        const dName = DAYS[(now.getDay() + 6) % 7];
+
+        if (week === cw && dayName === dName) {
+          renderToday(p, cw);
+        }
+      }
     });
     weekGridListenerAttached = true;
   }
@@ -515,6 +531,64 @@ function applyRulesToWeek(week, state) {
   return { week: w, coachNote: coachNote.join(" ") };
 }
 
+function renderToday(plan, currentWeek) {
+  const container = document.getElementById("todaySessions");
+  if (!container) return;
+
+  const now = new Date();
+  const dayIndex = (now.getDay() + 6) % 7;
+  const dayName = DAYS[dayIndex];
+
+  const rawWeek = plan.weeks.find(x => x.week === currentWeek);
+  if (!rawWeek) {
+    container.innerHTML = `<div class="muted">No schedule for today.</div>`;
+    return;
+  }
+
+  const w = normalizeWeek(rawWeek, rawWeek.week);
+  const sessions = (w.days[dayName] || []).slice().sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot));
+  const weekChecks = getSessionChecks()[String(currentWeek)] || {};
+
+  container.innerHTML = "";
+  if (!sessions.length) {
+    container.innerHTML = `<div class="muted">Rest day.</div>`;
+    return;
+  }
+
+  sessions.forEach((s, idx) => {
+    const isDone = !!(weekChecks[dayName] && weekChecks[dayName][String(idx)]);
+    const box = createSessionCard(s, currentWeek, dayName, idx, isDone);
+    container.appendChild(box);
+  });
+
+  if (!container.dataset.listenerAttached) {
+    container.addEventListener("change", (e) => {
+      const target = e.target;
+      if (!target || !(target instanceof HTMLInputElement)) return;
+      if (!target.matches(".done-toggle input")) return;
+
+      const week = Number(target.dataset.week);
+      const d = target.dataset.day;
+      const idx = Number(target.dataset.idx);
+
+      setSessionCheck(week, d, idx, target.checked);
+
+      const card = target.closest('.session');
+      if (card) {
+        card.classList.toggle('done', target.checked);
+      }
+
+      updateWeeklyProgressForSelectedWeek(basePlanGlobal);
+
+      const sel = document.getElementById("weekSelect");
+      if (sel && Number(sel.value) === week) {
+        renderWeek(getWorkingPlan(basePlanGlobal), week);
+      }
+    });
+    container.dataset.listenerAttached = "true";
+  }
+}
+
 async function loadPlan() {
   const pageUrl = new URL(window.location.href);
   const candidates = [
@@ -549,6 +623,7 @@ async function main() {
 
   buildWeekSelect(working, currentWeek);
   renderWeek(working, currentWeek);
+  renderToday(working, currentWeek);
 
   document.getElementById("weekSelect").addEventListener("change", (e) => {
     const w = Number(e.target.value);
