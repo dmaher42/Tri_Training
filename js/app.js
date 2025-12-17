@@ -236,7 +236,7 @@ function resetOverrides() {
   localStorage.removeItem(STORAGE_KEY);
 }
 
-function renderWeeklyProgress(w, weekNum) {
+function renderWeeklyProgressCard(w, weekNum) {
   const grid = document.getElementById("weekGrid");
   if (!grid) return;
 
@@ -279,7 +279,7 @@ function updateWeeklyProgress(weekNum) {
   const plan = getWorkingPlan(basePlanGlobal);
   const w = plan.weeks.find((x) => x.week === weekNum);
   if (!w) return;
-  renderWeeklyProgress(w, weekNum);
+  renderWeeklyProgressCard(w, weekNum);
 }
 
 function renderWeek(plan, weekNum) {
@@ -308,7 +308,7 @@ function renderWeek(plan, weekNum) {
 
   coachNote.textContent = w._coachNote ? `Coach note: ${w._coachNote}` : "";
 
-  renderWeeklyProgress(w, weekNum);
+  renderWeeklyProgressCard(w, weekNum);
 
   grid.innerHTML = "";
 
@@ -424,7 +424,7 @@ function updateWeeklyProgressForSelectedWeek(plan) {
   const working = getWorkingPlan(plan);
   const w = working.weeks.find(x => x.week === weekNum);
   if (!w) return;
-  renderWeeklyProgress(w, weekNum);
+  renderWeeklyProgressCard(w, weekNum);
 }
 
 function applyRulesToWeek(week, state, missedKey) {
