@@ -580,8 +580,12 @@ function applyRulesToWeek(week, state, missedKey) {
 
 async function loadPlan() {
   const candidates = [
-    "./data/plan.json",
-    new URL("../data/plan.json", import.meta.url).href
+    // Page-relative (works for GitHub Pages subpaths)
+    new URL("data/plan.json", window.location.href).href,
+    // Module-adjacent (for local dev / file://)
+    new URL("../data/plan.json", import.meta.url).href,
+    // Legacy module-relative fall-back
+    "./data/plan.json"
   ];
 
   const errors = [];
