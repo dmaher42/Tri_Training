@@ -19,6 +19,17 @@ This repository is a no-dependency static site that renders a triathlon training
 ## Running locally
 Open `index.html` in a browser. Because all data is fetched from `data/plan.json`, you do not need a server.
 
+## Features at a glance
+- **Adaptive toggles:** flag illness, injury, fatigue, or soreness to automatically soften every workout.
+- **Client-side persistence:** adaptations live in `localStorage` so refreshing the page keeps your choices.
+- **Data-driven schedule:** the weekly plan loads entirely from `data/plan.json`, making edits lightweight and reviewable.
+
+## Usage
+1. Clone or download this repository.
+2. Open `index.html` in your browser, or run a simple static server (e.g., `python -m http.server 8000`) and visit `http://localhost:8000`.
+3. Use the left-side controls to set the start date, export/import adaptations, and toggle safety adaptations for your current state.
+4. Browse the weekly cards to see the adjusted sessions and guidance.
+
 ## Publishing with GitHub Pages (no terminal needed)
 1. Push these files to your GitHub repository.
 2. In the GitHub web UI, go to **Settings → Pages**.
