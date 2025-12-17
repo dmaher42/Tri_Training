@@ -345,3 +345,44 @@ body {
 .highlight-card {
   border-left: 5px solid var(--accent);
 }
+
+#todaySessions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  #todaySessions {
+    grid-template-columns: 1fr;
+  }
+}
+
+#todaySessions .session {
+  padding: 10px;
+  margin: 0; /* Remove margin since we use gap in grid */
+}
+
+#todaySessions .session .session-type {
+  font-size: 14px;
+}
+
+#todaySessions .session .session-duration {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+#todaySessions .session .session-details {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+#todaySessions .session .slot-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+}
+
+/* Adjust spacing for top row in compact view */
+#todaySessions .session .top + .session-duration {
+  margin-top: 8px;
+}
