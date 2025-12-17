@@ -257,21 +257,18 @@ function renderWeeklyProgressCard(w, weekNum) {
     ? `<div class="weekly-progress__note muted">Focus this week: reduce load, protect key sessions.</div>`
     : "";
 
-  summaryBox.innerHTML = `
-    <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
-    <div class="weekly-progress__grid">
-      <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
-      <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
-      <div><div class="k">Key sessions</div><div class="v">${keyDone} / ${keyPlanned} done</div></div>
-    </div>
-    <div class="weekly-progress__bar" aria-hidden="true">
-      <div class="weekly-progress__barFill" style="width:${barPct}%"></div>
-    </div>
-    <div class="weekly-progress__note muted">
-      Aim: consistency. Don’t stack sessions to “make up” missed work.
-    </div>
-    ${cautionNote}
-  `;
+ summaryBox.innerHTML = `
+  <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
+
+  <div class="weekly-progress__grid">
+    <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
+    <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
+    <div><div class="k">Key sessions</div><div class="v">${keyDone} / ${keyPlanned} done</div></div>
+  </div>
+
+  ${cautionNote}
+`;
+
 }
 
 function updateWeeklyProgress(weekNum) {
