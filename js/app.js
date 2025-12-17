@@ -637,6 +637,18 @@ async function main() {
     renderWeek(p, currentWeek);
   });
 
+  // Modal controls
+  const modal = document.getElementById("adaptationModal");
+  document.getElementById("openAdaptation").addEventListener("click", () => {
+    modal.showModal();
+  });
+  document.getElementById("closeAdaptation").addEventListener("click", () => {
+    modal.close();
+  });
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.close();
+  });
+
   document.getElementById("adaptWeek").addEventListener("click", () => {
     const weekNum = Number(document.getElementById("weekSelect").value);
     const p = getWorkingPlan(basePlan);

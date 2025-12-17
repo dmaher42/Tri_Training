@@ -14,6 +14,7 @@
       <a href="index.html" class="active">Training Plan</a>
       <a href="strength.html">Strength & Mobility</a>
     </nav>
+    <button id="openAdaptation" class="primary" style="margin-top: 10px;">Adjust Plan / I'm Tired</button>
   </header>
 
   <main class="wrap grid">
@@ -35,8 +36,11 @@
       <div id="weekGrid" class="week-grid"></div>
     </section>
 
-    <aside class="card">
-      <h2>How are you feeling?</h2>
+    <dialog id="adaptationModal" class="card">
+      <div class="row" style="justify-content: space-between; margin-top: 0;">
+        <h2>How are you feeling?</h2>
+        <button id="closeAdaptation">Close</button>
+      </div>
 
       <div class="field">
         <label for="fatigue">Fatigue</label>
@@ -85,7 +89,7 @@
         </label>
       </div>
       <div class="note" id="coachNote"></div>
-    </aside>
+    </dialog>
   </main>
 
   <script defer src="js/app.js"></script>
