@@ -18,6 +18,7 @@ const DEFAULT_DETAILS = {
   Bike: "Easy spin, high cadence. Keep it aerobic only.",
   Run: "Easy aerobic run. Flat and relaxed.",
   Mobility: "Mobility and strength-durability work. Controlled and gentle.",
+  Race: "Race day. Execute calmly and deliberately.",
   Off: "Off evening. Prioritize sleep."
 };
 
@@ -26,6 +27,7 @@ const DEFAULT_DURATION = {
   Bike: "30–45m",
   Run: "20–30m",
   Mobility: "15–25m",
+  Race: "Race day",
   Off: "-"
 };
 
@@ -108,20 +110,29 @@ function defaultSession(day, slot) {
   };
 }
 
-function normalizeDaySessions(dayName, sessions = []) {
+function normalizeDaySessions(dayName, sessions = [], weekNum) {
   const slotMap = { AM: null, PM: null };
 
-  sessions.slice(0, 2).forEach((s, idx) => {
-    const slot = s.slot === "PM" || s.slot === "AM" ? s.slot : (idx === 0 ? "AM" : "PM");
-    if (!slotMap[slot]) {
+  sessions.forEach((s, idx) => {
+    const explicitSlot = s.slot === "PM" || s.slot === "AM" ? s.slot : null;
+    const slot = explicitSlot || (!slotMap.AM ? "AM" : (!slotMap.PM ? "PM" : null));
+
+    if (slot && !slotMap[slot]) {
       slotMap[slot] = {
         slot,
         type: s.type || PATTERN[dayName]?.[slot] || "Mobility",
         duration: s.duration || DEFAULT_DURATION[s.type] || "-",
         details: s.details || DEFAULT_DETAILS[s.type] || ""
       };
+      return;
     }
+
+    // Unused extra session for this day; keep it in the warning only.
   });
+
+  if (sessions.length > 2) {
+    console.warn(`[plan] ${weekNum ?? "?"} ${dayName}: found ${sessions.length} sessions; keeping AM/PM and ignoring extras`, sessions);
+  }
 
   for (const slot of ["AM", "PM"]) {
     if (!slotMap[slot]) {
@@ -132,12 +143,16 @@ function normalizeDaySessions(dayName, sessions = []) {
   return [slotMap.AM, slotMap.PM];
 }
 
-function normalizeWeek(week) {
+function normalizeWeek(week, weekNum) {
   const w = deepClone(week);
   for (const d of DAYS) {
-    w.days[d] = normalizeDaySessions(d, w.days[d] || []);
+    w.days[d] = normalizeDaySessions(d, w.days[d] || [], weekNum);
   }
   return w;
+}
+
+function isNonTrainingType(type) {
+  return type === "Off";
 }
 
 function computeWeeklyTotals(weekObj, weekNum) {
@@ -152,7 +167,7 @@ function computeWeeklyTotals(weekObj, weekNum) {
   for (const d of DAYS) {
     const sessions = weekObj.days[d] || [];
     sessions.forEach((s, idx) => {
-      const isOff = s.type === "Off";
+      const isOff = isNonTrainingType(s.type);
       const isChecked = !!(checks[d]?.[String(idx)]);
       const mins = durationToMinutes(s.duration);
       if (!isOff) {
@@ -206,7 +221,7 @@ function getWorkingPlan(plan) {
       if (override.coachNote) w._coachNote = override.coachNote;
     }
   }
-  p.weeks = p.weeks.map(normalizeWeek);
+  p.weeks = p.weeks.map((wk) => normalizeWeek(wk, wk.week));
   return p;
 }
 
@@ -266,7 +281,7 @@ function ensureRoutineNote(summary) {
 function renderWeek(plan, weekNum) {
   const rawWeek = plan.weeks.find(x => x.week === weekNum);
   if (!rawWeek) return;
-  const w = normalizeWeek(rawWeek);
+  const w = normalizeWeek(rawWeek, rawWeek.week);
   const summary = document.getElementById("weekSummary");
   const grid = document.getElementById("weekGrid");
   const coachNote = document.getElementById("coachNote");
@@ -358,13 +373,36 @@ function updateWeeklyProgressForSelectedWeek(plan) {
 }
 
 function simplifyDetails(details, mode = "easy") {
-  if (!details) return "Keep it easy.";
-  if (mode === "rest") return "Keep movement easy and skip any intensity.";
-  return `Keep it easy: ${details.replace(/[^a-zA-Z0-9]/g, ' ').replace(/\s+/g,' ').trim().slice(0, 140)}`;
+  const base = (details || "").trim().replace(/\s+/g, " ");
+  if (!base) return mode === "rest" ? "Keep it gentle. Skip any intensity." : "Keep it easy aerobic only.";
+  if (mode === "rest") return `Keep it gentle. Skip intensity. ${base}`;
+  return `Keep it easy aerobic only. ${base}`;
+}
+
+function isLowerBodySoreness(sorenessAreas) {
+  const flags = ["calf", "achilles", "shin", "knee", "hip", "foot", "plantar"];
+  return sorenessAreas.some((s) => flags.includes(s));
+}
+
+function stripIntensityText(details, mode = "easy") {
+  return simplifyDetails(details, mode);
+}
+
+function convertRunForInjury(session, dayName, slot) {
+  const isShortPmRun = slot === "PM" && (dayName === "Tue" || dayName === "Sat");
+  const type = isShortPmRun ? "Mobility" : "Bike";
+  const duration = DEFAULT_DURATION[type] || session.duration || "-";
+  const baseDetails = stripIntensityText(session.details, "easy");
+  return {
+    ...session,
+    type,
+    duration,
+    details: `No running. Substitute easy aerobic only. ${baseDetails}`.trim()
+  };
 }
 
 function applyRulesToWeek(week, state) {
-  const w = deepClone(normalizeWeek(week));
+  const w = deepClone(normalizeWeek(week, week.week));
   const sick = !!state.illness;
   const injured = !!state.injury;
   const heavy = (state.fatigue === "high") || (state.sleep === "poor");
@@ -372,31 +410,42 @@ function applyRulesToWeek(week, state) {
     .split(",")
     .map(x => x.trim().toLowerCase())
     .filter(Boolean);
+  const lowerBody = isLowerBodySoreness(sorenessAreas);
+  const protectRun = injured || lowerBody;
 
-  let coachNote = [];
-  const reducePct = sick ? 0.4 : (injured ? 0.35 : (heavy ? 0.25 : 0));
+  const coachNote = [];
+  const reducePct = sick ? 0.4 : (protectRun ? 0.35 : (heavy ? 0.25 : 0));
 
   if (sick) coachNote.push("Illness noted: shorten and keep everything gentle.");
-  if (injured) coachNote.push("Protect tissues: no intensity, keep controlled.");
-  if (heavy && !sick && !injured) coachNote.push("Fatigue / sleep flag: reduce load but keep routine.");
+  if (protectRun) coachNote.push("Run durability protection: swap runs and avoid intensity.");
+  if (heavy && !sick && !protectRun) coachNote.push("Fatigue / sleep flag: reduce load but keep routine.");
 
   for (const d of DAYS) {
     w.days[d] = (w.days[d] || []).map((s) => {
-      let duration = s.duration;
-      if (reducePct && s.duration !== "-") {
-        const mins = durationToMinutes(s.duration);
-        duration = mins ? minutesToRange(mins, reducePct) : s.duration;
+      let session = { ...s };
+
+      if (protectRun && session.type === "Run") {
+        session = convertRunForInjury(session, d, session.slot);
       }
-      let details = s.details;
-      if (s.type === "Off") {
-        details = "Off evening. Prioritize sleep.";
-      } else if (sick || injured || heavy) {
-        details = simplifyDetails(s.details, sick ? "rest" : "easy");
+
+      if (!isNonTrainingType(session.type) && reducePct && session.duration !== "-") {
+        const mins = durationToMinutes(session.duration);
+        session.duration = mins ? minutesToRange(mins, reducePct) : session.duration;
       }
-      if (s.type === "Run" && sorenessAreas.length) {
-        details = `Keep cadence relaxed; stop if any pain. ${details}`.trim();
+
+      if (sick) {
+        session.details = stripIntensityText(session.details, "rest");
+      } else if (protectRun && s.type === "Run") {
+        session.details = session.details || stripIntensityText(s.details, "easy");
+      } else if (heavy) {
+        session.details = stripIntensityText(session.details, "easy");
       }
-      return { ...s, duration, details };
+
+      if (session.type === "Off") {
+        session.details = DEFAULT_DETAILS.Off;
+      }
+
+      return session;
     });
   }
 
