@@ -1,7 +1,9 @@
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const STORAGE_KEY = "triPlanState_v2";
+const CALENDAR_VIEW_KEY = "triCalendarView";
 let weekGridListenerAttached = false;
 let basePlanGlobal = null;
+let hasFlashClassCache = null;
 
 const PATTERN = {
   Mon: { AM: "Swim", PM: "Mobility" },
@@ -50,6 +52,17 @@ function loadLocal() {
 
 function saveLocal(obj) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+
+function getPreferredCalendarView() {
+  const raw = localStorage.getItem(CALENDAR_VIEW_KEY);
+  return raw === "week" ? "week" : "month";
+}
+
+function setPreferredCalendarView(view) {
+  const v = view === "week" ? "week" : "month";
+  localStorage.setItem(CALENDAR_VIEW_KEY, v);
+  return v;
 }
 
 function getSessionChecks() {
@@ -330,6 +343,115 @@ function renderCalendarMonth(plan, weekNum) {
   }
 }
 
+function renderCalendarWeek(plan, weekNum) {
+  const grid = document.getElementById("calendarView");
+  const summary = document.getElementById("calendarSummary");
+  if (!grid || !plan) return;
+
+  const startDate = parseIsoDate(plan.startDate);
+  const checks = getSessionChecks()[String(weekNum)] || {};
+  const dayMs = 24 * 60 * 60 * 1000;
+  const weekStart = new Date(startDate.getTime() + Math.max(0, (Math.max(1, weekNum) - 1) * 7 * dayMs));
+  const today = new Date();
+  const todayUtc = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  const todayKey = todayUtc.toISOString().slice(0, 10);
+
+  const w = plan.weeks.find((x) => x.week === weekNum);
+
+  grid.innerHTML = "";
+  const frag = document.createDocumentFragment();
+
+  DAYS.forEach((d) => {
+    const head = document.createElement("div");
+    head.className = "cal-head muted";
+    head.textContent = d;
+    frag.appendChild(head);
+  });
+
+  let plannedSessions = 0;
+  let completedSessions = 0;
+
+  DAYS.forEach((dayName, idx) => {
+    const dateObj = new Date(weekStart.getTime() + idx * dayMs);
+    const key = dateObj.toISOString().slice(0, 10);
+    const cell = document.createElement("div");
+    const sessions = w?.days?.[dayName] || [];
+    const weekChecks = checks[dayName] || {};
+    const isToday = key === todayKey;
+
+    cell.className = `cal-day${isToday ? " is-today" : ""}`;
+    cell.dataset.date = key;
+    cell.dataset.week = String(weekNum);
+    cell.dataset.day = dayName;
+
+    const num = document.createElement("div");
+    num.className = "cal-day__num";
+    num.textContent = `${dayName} ${dateObj.getUTCDate()}`;
+    cell.appendChild(num);
+
+    const bars = document.createElement("div");
+    bars.className = "cal-day__bars";
+
+    ["AM", "PM"].forEach((slot, slotIdx) => {
+      const session = sessions[slotIdx];
+      const bar = document.createElement("span");
+      bar.className = `cal-bar cal-bar--${slot.toLowerCase()}`;
+      if (session) {
+        const isOff = isNonTrainingType(session.type);
+        const isDone = !isOff && !!weekChecks[String(slotIdx)];
+        if (isOff) bar.classList.add("is-off");
+        if (isDone) bar.classList.add("is-done");
+        if (!isOff) {
+          plannedSessions += 1;
+          if (isDone) completedSessions += 1;
+        }
+      }
+      bars.appendChild(bar);
+    });
+
+    cell.appendChild(bars);
+    frag.appendChild(cell);
+  });
+
+  grid.appendChild(frag);
+
+  if (summary) {
+    const endDate = new Date(weekStart.getTime() + 6 * dayMs);
+    summary.textContent = `Week ${weekNum} • ${weekStart.toISOString().slice(0, 10)} → ${endDate.toISOString().slice(0, 10)} • ${completedSessions} / ${plannedSessions} sessions completed`;
+  }
+}
+
+function applyCalendarToggleState(view) {
+  const weekBtn = document.getElementById("calWeekBtn");
+  const monthBtn = document.getElementById("calMonthBtn");
+  if (!weekBtn || !monthBtn) return;
+
+  const isWeek = view === "week";
+  weekBtn.classList.toggle("is-active", isWeek);
+  monthBtn.classList.toggle("is-active", !isWeek);
+  weekBtn.setAttribute("aria-pressed", String(isWeek));
+  monthBtn.setAttribute("aria-pressed", String(!isWeek));
+}
+
+function getSelectedWeek(plan) {
+  const sel = document.getElementById("weekSelect");
+  const selected = Number(sel?.value);
+  if (Number.isFinite(selected) && selected > 0) return selected;
+  if (plan) return computeCurrentWeek(plan);
+  return 1;
+}
+
+function renderCalendar(plan, weekNum) {
+  const view = getPreferredCalendarView();
+  applyCalendarToggleState(view);
+  const targetWeek = weekNum || getSelectedWeek(plan);
+  if (view === "week") {
+    renderCalendarWeek(plan, targetWeek);
+  } else {
+    renderCalendarMonth(plan, targetWeek);
+  }
+}
+
 function buildWeekSelect(plan, currentWeek) {
   const sel = document.getElementById("weekSelect");
   sel.innerHTML = "";
@@ -434,6 +556,28 @@ function updateDayProgress(dayEl) {
   }
 }
 
+function flashDayElement(el) {
+  if (!el) return;
+  if (hasFlashClassCache === null) {
+    try {
+      hasFlashClassCache = Array.from(document.styleSheets || []).some((sheet) => {
+        try {
+          return Array.from(sheet.cssRules || []).some((rule) => rule.selectorText && rule.selectorText.includes('.is-flash'));
+        } catch {
+          return false;
+        }
+      });
+    } catch {
+      hasFlashClassCache = false;
+    }
+  }
+
+  if (!hasFlashClassCache) return;
+
+  el.classList.add("is-flash");
+  setTimeout(() => el.classList.remove("is-flash"), 800);
+}
+
 function createSessionCard(s, weekNum, dayName, idx, isDone) {
   const box = document.createElement("div");
   const isOff = s.type === "Off";
@@ -526,7 +670,7 @@ function renderWeek(plan, weekNum) {
         updateDayProgress(card.closest('.day'));
       }
       updateWeeklyProgressForSelectedWeek(basePlanGlobal);
-      renderCalendarMonth(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
+      renderCalendar(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
 
       if (basePlanGlobal) {
         const p = getWorkingPlan(basePlanGlobal);
@@ -540,6 +684,26 @@ function renderWeek(plan, weekNum) {
       }
     });
     weekGridListenerAttached = true;
+  }
+}
+
+function jumpToWeekDay(weekNum, dayName) {
+  if (!weekNum || !dayName) return;
+  const sel = document.getElementById("weekSelect");
+  if (sel) sel.value = String(weekNum);
+
+  const plan = basePlanGlobal ? getWorkingPlan(basePlanGlobal) : null;
+  if (plan) {
+    renderWeek(plan, weekNum);
+    renderCalendar(plan, weekNum);
+  }
+
+  const grid = document.getElementById("weekGrid");
+  if (!grid) return;
+  const dayEl = Array.from(grid.querySelectorAll(".day")).find((d) => d.querySelector("h4")?.textContent === dayName);
+  if (dayEl) {
+    dayEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    flashDayElement(dayEl);
   }
 }
 
@@ -704,7 +868,7 @@ function renderToday(plan, currentWeek) {
       if (sel && Number(sel.value) === week) {
         renderWeek(getWorkingPlan(basePlanGlobal), week);
       }
-      renderCalendarMonth(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
+      renderCalendar(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
     });
     container.dataset.listenerAttached = "true";
   }
@@ -742,24 +906,54 @@ async function main() {
   const working = getWorkingPlan(basePlan);
   let currentWeek = computeCurrentWeek(working);
 
+  const initialView = setPreferredCalendarView(getPreferredCalendarView());
+  applyCalendarToggleState(initialView);
+
   buildWeekSelect(working, currentWeek);
   renderWeek(working, currentWeek);
   renderToday(working, currentWeek);
-  renderCalendarMonth(working, currentWeek);
+  renderCalendar(working, currentWeek);
 
   document.getElementById("weekSelect").addEventListener("change", (e) => {
     const w = Number(e.target.value);
     const p = getWorkingPlan(basePlan);
     renderWeek(p, w);
-    renderCalendarMonth(p, w);
+    renderCalendar(p, w);
   });
+
+  const handleCalendarViewChange = (view) => {
+    const p = getWorkingPlan(basePlan);
+    const targetWeek = Number(document.getElementById("weekSelect")?.value || currentWeek);
+    const v = setPreferredCalendarView(view);
+    applyCalendarToggleState(v);
+    renderCalendar(p, targetWeek);
+  };
+
+  const weekBtn = document.getElementById("calWeekBtn");
+  const monthBtn = document.getElementById("calMonthBtn");
+  if (weekBtn && monthBtn) {
+    weekBtn.addEventListener("click", () => handleCalendarViewChange("week"));
+    monthBtn.addEventListener("click", () => handleCalendarViewChange("month"));
+  }
+
+  const calendarView = document.getElementById("calendarView");
+  if (calendarView) {
+    calendarView.addEventListener("click", (e) => {
+      const cell = e.target.closest?.(".cal-day");
+      if (!cell || cell.classList.contains("is-dim")) return;
+      const weekNum = Number(cell.dataset.week);
+      const dayName = cell.dataset.day;
+      if (!weekNum || !dayName) return;
+      jumpToWeekDay(weekNum, dayName);
+    });
+  }
 
   document.getElementById("jumpToCurrent").addEventListener("click", () => {
     const p = getWorkingPlan(basePlan);
     currentWeek = computeCurrentWeek(p);
     buildWeekSelect(p, currentWeek);
     renderWeek(p, currentWeek);
-    renderCalendarMonth(p, currentWeek);
+    renderCalendar(p, currentWeek);
   });
 
   // Modal controls
@@ -792,7 +986,7 @@ async function main() {
 
     const p2 = getWorkingPlan(basePlan);
     renderWeek(p2, weekNum);
-    renderCalendarMonth(p2, weekNum);
+    renderCalendar(p2, weekNum);
   });
 
   document.getElementById("resetState").addEventListener("click", () => {
@@ -800,7 +994,7 @@ async function main() {
     const p2 = getWorkingPlan(basePlan);
     const w = Number(document.getElementById("weekSelect").value);
     renderWeek(p2, w);
-    renderCalendarMonth(p2, w);
+    renderCalendar(p2, w);
   });
 
   document.getElementById("exportState").addEventListener("click", () => {
@@ -824,7 +1018,7 @@ async function main() {
     const w = Number(document.getElementById("weekSelect").value);
     renderWeek(p2, w);
     e.target.value = "";
-    renderCalendarMonth(p2, w);
+    renderCalendar(p2, w);
   });
 }
 
