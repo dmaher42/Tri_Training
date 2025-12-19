@@ -535,12 +535,6 @@ function updateWeeklyProgress(weekNum) {
   renderWeeklyProgressCard(w, weekNum);
 }
 
-function renderGuidelines() {
-  const el = document.getElementById("guidelinesText");
-  if (!el) return;
-  el.textContent = "Two sessions are planned daily (AM/PM). Keep intensity controlled—if a session risks tomorrow, make it easier.";
-}
-
 function updateDayProgress(dayEl) {
   if (!dayEl) return;
   const sessions = Array.from(dayEl.querySelectorAll('.session:not([data-type="Off"])'));
@@ -895,7 +889,6 @@ async function main() {
   const basePlan = await loadPlan();
   basePlanGlobal = basePlan;
   renderMeta(basePlan);
-  renderGuidelines();
 
   const working = getWorkingPlan(basePlan);
   let currentWeek = computeCurrentWeek(working);
