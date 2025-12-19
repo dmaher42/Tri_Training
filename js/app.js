@@ -535,14 +535,10 @@ function updateWeeklyProgress(weekNum) {
   renderWeeklyProgressCard(w, weekNum);
 }
 
-function ensureRoutineNote(summary) {
-  const routineNote = document.getElementById("routineNote") || document.createElement("div");
-  routineNote.id = "routineNote";
-  routineNote.className = "routine-note";
-  routineNote.textContent = "Each day includes two planned sessions (AM and PM). Load is defined by the session description. If a session would compromise the next day, keep it easier.";
-  if (summary.parentNode && routineNote.parentNode !== summary.parentNode) {
-    summary.insertAdjacentElement("afterend", routineNote);
-  }
+function renderGuidelines() {
+  const el = document.getElementById("guidelinesText");
+  if (!el) return;
+  el.textContent = "Two sessions are planned daily (AM/PM). Keep intensity controlled—if a session risks tomorrow, make it easier.";
 }
 
 function updateDayProgress(dayEl) {
@@ -621,10 +617,7 @@ function renderWeek(plan, weekNum) {
   summary.innerHTML = `
     <div><strong>Phase:</strong> ${w.phase}</div>
     <div><strong>Target:</strong> ${w.hoursTarget}</div>
-    <div><strong>Notes:</strong> ${w.notes.map(n => `<div>• ${n}</div>`).join("")}</div>
   `;
-
-  ensureRoutineNote(summary);
 
   coachNote.textContent = w._coachNote ? `Coach note: ${w._coachNote}` : "";
 
@@ -902,6 +895,7 @@ async function main() {
   const basePlan = await loadPlan();
   basePlanGlobal = basePlan;
   renderMeta(basePlan);
+  renderGuidelines();
 
   const working = getWorkingPlan(basePlan);
   let currentWeek = computeCurrentWeek(working);
