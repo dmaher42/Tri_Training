@@ -17,105 +17,111 @@
     <button id="openAdaptation" class="primary" style="margin-top: 10px;">Adjust Plan</button>
   </header>
 
-  <main class="wrap grid">
-    <section class="card highlight-card" id="todayCard">
-      <h2>Today's Sessions</h2>
-      <div id="todaySessions"></div>
-    </section>
+  <div class="wrap">
+    <div class="layout">
+      <main class="layout__main grid">
+        <section class="card highlight-card" id="todayCard">
+          <h2>Today's Sessions</h2>
+          <div id="todaySessions"></div>
+        </section>
 
-    <section class="card">
-      <h2>This week</h2>
+        <section class="card">
+          <h2>This week</h2>
 
-      <div class="row">
-        <label for="weekSelect">Week</label>
-        <select id="weekSelect"></select>
-        <button id="jumpToCurrent">Jump to current</button>
-      </div>
-
-      <div id="weekSummary" class="muted"></div>
-
-      <section class="calendar" aria-label="Training calendar">
-        <div class="calendar__header">
-          <div class="calendar__title">
-            <h3>Calendar</h3>
-            <div id="calendarSummary" class="calendar__summary muted"></div>
+          <div class="row">
+            <label for="weekSelect">Week</label>
+            <select id="weekSelect"></select>
+            <button id="jumpToCurrent">Jump to current</button>
           </div>
 
-          <div class="calendar__controls">
-            <div class="calendar__toggle" role="group" aria-label="Calendar view toggle">
-              <button id="calWeekBtn" class="btn btn--ghost" type="button" aria-pressed="false">Week</button>
-              <button id="calMonthBtn" class="btn btn--ghost is-active" type="button" aria-pressed="true">Month</button>
+          <div id="weekSummary" class="muted"></div>
+          <div id="weekGrid" class="week-grid"></div>
+        </section>
+
+        <dialog id="adaptationModal" class="card">
+          <div class="row" style="justify-content: space-between; margin-top: 0;">
+            <h2>Adaptions/h2>
+            <button id="closeAdaptation">Close</button>
+          </div>
+
+          <div class="field">
+            <label for="fatigue">Fatigue</label>
+            <select id="fatigue">
+              <option value="low">Low</option>
+              <option value="moderate" selected>Moderate</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="sleep">Sleep</label>
+            <select id="sleep">
+              <option value="good">Good</option>
+              <option value="ok" selected>OK</option>
+              <option value="poor">Poor</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="soreness">Soreness</label>
+            <input id="soreness" placeholder="e.g. calf, hip flexor" />
+          </div>
+
+          <label class="checkbox">
+            <input id="illness" type="checkbox" /> Sick / fever
+          </label>
+
+          <label class="checkbox">
+            <input id="injury" type="checkbox" /> Injury warning
+          </label>
+
+          <h3>Adaptation notes</h3>
+          <div id="missedList"></div>
+
+          <button id="adaptWeek" class="primary">Adapt this week</button>
+
+          <hr />
+
+          <div class="row">
+            <button id="resetState" class="danger">Reset adaptations</button>
+            <button id="exportState">Export state</button>
+            <label class="file">
+              <span>Import state</span>
+              <input id="importState" type="file" accept="application/json" />
+            </label>
+          </div>
+          <div class="note" id="coachNote"></div>
+        </dialog>
+      </main>
+
+      <aside class="layout__side" aria-label="Sidebar">
+        <section class="calendar" aria-label="Training calendar">
+          <div class="calendar__header">
+            <div class="calendar__title">
+              <h3>Calendar</h3>
+              <div id="calendarSummary" class="calendar__summary muted"></div>
             </div>
 
-            <div class="calendar__legend">
-              <span class="legend-item"><span class="legend-dot legend-dot--am"></span> Session 1 (AM)</span>
-              <span class="legend-item"><span class="legend-dot legend-dot--pm"></span> Session 2 (PM)</span>
+            <div class="calendar__controls">
+              <div class="calendar__toggle" role="group" aria-label="Calendar view toggle">
+                <button id="calWeekBtn" class="btn btn--ghost" type="button" aria-pressed="false">Week</button>
+                <button id="calMonthBtn" class="btn btn--ghost is-active" type="button" aria-pressed="true">Month</button>
+              </div>
+
+              <div class="calendar__legend">
+                <span class="legend-item"><span class="legend-dot legend-dot--am"></span> Session 1 (AM)</span>
+                <span class="legend-item"><span class="legend-dot legend-dot--pm"></span> Session 2 (PM)</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div id="calendarView" class="calendar__grid" aria-live="polite"></div>
+          <div id="calendarView" class="calendar__grid" aria-live="polite"></div>
 
-        <div class="calendar__note muted">Marks completed sessions based on your Done checkboxes.</div>
-      </section>
-      <div id="weekGrid" class="week-grid"></div>
-    </section>
-
-    <dialog id="adaptationModal" class="card">
-      <div class="row" style="justify-content: space-between; margin-top: 0;">
-        <h2>Adaptions/h2>
-        <button id="closeAdaptation">Close</button>
-      </div>
-
-      <div class="field">
-        <label for="fatigue">Fatigue</label>
-        <select id="fatigue">
-          <option value="low">Low</option>
-          <option value="moderate" selected>Moderate</option>
-          <option value="high">High</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="sleep">Sleep</label>
-        <select id="sleep">
-          <option value="good">Good</option>
-          <option value="ok" selected>OK</option>
-          <option value="poor">Poor</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="soreness">Soreness</label>
-        <input id="soreness" placeholder="e.g. calf, hip flexor" />
-      </div>
-
-      <label class="checkbox">
-        <input id="illness" type="checkbox" /> Sick / fever
-      </label>
-
-      <label class="checkbox">
-        <input id="injury" type="checkbox" /> Injury warning
-      </label>
-
-      <h3>Adaptation notes</h3>
-      <div id="missedList"></div>
-
-      <button id="adaptWeek" class="primary">Adapt this week</button>
-
-      <hr />
-
-      <div class="row">
-        <button id="resetState" class="danger">Reset adaptations</button>
-        <button id="exportState">Export state</button>
-        <label class="file">
-          <span>Import state</span>
-          <input id="importState" type="file" accept="application/json" />
-        </label>
-      </div>
-      <div class="note" id="coachNote"></div>
-    </dialog>
-  </main>
+          <div class="calendar__note muted">Marks completed sessions based on your Done checkboxes.</div>
+        </section>
+      </aside>
+    </div>
+  </div>
 
   <script defer src="js/app.js"></script>
 </body>
