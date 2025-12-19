@@ -33,6 +33,31 @@
       </div>
 
       <div id="weekSummary" class="muted"></div>
+
+      <section class="calendar" aria-label="Training calendar">
+        <div class="calendar__header">
+          <div class="calendar__title">
+            <h3>Calendar</h3>
+            <div id="calendarSummary" class="calendar__summary muted"></div>
+          </div>
+
+          <div class="calendar__controls">
+            <div class="calendar__toggle" role="group" aria-label="Calendar view toggle">
+              <button id="calWeekBtn" class="btn btn--ghost" type="button" aria-pressed="false">Week</button>
+              <button id="calMonthBtn" class="btn btn--ghost is-active" type="button" aria-pressed="true">Month</button>
+            </div>
+
+            <div class="calendar__legend">
+              <span class="legend-item"><span class="legend-dot legend-dot--am"></span> Session 1 (AM)</span>
+              <span class="legend-item"><span class="legend-dot legend-dot--pm"></span> Session 2 (PM)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="calendarView" class="calendar__grid" aria-live="polite"></div>
+
+        <div class="calendar__note muted">Marks completed sessions based on your Done checkboxes.</div>
+      </section>
       <div id="weekGrid" class="week-grid"></div>
     </section>
 
