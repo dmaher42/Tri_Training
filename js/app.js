@@ -211,6 +211,125 @@ function computeCurrentWeek(plan) {
   return clamp(w, 1, plan.weeks.length);
 }
 
+function renderCalendarMonth(plan, weekNum) {
+  const grid = document.getElementById("calendarView");
+  const summary = document.getElementById("calendarSummary");
+  if (!grid || !plan) return;
+
+  const startDate = parseIsoDate(plan.startDate);
+  const raceDate = parseIsoDate(plan.raceDate);
+  const checks = getSessionChecks();
+
+  const planByDate = new Map();
+  const dayMs = 24 * 60 * 60 * 1000;
+  for (let cursor = new Date(startDate); cursor.getTime() <= raceDate.getTime(); cursor = new Date(cursor.getTime() + dayMs)) {
+    const dayIndex = daysBetween(startDate, cursor);
+    const wNum = Math.floor(dayIndex / 7) + 1;
+    const dayName = DAYS[dayIndex % 7];
+    const week = plan.weeks.find((w) => w.week === wNum);
+    const sessions = week?.days?.[dayName] || [];
+    const key = cursor.toISOString().slice(0, 10);
+    planByDate.set(key, { weekNum: wNum, dayName, sessions, checks: checks[String(wNum)]?.[dayName] || {} });
+  }
+
+  const monthStartAnchor = new Date(startDate.getTime() + (Math.max(1, weekNum) - 1) * 7 * dayMs);
+  const displayYear = monthStartAnchor.getUTCFullYear();
+  const displayMonth = monthStartAnchor.getUTCMonth();
+  const firstOfMonth = new Date(Date.UTC(displayYear, displayMonth, 1));
+  const daysInMonth = new Date(Date.UTC(displayYear, displayMonth + 1, 0)).getUTCDate();
+  const firstDayOffset = (firstOfMonth.getUTCDay() + 6) % 7; // Monday = 0
+  const today = new Date();
+  const todayUtc = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  const todayKey = todayUtc.toISOString().slice(0, 10);
+
+  grid.innerHTML = "";
+  const frag = document.createDocumentFragment();
+
+  DAYS.forEach((d) => {
+    const head = document.createElement("div");
+    head.className = "cal-head muted";
+    head.textContent = d;
+    frag.appendChild(head);
+  });
+
+  for (let i = 0; i < firstDayOffset; i++) {
+    const pad = document.createElement("div");
+    pad.className = "cal-day is-dim";
+    pad.innerHTML = `<div class="cal-day__num">&nbsp;</div>`;
+    frag.appendChild(pad);
+  }
+
+  let completedSessions = 0;
+  let plannedSessions = 0;
+
+  for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
+    const dateObj = new Date(Date.UTC(displayYear, displayMonth, dayNum));
+    const key = dateObj.toISOString().slice(0, 10);
+    const dayInfo = planByDate.get(key);
+    const cell = document.createElement("div");
+
+    if (!dayInfo) {
+      cell.className = "cal-day is-dim";
+      cell.innerHTML = `<div class="cal-day__num">${dayNum}</div>`;
+      frag.appendChild(cell);
+      continue;
+    }
+
+    const isToday = key === todayKey;
+    cell.className = `cal-day${isToday ? " is-today" : ""}`;
+    cell.dataset.date = key;
+    cell.dataset.week = String(dayInfo.weekNum);
+    cell.dataset.day = dayInfo.dayName;
+
+    const num = document.createElement("div");
+    num.className = "cal-day__num";
+    num.textContent = String(dayNum);
+    cell.appendChild(num);
+
+    const bars = document.createElement("div");
+    bars.className = "cal-day__bars";
+
+    ["AM", "PM"].forEach((slot, idx) => {
+      const session = dayInfo.sessions[idx];
+      const bar = document.createElement("span");
+      bar.className = `cal-bar cal-bar--${slot.toLowerCase()}`;
+      if (session) {
+        const isOff = isNonTrainingType(session.type);
+        const isDone = !isOff && !!dayInfo.checks[String(idx)];
+        if (isOff) bar.classList.add("is-off");
+        if (isDone) bar.classList.add("is-done");
+        if (!isOff) {
+          plannedSessions += 1;
+          if (isDone) completedSessions += 1;
+        }
+      }
+      bars.appendChild(bar);
+    });
+
+    cell.appendChild(bars);
+    frag.appendChild(cell);
+  }
+
+  const totalCells = DAYS.length + firstDayOffset + daysInMonth;
+  const remainder = totalCells % 7;
+  if (remainder) {
+    const pads = 7 - remainder;
+    for (let i = 0; i < pads; i++) {
+      const pad = document.createElement("div");
+      pad.className = "cal-day is-dim";
+      pad.innerHTML = `<div class="cal-day__num">&nbsp;</div>`;
+      frag.appendChild(pad);
+    }
+  }
+
+  grid.appendChild(frag);
+
+  if (summary) {
+    const monthName = firstOfMonth.toLocaleString(undefined, { month: "long", timeZone: "UTC" });
+    summary.textContent = `${monthName} ${displayYear} • ${completedSessions} / ${plannedSessions} sessions completed`;
+  }
+}
+
 function buildWeekSelect(plan, currentWeek) {
   const sel = document.getElementById("weekSelect");
   sel.innerHTML = "";
@@ -407,6 +526,7 @@ function renderWeek(plan, weekNum) {
         updateDayProgress(card.closest('.day'));
       }
       updateWeeklyProgressForSelectedWeek(basePlanGlobal);
+      renderCalendarMonth(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
 
       if (basePlanGlobal) {
         const p = getWorkingPlan(basePlanGlobal);
@@ -584,6 +704,7 @@ function renderToday(plan, currentWeek) {
       if (sel && Number(sel.value) === week) {
         renderWeek(getWorkingPlan(basePlanGlobal), week);
       }
+      renderCalendarMonth(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
     });
     container.dataset.listenerAttached = "true";
   }
@@ -624,10 +745,13 @@ async function main() {
   buildWeekSelect(working, currentWeek);
   renderWeek(working, currentWeek);
   renderToday(working, currentWeek);
+  renderCalendarMonth(working, currentWeek);
 
   document.getElementById("weekSelect").addEventListener("change", (e) => {
     const w = Number(e.target.value);
-    renderWeek(getWorkingPlan(basePlan), w);
+    const p = getWorkingPlan(basePlan);
+    renderWeek(p, w);
+    renderCalendarMonth(p, w);
   });
 
   document.getElementById("jumpToCurrent").addEventListener("click", () => {
@@ -635,6 +759,7 @@ async function main() {
     currentWeek = computeCurrentWeek(p);
     buildWeekSelect(p, currentWeek);
     renderWeek(p, currentWeek);
+    renderCalendarMonth(p, currentWeek);
   });
 
   // Modal controls
@@ -667,6 +792,7 @@ async function main() {
 
     const p2 = getWorkingPlan(basePlan);
     renderWeek(p2, weekNum);
+    renderCalendarMonth(p2, weekNum);
   });
 
   document.getElementById("resetState").addEventListener("click", () => {
@@ -674,6 +800,7 @@ async function main() {
     const p2 = getWorkingPlan(basePlan);
     const w = Number(document.getElementById("weekSelect").value);
     renderWeek(p2, w);
+    renderCalendarMonth(p2, w);
   });
 
   document.getElementById("exportState").addEventListener("click", () => {
@@ -697,6 +824,7 @@ async function main() {
     const w = Number(document.getElementById("weekSelect").value);
     renderWeek(p2, w);
     e.target.value = "";
+    renderCalendarMonth(p2, w);
   });
 }
 
