@@ -1,8 +1,25 @@
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const STORAGE_KEY = "triPlanState_v2";
-const CALENDAR_VIEW_KEY = "triCalendarView";
+
+const PLAN_STORAGE_KEY = "triPlanSelected_v1";
+const STORAGE_KEY_PREFIX = "triPlanState_v2";
+const CALENDAR_VIEW_KEY_PREFIX = "triCalendarView";
+
+const PLAN_OPTIONS = {
+  "70.3": {
+    label: "70.3",
+    file: "data/plan-70.3.json"
+  },
+  "ironman": {
+    label: "Ironman",
+    file: "data/plan-ironman.json"
+  }
+};
+
 let weekGridListenerAttached = false;
+let todayListenerAttached = false;
+let calendarListenerAttached = false;
 let basePlanGlobal = null;
+let currentPlanKeyGlobal = "70.3";
 let hasFlashClassCache = null;
 
 const PATTERN = {
@@ -33,6 +50,30 @@ const DEFAULT_DURATION = {
   Off: "-"
 };
 
+function getCurrentStorageKey() {
+  return `${STORAGE_KEY_PREFIX}_${currentPlanKeyGlobal}`;
+}
+
+function getCurrentCalendarViewKey() {
+  return `${CALENDAR_VIEW_KEY_PREFIX}_${currentPlanKeyGlobal}`;
+}
+
+function getSelectedPlanKey() {
+  const saved = localStorage.getItem(PLAN_STORAGE_KEY);
+  return PLAN_OPTIONS[saved] ? saved : "70.3";
+}
+
+function setSelectedPlanKey(planKey) {
+  const validPlan = PLAN_OPTIONS[planKey] ? planKey : "70.3";
+  localStorage.setItem(PLAN_STORAGE_KEY, validPlan);
+  currentPlanKeyGlobal = validPlan;
+  return validPlan;
+}
+
+function getPlanConfig(planKey) {
+  return PLAN_OPTIONS[planKey] || PLAN_OPTIONS["70.3"];
+}
+
 function parseIsoDate(s) {
   const [y, m, d] = s.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, d));
@@ -43,30 +84,35 @@ function daysBetween(a, b) {
   return Math.floor(ms / (1000 * 60 * 60 * 24));
 }
 
-function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+function clamp(n, lo, hi) {
+  return Math.max(lo, Math.min(hi, n));
+}
 
 function loadLocal() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
-  catch { return null; }
+  try {
+    return JSON.parse(localStorage.getItem(getCurrentStorageKey()) || "null");
+  } catch {
+    return null;
+  }
 }
 
 function saveLocal(obj) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+  localStorage.setItem(getCurrentStorageKey(), JSON.stringify(obj));
 }
 
 function getPreferredCalendarView() {
-  const raw = localStorage.getItem(CALENDAR_VIEW_KEY);
+  const raw = localStorage.getItem(getCurrentCalendarViewKey());
   return raw === "week" ? "week" : "month";
 }
 
 function setPreferredCalendarView(view) {
   const v = view === "week" ? "week" : "month";
-  localStorage.setItem(CALENDAR_VIEW_KEY, v);
+  localStorage.setItem(getCurrentCalendarViewKey(), v);
   return v;
 }
 
 function getSessionChecks() {
-  return (loadLocal()?.sessionChecks || {});
+  return loadLocal()?.sessionChecks || {};
 }
 
 function setSessionCheck(weekNum, day, idx, val) {
@@ -79,27 +125,29 @@ function setSessionCheck(weekNum, day, idx, val) {
   saveLocal(local);
 }
 
-function deepClone(x) { return JSON.parse(JSON.stringify(x)); }
+function deepClone(x) {
+  return JSON.parse(JSON.stringify(x));
+}
 
 function durationToMinutes(s) {
   if (!s || s === "-") return 0;
   const raw = String(s).trim();
   const parts = raw.includes("–") ? raw.split("–") : raw.split("-");
-  const cleanedParts = parts.map(p => p.trim()).filter(Boolean);
-  const parseOne = (t) => {
-    const s = String(t).trim();
-    if (!s) return 0;
+  const cleanedParts = parts.map((p) => p.trim()).filter(Boolean);
 
-    // HH:MM format
-    if (s.includes(":")) {
-      const [hh, mm] = s.split(":").map(Number);
+  const parseOne = (t) => {
+    const value = String(t).trim();
+    if (!value) return 0;
+
+    if (value.includes(":")) {
+      const [hh, mm] = value.split(":").map(Number);
       return (hh * 60) + mm;
     }
 
-    // Minutes, allow both "40m" and "40"
-    const m = s.match(/(\d+)/);
+    const m = value.match(/(\d+)/);
     return m ? Number(m[1]) : 0;
   };
+
   if (cleanedParts.length === 1) return parseOne(cleanedParts[0]);
   return Math.round((parseOne(cleanedParts[0]) + parseOne(cleanedParts[1])) / 2);
 }
@@ -113,13 +161,16 @@ function minutesToHHMM(mins) {
 function minutesToRange(mins, pct = 0) {
   const m = Math.max(0, Math.round(mins * (1 - pct)));
   if (m >= 120) {
-    const hh = Math.floor(m / 60), mm = m % 60;
+    const hh = Math.floor(m / 60);
+    const mm = m % 60;
     return `${hh}:${String(mm).padStart(2, "0")}`;
   }
   return `${m}m`;
 }
 
-function slotIndex(slot) { return slot === "PM" ? 1 : 0; }
+function slotIndex(slot) {
+  return slot === "PM" ? 1 : 0;
+}
 
 function defaultSession(day, slot) {
   const type = PATTERN[day]?.[slot] || "Mobility";
@@ -139,8 +190,16 @@ function normalizeDaySessions(dayName, sessions = [], weekNum) {
     slotMap[slot] = {
       slot,
       type: s.type || PATTERN[dayName]?.[slot] || "Mobility",
-      duration: s.duration || DEFAULT_DURATION[s.type] || DEFAULT_DURATION[slotMap[slot]?.type] || "-",
-      details: s.details || DEFAULT_DETAILS[s.type] || DEFAULT_DETAILS[slotMap[slot]?.type] || ""
+      duration:
+        s.duration ||
+        DEFAULT_DURATION[s.type] ||
+        DEFAULT_DURATION[slotMap[slot]?.type] ||
+        "-",
+      details:
+        s.details ||
+        DEFAULT_DETAILS[s.type] ||
+        DEFAULT_DETAILS[slotMap[slot]?.type] ||
+        ""
     };
   };
 
@@ -199,8 +258,8 @@ function computeWeeklyTotals(weekObj, weekNum) {
     sessions.forEach((s, idx) => {
       const isOff = isNonTrainingType(s.type);
       const isChecked = !!(checks[d]?.[String(idx)]);
-      // Race days count as planned sessions but do not add to weekly minute totals.
       const mins = s.type === "Race" ? 0 : durationToMinutes(s.duration);
+
       if (!isOff) {
         plannedSessions += 1;
         plannedMinutes += mins;
@@ -235,14 +294,25 @@ function renderCalendarMonth(plan, weekNum) {
 
   const planByDate = new Map();
   const dayMs = 24 * 60 * 60 * 1000;
-  for (let cursor = new Date(startDate); cursor.getTime() <= raceDate.getTime(); cursor = new Date(cursor.getTime() + dayMs)) {
+
+  for (
+    let cursor = new Date(startDate);
+    cursor.getTime() <= raceDate.getTime();
+    cursor = new Date(cursor.getTime() + dayMs)
+  ) {
     const dayIndex = daysBetween(startDate, cursor);
     const wNum = Math.floor(dayIndex / 7) + 1;
     const dayName = DAYS[dayIndex % 7];
     const week = plan.weeks.find((w) => w.week === wNum);
     const sessions = week?.days?.[dayName] || [];
     const key = cursor.toISOString().slice(0, 10);
-    planByDate.set(key, { weekNum: wNum, dayName, sessions, checks: checks[String(wNum)]?.[dayName] || {} });
+
+    planByDate.set(key, {
+      weekNum: wNum,
+      dayName,
+      sessions,
+      checks: checks[String(wNum)]?.[dayName] || {}
+    });
   }
 
   const monthStartAnchor = new Date(startDate.getTime() + (Math.max(1, weekNum) - 1) * 7 * dayMs);
@@ -250,7 +320,7 @@ function renderCalendarMonth(plan, weekNum) {
   const displayMonth = monthStartAnchor.getUTCMonth();
   const firstOfMonth = new Date(Date.UTC(displayYear, displayMonth, 1));
   const daysInMonth = new Date(Date.UTC(displayYear, displayMonth + 1, 0)).getUTCDate();
-  const firstDayOffset = (firstOfMonth.getUTCDay() + 6) % 7; // Monday = 0
+  const firstDayOffset = (firstOfMonth.getUTCDay() + 6) % 7;
   const today = new Date();
   const todayUtc = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
   const todayKey = todayUtc.toISOString().slice(0, 10);
@@ -306,6 +376,7 @@ function renderCalendarMonth(plan, weekNum) {
       const session = dayInfo.sessions[idx];
       const bar = document.createElement("span");
       bar.className = `cal-bar cal-bar--${slot.toLowerCase()}`;
+
       if (session) {
         const isOff = isNonTrainingType(session.type);
         const isDone = !isOff && !!dayInfo.checks[String(idx)];
@@ -316,6 +387,7 @@ function renderCalendarMonth(plan, weekNum) {
           if (isDone) completedSessions += 1;
         }
       }
+
       bars.appendChild(bar);
     });
 
@@ -396,6 +468,7 @@ function renderCalendarWeek(plan, weekNum) {
       const session = sessions[slotIdx];
       const bar = document.createElement("span");
       bar.className = `cal-bar cal-bar--${slot.toLowerCase()}`;
+
       if (session) {
         const isOff = isNonTrainingType(session.type);
         const isDone = !isOff && !!weekChecks[String(slotIdx)];
@@ -406,6 +479,7 @@ function renderCalendarWeek(plan, weekNum) {
           if (isDone) completedSessions += 1;
         }
       }
+
       bars.appendChild(bar);
     });
 
@@ -454,8 +528,10 @@ function renderCalendar(plan, weekNum) {
 
 function buildWeekSelect(plan, currentWeek) {
   const sel = document.getElementById("weekSelect");
+  if (!sel) return;
+
   sel.innerHTML = "";
-  plan.weeks.forEach(w => {
+  plan.weeks.forEach((w) => {
     const opt = document.createElement("option");
     opt.value = String(w.week);
     opt.textContent = `Week ${w.week} – ${w.phase} (${w.hoursTarget})`;
@@ -466,20 +542,38 @@ function buildWeekSelect(plan, currentWeek) {
 
 function renderMeta(plan) {
   const el = document.getElementById("meta");
-  el.textContent = `Start: ${plan.startDate} • Race: ${plan.raceDate}`;
+  if (el) {
+    el.textContent = `Start: ${plan.startDate} • Race: ${plan.raceDate}`;
+  }
+
+  const heading = document.getElementById("planHeading");
+  if (heading) {
+    heading.textContent = plan.title || getPlanConfig(currentPlanKeyGlobal).label || "Training Plan";
+  }
+
+  document.title = plan.title || "Tri Plan";
+}
+
+function syncPlanSelector() {
+  const planSelect = document.getElementById("planSelect");
+  if (planSelect) {
+    planSelect.value = currentPlanKeyGlobal;
+  }
 }
 
 function getWorkingPlan(plan) {
   const local = loadLocal();
   const p = deepClone(plan);
+
   if (local?.weekOverrides) {
     for (const [weekNum, override] of Object.entries(local.weekOverrides)) {
-      const w = p.weeks.find(x => String(x.week) === String(weekNum));
+      const w = p.weeks.find((x) => String(x.week) === String(weekNum));
       if (!w) continue;
       if (override.days) w.days = override.days;
       if (override.coachNote) w._coachNote = override.coachNote;
     }
   }
+
   p.weeks = p.weeks.map((wk) => normalizeWeek(wk, wk.week));
   return p;
 }
@@ -492,7 +586,7 @@ function setWeekOverride(weekNum, days, coachNote) {
 }
 
 function resetOverrides() {
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(getCurrentStorageKey());
 }
 
 function renderWeeklyProgressCard(w, weekNum) {
@@ -509,6 +603,7 @@ function renderWeeklyProgressCard(w, weekNum) {
 
   const { plannedSessions, completedSessions, plannedMinutes, completedMinutes } = computeWeeklyTotals(w, weekNum);
   const completionPct = plannedSessions ? Math.round((completedSessions / plannedSessions) * 100) : 0;
+
   const barMarkup = plannedSessions ? `
     <div class="weekly-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${completionPct}">
       <div class="weekly-progress__barFill" style="width: ${completionPct}%"></div>
@@ -516,14 +611,13 @@ function renderWeeklyProgressCard(w, weekNum) {
   ` : "";
 
   summaryBox.innerHTML = `
-  <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
-
-  <div class="weekly-progress__grid">
-    <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
-    <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
-    <div><div class="k">Completion</div><div class="v">${completionPct}%</div></div>
-  </div>
-  ${barMarkup}
+    <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
+    <div class="weekly-progress__grid">
+      <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
+      <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
+      <div><div class="k">Completion</div><div class="v">${completionPct}%</div></div>
+    </div>
+    ${barMarkup}
   `;
 }
 
@@ -539,20 +633,21 @@ function updateDayProgress(dayEl) {
   if (!dayEl) return;
   const sessions = Array.from(dayEl.querySelectorAll('.session:not([data-type="Off"])'));
   const total = sessions.length;
-  const done = sessions.filter((s) => s.classList.contains('done')).length;
-  const progressEl = dayEl.querySelector('.day__progress');
+  const done = sessions.filter((s) => s.classList.contains("done")).length;
+  const progressEl = dayEl.querySelector(".day__progress");
   if (progressEl) {
-    progressEl.textContent = total ? `Done: ${done} / ${total}` : 'Done: 0 / 0';
+    progressEl.textContent = total ? `Done: ${done} / ${total}` : "Done: 0 / 0";
   }
 }
 
 function flashDayElement(el) {
   if (!el) return;
+
   if (hasFlashClassCache === null) {
     try {
       hasFlashClassCache = Array.from(document.styleSheets || []).some((sheet) => {
         try {
-          return Array.from(sheet.cssRules || []).some((rule) => rule.selectorText && rule.selectorText.includes('.is-flash'));
+          return Array.from(sheet.cssRules || []).some((rule) => rule.selectorText && rule.selectorText.includes(".is-flash"));
         } catch {
           return false;
         }
@@ -574,13 +669,16 @@ function createSessionCard(s, weekNum, dayName, idx, isDone) {
   box.className = `session${isDone ? " done" : ""}`;
   box.dataset.type = s.type;
   box.dataset.slot = s.slot;
+
   const doneToggle = isOff ? "" : `
     <label class="done-toggle">
       <input type="checkbox" data-week="${weekNum}" data-day="${dayName}" data-idx="${idx}" ${isDone ? "checked" : ""}>
       <span>Done</span>
     </label>`;
+
   const slotLabel = s.slot === "PM" ? "Session 2 · PM" : "Session 1 · AM";
   const adaptedBadge = s._adapted ? `<span class="adapted-badge">Adapted</span>` : "";
+
   box.innerHTML = `
     <div class="top">
       <div class="session-title">
@@ -595,12 +693,14 @@ function createSessionCard(s, weekNum, dayName, idx, isDone) {
     <div class="session-duration muted">${s.duration}</div>
     <p class="session-details">${s.details || ""}</p>
   `;
+
   return box;
 }
 
 function renderWeek(plan, weekNum) {
-  const rawWeek = plan.weeks.find(x => x.week === weekNum);
+  const rawWeek = plan.weeks.find((x) => x.week === weekNum);
   if (!rawWeek) return;
+
   const w = normalizeWeek(rawWeek, rawWeek.week);
   const summary = document.getElementById("weekSummary");
   const grid = document.getElementById("weekGrid");
@@ -614,9 +714,7 @@ function renderWeek(plan, weekNum) {
   `;
 
   coachNote.textContent = w._coachNote ? `Coach note: ${w._coachNote}` : "";
-
   renderWeeklyProgressCard(w, weekNum);
-
   grid.innerHTML = "";
 
   for (const d of DAYS) {
@@ -627,6 +725,7 @@ function renderWeek(plan, weekNum) {
         <h4>${d}</h4>
         <div class="day__progress" aria-live="polite"></div>
       </div>`;
+
     const sessions = (w.days[d] || []).slice().sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot));
 
     sessions.forEach((s, idx) => {
@@ -636,7 +735,6 @@ function renderWeek(plan, weekNum) {
     });
 
     updateDayProgress(day);
-
     grid.appendChild(day);
   }
 
@@ -647,15 +745,19 @@ function renderWeek(plan, weekNum) {
       const target = e.target;
       if (!target || !(target instanceof HTMLInputElement)) return;
       if (!target.matches(".done-toggle input")) return;
+
       const week = Number(target.dataset.week);
       const dayName = target.dataset.day;
       const idx = Number(target.dataset.idx);
+
       setSessionCheck(week, dayName, idx, target.checked);
-      const card = target.closest('.session');
+
+      const card = target.closest(".session");
       if (card) {
-        card.classList.toggle('done', target.checked);
-        updateDayProgress(card.closest('.day'));
+        card.classList.toggle("done", target.checked);
+        updateDayProgress(card.closest(".day"));
       }
+
       updateWeeklyProgressForSelectedWeek(basePlanGlobal);
       renderCalendar(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
 
@@ -676,6 +778,7 @@ function renderWeek(plan, weekNum) {
 
 function jumpToWeekDay(weekNum, dayName) {
   if (!weekNum || !dayName) return;
+
   const sel = document.getElementById("weekSelect");
   if (sel) sel.value = String(weekNum);
 
@@ -687,7 +790,11 @@ function jumpToWeekDay(weekNum, dayName) {
 
   const grid = document.getElementById("weekGrid");
   if (!grid) return;
-  const dayEl = Array.from(grid.querySelectorAll(".day")).find((d) => d.querySelector("h4")?.textContent === dayName);
+
+  const dayEl = Array.from(grid.querySelectorAll(".day")).find(
+    (d) => d.querySelector("h4")?.textContent === dayName
+  );
+
   if (dayEl) {
     dayEl.scrollIntoView({ behavior: "smooth", block: "start" });
     flashDayElement(dayEl);
@@ -698,10 +805,12 @@ function updateWeeklyProgressForSelectedWeek(plan) {
   if (!plan) return;
   const sel = document.getElementById("weekSelect");
   if (!sel) return;
+
   const weekNum = Number(sel.value);
   const working = getWorkingPlan(plan);
-  const w = working.weeks.find(x => x.week === weekNum);
+  const w = working.weeks.find((x) => x.week === weekNum);
   if (!w) return;
+
   renderWeeklyProgressCard(w, weekNum);
 }
 
@@ -727,9 +836,14 @@ function convertRunForInjury(session, dayName, slot, reducePct) {
   const substituteDetail = isBrickRun
     ? "Mobility/Elliptical. Keep cadence relaxed."
     : "Easy aerobic bike. No load.";
+
   const baseMins = durationToMinutes(session.duration) || durationToMinutes(DEFAULT_DURATION[type]);
-  const duration = baseMins ? minutesToRange(baseMins, reducePct || 0.35) : (DEFAULT_DURATION[type] || session.duration || "-");
+  const duration = baseMins
+    ? minutesToRange(baseMins, reducePct || 0.35)
+    : (DEFAULT_DURATION[type] || session.duration || "-");
+
   const baseDetails = stripIntensityText(DEFAULT_DETAILS[type] || session.details, "easy");
+
   return {
     ...session,
     slot,
@@ -745,11 +859,12 @@ function applyRulesToWeek(week, state) {
   const w = deepClone(normalizeWeek(week, week.week));
   const sick = !!state.illness;
   const injured = !!state.injury;
-  const heavy = (state.fatigue === "high") || (state.sleep === "poor");
+  const heavy = state.fatigue === "high" || state.sleep === "poor";
   const sorenessAreas = (state.soreness || "")
     .split(",")
-    .map(x => x.trim().toLowerCase())
+    .map((x) => x.trim().toLowerCase())
     .filter(Boolean);
+
   const lowerBody = isLowerBodySoreness(sorenessAreas);
   const protectRun = injured || lowerBody;
 
@@ -810,7 +925,7 @@ function renderToday(plan, currentWeek) {
   const dayIndex = (now.getDay() + 6) % 7;
   const dayName = DAYS[dayIndex];
 
-  const rawWeek = plan.weeks.find(x => x.week === currentWeek);
+  const rawWeek = plan.weeks.find((x) => x.week === currentWeek);
   if (!rawWeek) {
     container.innerHTML = `<div class="muted">No schedule for today.</div>`;
     return;
@@ -821,6 +936,7 @@ function renderToday(plan, currentWeek) {
   const weekChecks = getSessionChecks()[String(currentWeek)] || {};
 
   container.innerHTML = "";
+
   if (!sessions.length) {
     container.innerHTML = `<div class="muted">Rest day.</div>`;
     return;
@@ -832,7 +948,7 @@ function renderToday(plan, currentWeek) {
     container.appendChild(box);
   });
 
-  if (!container.dataset.listenerAttached) {
+  if (!todayListenerAttached) {
     container.addEventListener("change", (e) => {
       const target = e.target;
       if (!target || !(target instanceof HTMLInputElement)) return;
@@ -844,9 +960,9 @@ function renderToday(plan, currentWeek) {
 
       setSessionCheck(week, d, idx, target.checked);
 
-      const card = target.closest('.session');
+      const card = target.closest(".session");
       if (card) {
-        card.classList.toggle('done', target.checked);
+        card.classList.toggle("done", target.checked);
       }
 
       updateWeeklyProgressForSelectedWeek(basePlanGlobal);
@@ -855,26 +971,29 @@ function renderToday(plan, currentWeek) {
       if (sel && Number(sel.value) === week) {
         renderWeek(getWorkingPlan(basePlanGlobal), week);
       }
+
       renderCalendar(getWorkingPlan(basePlanGlobal), Number(document.getElementById("weekSelect")?.value || week));
     });
-    container.dataset.listenerAttached = "true";
+    todayListenerAttached = true;
   }
 }
 
-async function loadPlan() {
+async function loadPlan(planKey = currentPlanKeyGlobal) {
+  const config = getPlanConfig(planKey);
   const pageUrl = new URL(window.location.href);
+  const ts = Date.now();
+
   const candidates = [
-    `${new URL("data/plan.json", pageUrl).href}?t=${Date.now()}`,
-    `${pageUrl.origin}${pageUrl.pathname.replace(/\/[^/]*$/, "")}/data/plan.json?t=${Date.now()}`,
-    `data/plan.json?t=${Date.now()}`
+    `${new URL(config.file, pageUrl).href}?t=${ts}`,
+    `${pageUrl.origin}${pageUrl.pathname.replace(/\/[^/]*$/, "")}/${config.file}?t=${ts}`,
+    `${config.file}?t=${ts}`
   ];
 
   const errors = [];
-  const ts = Date.now();
 
   for (const url of candidates) {
     try {
-      const res = await fetch(url.replace(/t=\d+$/, `t=${ts}`), { cache: "no-store" });
+      const res = await fetch(url, { cache: "no-store" });
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return await res.json();
     } catch (err) {
@@ -882,12 +1001,16 @@ async function loadPlan() {
     }
   }
 
-  throw new Error(`Failed to fetch plan.json. Attempts: ${errors.join(" | ")}`);
+  throw new Error(`Failed to fetch ${config.file}. Attempts: ${errors.join(" | ")}`);
 }
 
-async function main() {
-  const basePlan = await loadPlan();
+async function renderAppForPlan(planKey) {
+  const validPlanKey = setSelectedPlanKey(planKey);
+  syncPlanSelector();
+
+  const basePlan = await loadPlan(validPlanKey);
   basePlanGlobal = basePlan;
+
   renderMeta(basePlan);
 
   const working = getWorkingPlan(basePlan);
@@ -900,116 +1023,186 @@ async function main() {
   renderWeek(working, currentWeek);
   renderToday(working, currentWeek);
   renderCalendar(working, currentWeek);
+}
 
-  document.getElementById("weekSelect").addEventListener("change", (e) => {
-    const w = Number(e.target.value);
-    const p = getWorkingPlan(basePlan);
-    renderWeek(p, w);
-    renderCalendar(p, w);
-  });
+function bindStaticUI() {
+  const weekSelect = document.getElementById("weekSelect");
+  if (weekSelect && !weekSelect.dataset.bound) {
+    weekSelect.addEventListener("change", (e) => {
+      const w = Number(e.target.value);
+      const p = getWorkingPlan(basePlanGlobal);
+      renderWeek(p, w);
+      renderCalendar(p, w);
+    });
+    weekSelect.dataset.bound = "true";
+  }
+
+  const weekBtn = document.getElementById("calWeekBtn");
+  const monthBtn = document.getElementById("calMonthBtn");
 
   const handleCalendarViewChange = (view) => {
-    const p = getWorkingPlan(basePlan);
-    const targetWeek = Number(document.getElementById("weekSelect")?.value || currentWeek);
+    const p = getWorkingPlan(basePlanGlobal);
+    const targetWeek = Number(document.getElementById("weekSelect")?.value || computeCurrentWeek(p));
     const v = setPreferredCalendarView(view);
     applyCalendarToggleState(v);
     renderCalendar(p, targetWeek);
   };
 
-  const weekBtn = document.getElementById("calWeekBtn");
-  const monthBtn = document.getElementById("calMonthBtn");
-  if (weekBtn && monthBtn) {
+  if (weekBtn && !weekBtn.dataset.bound) {
     weekBtn.addEventListener("click", () => handleCalendarViewChange("week"));
+    weekBtn.dataset.bound = "true";
+  }
+
+  if (monthBtn && !monthBtn.dataset.bound) {
     monthBtn.addEventListener("click", () => handleCalendarViewChange("month"));
+    monthBtn.dataset.bound = "true";
   }
 
   const calendarView = document.getElementById("calendarView");
-  if (calendarView) {
+  if (calendarView && !calendarListenerAttached) {
     calendarView.addEventListener("click", (e) => {
       const cell = e.target.closest?.(".cal-day");
       if (!cell || cell.classList.contains("is-dim")) return;
+
       const weekNum = Number(cell.dataset.week);
       const dayName = cell.dataset.day;
       if (!weekNum || !dayName) return;
+
       jumpToWeekDay(weekNum, dayName);
     });
+    calendarListenerAttached = true;
   }
 
-  document.getElementById("jumpToCurrent").addEventListener("click", () => {
-    const p = getWorkingPlan(basePlan);
-    currentWeek = computeCurrentWeek(p);
-    buildWeekSelect(p, currentWeek);
-    renderWeek(p, currentWeek);
-    renderCalendar(p, currentWeek);
-  });
+  const jumpToCurrent = document.getElementById("jumpToCurrent");
+  if (jumpToCurrent && !jumpToCurrent.dataset.bound) {
+    jumpToCurrent.addEventListener("click", () => {
+      const p = getWorkingPlan(basePlanGlobal);
+      const currentWeek = computeCurrentWeek(p);
+      buildWeekSelect(p, currentWeek);
+      renderWeek(p, currentWeek);
+      renderToday(p, currentWeek);
+      renderCalendar(p, currentWeek);
+    });
+    jumpToCurrent.dataset.bound = "true";
+  }
 
-  // Modal controls
   const modal = document.getElementById("adaptationModal");
-  document.getElementById("openAdaptation").addEventListener("click", () => {
-    modal.showModal();
-  });
-  document.getElementById("closeAdaptation").addEventListener("click", () => {
-    modal.close();
-  });
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.close();
-  });
+  const openAdaptation = document.getElementById("openAdaptation");
+  const closeAdaptation = document.getElementById("closeAdaptation");
 
-  document.getElementById("adaptWeek").addEventListener("click", () => {
-    const weekNum = Number(document.getElementById("weekSelect").value);
-    const p = getWorkingPlan(basePlan);
-    const w = p.weeks.find(x => x.week === weekNum);
+  if (openAdaptation && !openAdaptation.dataset.bound) {
+    openAdaptation.addEventListener("click", () => {
+      modal.showModal();
+    });
+    openAdaptation.dataset.bound = "true";
+  }
 
-    const state = {
-      fatigue: document.getElementById("fatigue").value,
-      sleep: document.getElementById("sleep").value,
-      soreness: document.getElementById("soreness").value,
-      illness: document.getElementById("illness").checked,
-      injury: document.getElementById("injury").checked
-    };
+  if (closeAdaptation && !closeAdaptation.dataset.bound) {
+    closeAdaptation.addEventListener("click", () => {
+      modal.close();
+    });
+    closeAdaptation.dataset.bound = "true";
+  }
 
-    const { week: adapted, coachNote } = applyRulesToWeek(w, state);
-    setWeekOverride(weekNum, adapted.days, coachNote);
+  if (modal && !modal.dataset.bound) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.close();
+    });
+    modal.dataset.bound = "true";
+  }
 
-    const p2 = getWorkingPlan(basePlan);
-    renderWeek(p2, weekNum);
-    renderCalendar(p2, weekNum);
-  });
+  const adaptWeekBtn = document.getElementById("adaptWeek");
+  if (adaptWeekBtn && !adaptWeekBtn.dataset.bound) {
+    adaptWeekBtn.addEventListener("click", () => {
+      const weekNum = Number(document.getElementById("weekSelect").value);
+      const p = getWorkingPlan(basePlanGlobal);
+      const w = p.weeks.find((x) => x.week === weekNum);
 
-  document.getElementById("resetState").addEventListener("click", () => {
-    resetOverrides();
-    const p2 = getWorkingPlan(basePlan);
-    const w = Number(document.getElementById("weekSelect").value);
-    renderWeek(p2, w);
-    renderCalendar(p2, w);
-  });
+      const state = {
+        fatigue: document.getElementById("fatigue").value,
+        sleep: document.getElementById("sleep").value,
+        soreness: document.getElementById("soreness").value,
+        illness: document.getElementById("illness").checked,
+        injury: document.getElementById("injury").checked
+      };
 
-  document.getElementById("exportState").addEventListener("click", () => {
-    const local = loadLocal() || {};
-    const blob = new Blob([JSON.stringify(local, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "tri-plan-state.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+      const { week: adapted, coachNote } = applyRulesToWeek(w, state);
+      setWeekOverride(weekNum, adapted.days, coachNote);
 
-  document.getElementById("importState").addEventListener("change", async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const text = await file.text();
-    const obj = JSON.parse(text);
-    saveLocal(obj);
-    const p2 = getWorkingPlan(basePlan);
-    const w = Number(document.getElementById("weekSelect").value);
-    renderWeek(p2, w);
-    e.target.value = "";
-    renderCalendar(p2, w);
-  });
+      const p2 = getWorkingPlan(basePlanGlobal);
+      renderWeek(p2, weekNum);
+      renderToday(p2, computeCurrentWeek(p2));
+      renderCalendar(p2, weekNum);
+    });
+    adaptWeekBtn.dataset.bound = "true";
+  }
+
+  const resetStateBtn = document.getElementById("resetState");
+  if (resetStateBtn && !resetStateBtn.dataset.bound) {
+    resetStateBtn.addEventListener("click", () => {
+      resetOverrides();
+      const p2 = getWorkingPlan(basePlanGlobal);
+      const w = Number(document.getElementById("weekSelect").value);
+      renderWeek(p2, w);
+      renderToday(p2, computeCurrentWeek(p2));
+      renderCalendar(p2, w);
+    });
+    resetStateBtn.dataset.bound = "true";
+  }
+
+  const exportStateBtn = document.getElementById("exportState");
+  if (exportStateBtn && !exportStateBtn.dataset.bound) {
+    exportStateBtn.addEventListener("click", () => {
+      const local = loadLocal() || {};
+      const blob = new Blob([JSON.stringify(local, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `tri-plan-state-${currentPlanKeyGlobal}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+    exportStateBtn.dataset.bound = "true";
+  }
+
+  const importStateInput = document.getElementById("importState");
+  if (importStateInput && !importStateInput.dataset.bound) {
+    importStateInput.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const text = await file.text();
+      const obj = JSON.parse(text);
+      saveLocal(obj);
+
+      const p2 = getWorkingPlan(basePlanGlobal);
+      const w = Number(document.getElementById("weekSelect").value);
+      renderWeek(p2, w);
+      renderToday(p2, computeCurrentWeek(p2));
+      renderCalendar(p2, w);
+
+      e.target.value = "";
+    });
+    importStateInput.dataset.bound = "true";
+  }
+
+  const planSelect = document.getElementById("planSelect");
+  if (planSelect && !planSelect.dataset.bound) {
+    planSelect.addEventListener("change", async (e) => {
+      const selected = e.target.value;
+      await renderAppForPlan(selected);
+    });
+    planSelect.dataset.bound = "true";
+  }
 }
 
-main().catch(err => {
+async function main() {
+  const initialPlan = getSelectedPlanKey();
+  bindStaticUI();
+  await renderAppForPlan(initialPlan);
+}
+
+main().catch((err) => {
   console.error(err);
-  alert("Failed to load plan. Check that /data/plan.json exists and GitHub Pages is serving it.");
+  alert("Failed to load plan. Check that data/plan-70.3.json and/or data/plan-ironman.json exist and GitHub Pages is serving them.");
 });
