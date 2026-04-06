@@ -1,0 +1,2405 @@
+{
+  "title": "Build to Ironman 18 October 2026",
+  "startDate": "2026-04-07",
+  "raceDate": "2026-10-18",
+  "weeks": [
+    {
+      "week": 1,
+      "phase": "Rebuild",
+      "hoursTarget": "9–10h",
+      "notes": [
+        "Settle into consistent doubles. One true brick. Extend long ride and long run by time, not speed.",
+        "Keep one key bike session only. Everything else aerobic."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy aerobic swim. Relaxed and continuous."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin. Low stress."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Full rest day."
+          },
+          {
+            "slot": "PM",
+            "type": "Mobility",
+            "duration": "10–20m",
+            "details": "Optional mobility only."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy continuous or short aerobic reps."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60m",
+            "details": "Easy to steady. Build slightly in the second half."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "8×5m medium effort, 2–3m easy between. Controlled, not hard."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–25m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "2:30–2:45",
+            "details": "Long aerobic ride. Fuel throughout."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "65–70m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Easy recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 2,
+      "phase": "Rebuild",
+      "hoursTarget": "10–11h",
+      "notes": [
+        "Keep frequency high. Extend long ride and long run slightly.",
+        "Stay controlled. No second hard session."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy aerobic + drills."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture focus."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Continuous steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "8×5m medium effort, 2–3m easy between."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–25m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "3:00",
+            "details": "Long aerobic ride. Practice fueling."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "70–75m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Easy recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 3,
+      "phase": "Simulation Week",
+      "hoursTarget": "9–10h",
+      "notes": [
+        "Reduce slightly into the April 23–25 home simulation.",
+        "Treat simulation as a long training day, not a race."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20m",
+            "details": "Light only."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "4×5m medium, controlled."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "20–30m",
+            "details": "Easy loosen-up swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Very easy only."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Rest or very easy 20–30m spin only if needed."
+          },
+          {
+            "slot": "PM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Stay fresh."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "45–60m",
+            "details": "Continuous easy–steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "3:00 + Run 8–12km",
+            "details": "Home 70.3 simulation day: steady bike, controlled run."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Recovery day."
+          },
+          {
+            "slot": "PM",
+            "type": "Mobility",
+            "duration": "10–20m",
+            "details": "Optional only."
+          }
+        ]
+      }
+    },
+    {
+      "week": 4,
+      "phase": "Recover / Reset",
+      "hoursTarget": "8–9h",
+      "notes": [
+        "Absorb the simulation. Resume normal rhythm without forcing volume.",
+        "One key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Recovery."
+          },
+          {
+            "slot": "PM",
+            "type": "Mobility",
+            "duration": "10–20m",
+            "details": "Optional only."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core focus."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "8×5m medium effort."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–25m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "2:45–3:00",
+            "details": "Long aerobic ride."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "70–75m",
+            "details": "Long easy run."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Easy recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 5,
+      "phase": "Build 1",
+      "hoursTarget": "10–11h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "3:15",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "75–80m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 6,
+      "phase": "Build 2",
+      "hoursTarget": "11–12h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "3:30",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "80–85m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 7,
+      "phase": "Build 3",
+      "hoursTarget": "11–12h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "3:45",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "85–90m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 8,
+      "phase": "Recovery Week",
+      "hoursTarget": "9–10h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "40–50m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "50–60m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "25–35m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "2:45–3:00",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "70–75m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 9,
+      "phase": "Ironman Build 1",
+      "hoursTarget": "11–12h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "4:00",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "90–95m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 10,
+      "phase": "Ironman Build 2",
+      "hoursTarget": "12–13h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "4:15",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "95–100m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 11,
+      "phase": "Ironman Build 3",
+      "hoursTarget": "12–13h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "4:30",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "100–105m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 12,
+      "phase": "Recovery Week",
+      "hoursTarget": "10–11h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "40–50m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "50–60m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "25–35m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "3:15–3:30",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "80–85m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 13,
+      "phase": "Specific Build 1",
+      "hoursTarget": "12–13h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "4:45",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "1:45",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 14,
+      "phase": "Specific Build 2",
+      "hoursTarget": "13–14h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "5:00",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "1:50",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 15,
+      "phase": "Specific Build 3",
+      "hoursTarget": "13–14h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "5:15",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "1:55",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 16,
+      "phase": "Recovery Week",
+      "hoursTarget": "10–11h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "40–50m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "50–60m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "25–35m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "3:30–3:45",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "85–90m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 17,
+      "phase": "Peak Specific 1",
+      "hoursTarget": "13–15h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "5:30",
+            "details": "Long ride. Full nutrition rehearsal."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "2:00",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 18,
+      "phase": "Peak Specific 2",
+      "hoursTarget": "14–15h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "5:45–6:00",
+            "details": "Peak long ride. Full nutrition rehearsal."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "2:00–2:10",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 19,
+      "phase": "Peak Specific 3",
+      "hoursTarget": "13–14h",
+      "notes": [
+        "Long ride is the centrepiece. Keep most work aerobic.",
+        "Maintain one key bike session, one long ride, one long run."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "45–60m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "50–60m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20–30m",
+            "details": "Glute/core/posture maintenance."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "35–50m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "60–75m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "90–105m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "20–30m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–45m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "45–55m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "5:00–5:15",
+            "details": "Long ride. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "25–30m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "1:45–1:55",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 20,
+      "phase": "Taper 1",
+      "hoursTarget": "11–12h",
+      "notes": [
+        "Reduce volume while keeping rhythm.",
+        "Keep frequency; trim long sessions."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "40–50m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20m",
+            "details": "Light maintenance only."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "50–60m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "25–35m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "4:00",
+            "details": "Long ride trimmed. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "1:30–1:40",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 21,
+      "phase": "Taper 2",
+      "hoursTarget": "8–9h",
+      "notes": [
+        "Further reduction. Keep rhythm and feel.",
+        "No extra fatigue."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Easy aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "40–50m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy aerobic run."
+          },
+          {
+            "slot": "PM",
+            "type": "Strength",
+            "duration": "20m",
+            "details": "Very light maintenance only."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "30–40m",
+            "details": "Steady swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "50–60m",
+            "details": "Easy to steady."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "75–90m",
+            "details": "Controlled medium sustained work."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Easy."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "25–35m",
+            "details": "Relaxed aerobic swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "40–45m",
+            "details": "Easy continuous run."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Bike",
+            "duration": "2:45–3:00",
+            "details": "Long ride trimmed. Fuel consistently."
+          },
+          {
+            "slot": "PM",
+            "type": "Run",
+            "duration": "15–20m",
+            "details": "True brick run. Very easy."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "60–75m",
+            "details": "Long easy run by time."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30m",
+            "details": "Recovery spin."
+          }
+        ]
+      }
+    },
+    {
+      "week": 22,
+      "phase": "Race Week",
+      "hoursTarget": "5–6h",
+      "notes": [
+        "Very low volume. Rest and nutrition are priorities.",
+        "Keep everything short and controlled."
+      ],
+      "days": {
+        "Mon": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "20–30m",
+            "details": "Easy feel only."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "Easy spin."
+          }
+        ],
+        "Tue": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "25–35m",
+            "details": "Easy run."
+          },
+          {
+            "slot": "PM",
+            "type": "Mobility",
+            "duration": "10–15m",
+            "details": "Stay loose."
+          }
+        ],
+        "Wed": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "20–25m",
+            "details": "Easy swim."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "30–40m",
+            "details": "A few brief pickups."
+          }
+        ],
+        "Thu": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "20–25m",
+            "details": "Easy, relaxed."
+          },
+          {
+            "slot": "PM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Rest."
+          }
+        ],
+        "Fri": [
+          {
+            "slot": "AM",
+            "type": "Swim",
+            "duration": "15–20m",
+            "details": "Optional loosen-up."
+          },
+          {
+            "slot": "PM",
+            "type": "Bike",
+            "duration": "20–30m",
+            "details": "Very easy spin."
+          }
+        ],
+        "Sat": [
+          {
+            "slot": "AM",
+            "type": "Run",
+            "duration": "10–15m",
+            "details": "Very easy jog only."
+          },
+          {
+            "slot": "PM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Feet up."
+          }
+        ],
+        "Sun": [
+          {
+            "slot": "AM",
+            "type": "Race",
+            "duration": "Ironman",
+            "details": "Ironman race day."
+          },
+          {
+            "slot": "PM",
+            "type": "Off",
+            "duration": "-",
+            "details": "Recover."
+          }
+        ]
+      }
+    }
+  ]
+}
