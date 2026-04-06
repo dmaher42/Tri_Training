@@ -8,8 +8,21 @@
 </head>
 <body>
   <header class="wrap">
-    <h1>70.3</h1>
-    <p class="muted" id="meta"></p>
+    <div class="row" style="justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap;">
+      <div>
+        <h1 id="planHeading">Training Plan</h1>
+        <p class="muted" id="meta"></p>
+      </div>
+
+      <div class="field" style="min-width: 220px; margin: 0;">
+        <label for="planSelect">Plan</label>
+        <select id="planSelect">
+          <option value="70.3">70.3</option>
+          <option value="ironman">Ironman</option>
+        </select>
+      </div>
+    </div>
+
     <nav class="nav">
       <a href="index.html" class="active">Training Plan</a>
       <a href="strength.html">Strength & Mobility</a>
@@ -40,7 +53,7 @@
 
         <dialog id="adaptationModal" class="card">
           <div class="row" style="justify-content: space-between; margin-top: 0;">
-            <h2>Adaptions/h2>
+            <h2>Adaptations</h2>
             <button id="closeAdaptation">Close</button>
           </div>
 
