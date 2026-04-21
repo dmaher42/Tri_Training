@@ -10,27 +10,29 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="wrap">
-    <div class="row" style="justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap;">
-      <div>
+  <header class="header-compact wrap">
+    <div class="row" style="justify-content: space-between; align-items: flex-start; gap: 20px;">
+      <div class="header-main">
         <h1 id="planHeading">Training Plan</h1>
-        <p class="muted" id="meta"></p>
+        <p class="muted" id="meta" style="margin-bottom: 8px;"></p>
+        
+        <nav class="nav-inline">
+          <a href="index.html" class="active">Training Plan</a>
+          <a href="strength.html">Strength & Mobility</a>
+          <button id="openAdaptation" class="btn btn-sm primary" style="margin-left: 12px;">Adjust Plan</button>
+        </nav>
       </div>
 
-      <div class="field" style="min-width: 220px; margin: 0;">
-        <label for="planSelect">Plan</label>
-        <select id="planSelect">
-          <option value="70.3">70.3</option>
-          <option value="ironman">Ironman</option>
-        </select>
+      <div class="header-controls">
+        <div class="field-compact">
+          <label for="planSelect">Plan</label>
+          <select id="planSelect">
+            <option value="70.3">70.3</option>
+            <option value="ironman">Ironman</option>
+          </select>
+        </div>
       </div>
     </div>
-
-    <nav class="nav">
-      <a href="index.html" class="active">Training Plan</a>
-      <a href="strength.html">Strength & Mobility</a>
-    </nav>
-    <button id="openAdaptation" class="primary" style="margin-top: 10px;">Adjust Plan</button>
   </header>
 
   <div class="wrap">
