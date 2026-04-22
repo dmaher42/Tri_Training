@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tri Plan</title>
+  <title>Tri-Training | Athlete Dashboard</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0c10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
@@ -153,10 +159,28 @@
 
           <div class="calendar__note muted">Marks completed sessions based on your Done checkboxes.</div>
         </section>
+
+        <section class="card" style="border-top: 1px solid rgba(255,255,255,0.05); margin-top: var(--space-4);">
+          <h2 style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: var(--space-2);">Data Management</h2>
+          <p class="muted" style="font-size: 11px; margin-bottom: var(--space-3); line-height: 1.4;">Export your history as a JSON backup or clear all local training data.</p>
+          <div style="display: flex; gap: var(--space-2); flex-direction: column;">
+            <button onclick="exportProgress()" class="btn btn-xs" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.05); border-color: var(--border-subtle);">Download Backup</button>
+            <button onclick="resetProgress()" class="btn btn-xs" style="width: 100%; justify-content: center; background: rgba(239, 68, 68, 0.05); color: #ef4444; border-color: rgba(239, 68, 68, 0.1);">Reset All History</button>
+          </div>
+        </section>
       </aside>
     </div>
   </main>
 
   <script defer src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW Registered'))
+          .catch(err => console.log('SW Error', err));
+      });
+    }
+  </script>
 </body>
 </html>

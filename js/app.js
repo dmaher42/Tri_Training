@@ -149,7 +149,9 @@ function durationToMinutes(s) {
   };
 
   if (cleanedParts.length === 1) return parseOne(cleanedParts[0]);
-  return Math.max(parseOne(cleanedParts[0]), parseOne(cleanedParts[1]));
+  const a = parseOne(cleanedParts[0]);
+  const b = parseOne(cleanedParts[1]);
+  return (a + b) / 2;
 }
 
 function minutesToHHMM(mins) {
@@ -603,11 +605,14 @@ function renderWeeklyProgressCard(w, weekNum) {
   // Sparkline data
   const weekChecks = getSessionChecks()[String(weekNum)] || {};
   const dayCompletion = DAYS.map(d => {
-    const daySessions = (w.days[d] || []);
+    const daySessions = (w.days[d] || []).filter(s => !isNonTrainingType(s.type));
     if (daySessions.length === 0) return 0;
-    const checks = weekChecks[d] || {};
-    const doneCount = Object.values(checks).filter(v => v === true).length;
-    return (doneCount / daySessions.length);
+    
+    let dayTotalMins = 0;
+    daySessions.forEach(s => dayTotalMins += durationToMinutes(s.duration));
+    
+    // Normalize to a reasonable max height (e.g. 180 mins = full height)
+    return Math.min(1, dayTotalMins / 180);
   });
 
   // SVG Sparkline path
@@ -623,8 +628,14 @@ function renderWeeklyProgressCard(w, weekNum) {
     <div class="weekly-progress__sparkline">
       <div class="k">Daily Completion Trend</div>
       <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="sparklineGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="var(--success)" stop-opacity="0.2" />
+            <stop offset="100%" stop-color="var(--success)" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M 0 ${height} L ${points} L ${width} ${height} Z" fill="url(#sparklineGradient)" stroke="none" />
         <polyline points="${points}" fill="none" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        <path d="M 0 ${height} L ${points} L ${width} ${height} Z" fill="rgba(16, 185, 129, 0.1)" stroke="none" />
       </svg>
     </div>
   `;
@@ -697,7 +708,8 @@ function flashDayElement(el) {
 function createSessionCard(s, weekNum, dayName, idx, isDone) {
   const box = document.createElement("div");
   const isOff = s.type === "Off";
-  box.className = `session${isDone ? " done" : ""}${isOff ? " is-rest" : ""}`;
+  const typeClass = s.type ? `is-${s.type.toLowerCase()}` : "";
+  box.className = `session ${typeClass}${isDone ? " done" : ""}${isOff ? " is-rest" : ""}`;
   box.dataset.type = s.type;
   box.dataset.slot = s.slot;
 
@@ -990,6 +1002,7 @@ function renderToday(plan, currentWeek) {
   sessions.forEach((s, idx) => {
     const isDone = !!(weekChecks[dayName] && weekChecks[dayName][String(idx)]);
     const box = createSessionCard(s, currentWeek, dayName, idx, isDone);
+    box.classList.add("is-priority");
     container.appendChild(box);
   });
 
@@ -1251,3 +1264,22 @@ main().catch((err) => {
   console.error(err);
   alert("Failed to load plan. Check that data/plan-70.3.json and/or data/plan-ironman.json exist and GitHub Pages is serving them.");
 });
+
+window.exportProgress = () => {
+  const data = loadLocal();
+  if (!data) return alert("No progress data to export.");
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `tri-training-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+window.resetProgress = () => {
+  if (confirm("Are you sure you want to reset ALL training progress? This cannot be undone.")) {
+    localStorage.removeItem(getCurrentStorageKey());
+    window.location.reload();
+  }
+};

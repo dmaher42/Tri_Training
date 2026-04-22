@@ -4,9 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Strength & Mobility</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0c10">
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="is-strength-page">
   <header class="header-ultra">
     <div class="wrap">
       <div class="row">
@@ -36,47 +38,108 @@
   </header>
 
   <main class="wrap main-content-area">
-    <section class="card">
-      <h2>Daily Reset (10–15 min)</h2>
-      <ul>
-        <li>Couch stretch – 2×45–60s/side</li>
-        <li>Cat–Cow – 10–15 slow reps</li>
-        <li>90/90 hip rotations – 6–8/side</li>
-        <li>Hamstring floss – 10 reps/side</li>
-      </ul>
-    </section>
+    <div class="layout">
+      <div class="layout__main grid">
+        <div class="section-header">
+          <h2>Routine Priority</h2>
+        </div>
 
-    <section class="card">
-      <h2>Strength Focus (2–3×/week)</h2>
-      <h3>Hip Flexors</h3>
-      <ul>
-        <li>Standing banded march – 2–3×8/side</li>
-        <li>Split squat iso – 2×20–30s/side</li>
-      </ul>
+        <section class="session is-mobility">
+          <div class="top">
+            <div class="session-title">
+              <span class="slot-badge">Daily</span>
+              <strong class="session-type">Reset & Activation</strong>
+            </div>
+          </div>
+          <div class="session-duration muted">10–15 min</div>
+          <div class="session-details">
+            <ul class="exercise-list">
+              <li><strong>Couch stretch</strong> – 2×45–60s/side</li>
+              <li><strong>Cat–Cow</strong> – 10–15 slow reps</li>
+              <li><strong>90/90 hip rotations</strong> – 6–8/side</li>
+              <li><strong>Hamstring floss</strong> – 10 reps/side</li>
+            </ul>
+          </div>
+        </section>
 
-      <h3>Hamstrings</h3>
-      <ul>
-        <li>Single-leg RDL – 2–3×6–8</li>
-        <li>Bridge walkouts – 2×6–10</li>
-      </ul>
+        <div class="section-header">
+          <h2>Core Strength (2–3×/week)</h2>
+        </div>
 
-      <h3>Glutes & Core</h3>
-      <ul>
-        <li>Side-lying leg raises – 2×10–15</li>
-        <li>Dead bug – 2×6–8/side</li>
-        <li>Bird dog – 2×6/side</li>
-      </ul>
-    </section>
+        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+          <section class="session is-mobility">
+            <div class="top"><div class="session-title"><strong class="session-type">Hip Flexors</strong></div></div>
+            <div class="session-details">
+              <ul class="exercise-list">
+                <li>Standing banded march – 2–3×8/side</li>
+                <li>Split squat iso – 2×20–30s/side</li>
+              </ul>
+            </div>
+          </section>
 
-    <section class="card">
-      <h2>Evening Flexibility & Sleep</h2>
-      <ul>
-        <li>Supine hamstring stretch – 60–90s</li>
-        <li>Child’s pose breathing – 2–3 min</li>
-        <li>Legs up wall – 2–5 min</li>
-        <li>Long exhales / box breathing</li>
-      </ul>
-    </section>
+          <section class="session is-mobility">
+            <div class="top"><div class="session-title"><strong class="session-type">Hamstrings</strong></div></div>
+            <div class="session-details">
+              <ul class="exercise-list">
+                <li>Single-leg RDL – 2–3×6–8</li>
+                <li>Bridge walkouts – 2×6–10</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="session is-mobility">
+            <div class="top"><div class="session-title"><strong class="session-type">Glutes & Core</strong></div></div>
+            <div class="session-details">
+              <ul class="exercise-list">
+                <li>Side-lying leg raises – 2×10–15</li>
+                <li>Dead bug – 2×6–8/side</li>
+                <li>Bird dog – 2×6/side</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <div class="section-header">
+          <h2>Recovery & Sleep</h2>
+        </div>
+
+        <section class="session is-off">
+          <div class="top">
+            <div class="session-title">
+              <span class="slot-badge">Evening</span>
+              <strong class="session-type">Flexibility Protocol</strong>
+            </div>
+          </div>
+          <div class="session-details">
+            <ul class="exercise-list">
+              <li>Supine hamstring stretch – 60–90s</li>
+              <li>Child’s pose breathing – 2–3 min</li>
+              <li>Legs up wall – 2–5 min</li>
+              <li>Long exhales / box breathing</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+
+      <aside class="layout__side grid">
+        <section class="card highlight-card">
+          <h2>Mobility Goals</h2>
+          <div class="muted" style="margin-bottom: var(--space-4);">Focus areas for this block:</div>
+          <ul class="exercise-list">
+            <li>Improve T-Spine extension</li>
+            <li>Increase ankle dorsiflexion</li>
+            <li>Consistent daily reset</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>Athlete Tips</h2>
+          <p class="muted" style="font-size: 13px; line-height: 1.6;">
+            Strength work in this phase is about <strong>durability</strong>, not max load. Focus on controlled movements and full range of motion.
+          </p>
+        </section>
+      </aside>
+    </div>
   </main>
 </body>
 </html>
