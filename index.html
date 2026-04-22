@@ -10,65 +10,72 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header class="header-ultra wrap">
-    <div class="row" style="justify-content: space-between; align-items: center; gap: 16px;">
-      <div class="header-main" style="display: flex; align-items: baseline; gap: 12px;">
-        <h1 id="planHeading" style="margin: 0;">Plan</h1>
-        <span class="muted" id="meta" style="font-size: 11px; white-space: nowrap;"></span>
-      </div>
+  <header class="header-ultra">
+    <div class="wrap">
+      <div class="row">
+        <div class="header-main">
+          <h1 id="planHeading">Plan</h1>
+          <span class="muted" id="meta"></span>
+        </div>
 
-      <div class="nav-pill-container">
-        <nav class="nav-pill">
-          <a href="index.html" class="nav-item active">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Plan
-          </a>
-          <a href="strength.html" class="nav-item">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M6 18h8"></path><path d="M3 22l1.5-1.5"></path><path d="M13 22l1.5-1.5"></path><path d="M20 22l1.5-1.5"></path><path d="M19 13l2.87-2.87a3.38 3.38 0 0 0-4.77-4.77L14.25 8.24"></path><path d="M6.58 10.27a3.39 3.39 0 0 0 0 4.79l2.45 2.45a3.39 3.39 0 0 0 4.79 0"></path><path d="M18 6l2-2"></path><path d="M13 6l2-2"></path><path d="M7 6l2-2"></path><path d="M10 13l2.5 2.5"></path></svg>
-            Strength
-          </a>
-          <div class="nav-divider"></div>
-          <button id="openAdaptation" class="nav-btn-pill">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-            Adjust
-          </button>
-        </nav>
-      </div>
+        <div class="nav-pill-container">
+          <nav class="nav-pill">
+            <a href="index.html" class="nav-item active">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Plan
+            </a>
+            <a href="strength.html" class="nav-item">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M6 18h8"></path><path d="M3 22l1.5-1.5"></path><path d="M13 22l1.5-1.5"></path><path d="M20 22l1.5-1.5"></path><path d="M19 13l2.87-2.87a3.38 3.38 0 0 0-4.77-4.77L14.25 8.24"></path><path d="M6.58 10.27a3.39 3.39 0 0 0 0 4.79l2.45 2.45a3.39 3.39 0 0 0 4.79 0"></path><path d="M18 6l2-2"></path><path d="M13 6l2-2"></path><path d="M7 6l2-2"></path><path d="M10 13l2.5 2.5"></path></svg>
+              Strength
+            </a>
+            <div class="nav-divider"></div>
+            <button id="openAdaptation" class="nav-btn-pill">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Adjust
+            </button>
+          </nav>
+        </div>
 
-      <div class="header-controls">
-        <select id="planSelect" class="select-sm">
-          <option value="70.3">70.3</option>
-          <option value="ironman">Ironman</option>
-        </select>
+        <div class="header-controls">
+          <select id="planSelect" class="select-sm">
+            <option value="70.3">70.3</option>
+            <option value="ironman">Ironman</option>
+          </select>
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="wrap">
+  <main class="wrap main-content-area">
     <div class="layout">
-      <main class="layout__main grid">
+      <div class="layout__main grid">
         <section class="card highlight-card" id="todayCard">
           <h2>Today's Sessions</h2>
           <div id="todaySessions"></div>
         </section>
 
         <section class="card">
-          <h2>This week</h2>
-
-          <div class="row">
-            <label for="weekSelect">Week</label>
-            <select id="weekSelect"></select>
-            <button id="jumpToCurrent">Jump to current</button>
+          <div class="row section-header">
+            <div class="header-main">
+              <h2>Training Week</h2>
+              <div id="weekSummary" class="muted"></div>
+            </div>
+            <div class="header-controls">
+              <button id="jumpToCurrent" class="btn btn-xs">Today</button>
+            </div>
           </div>
 
-          <div id="weekSummary" class="muted"></div>
+          <div class="row week-selector-row">
+            <select id="weekSelect" class="week-select-main"></select>
+          </div>
+
           <div id="weekGrid" class="week-grid"></div>
         </section>
 
         <dialog id="adaptationModal" class="card">
-          <div class="row" style="justify-content: space-between; margin-top: 0;">
+          <div class="row modal-header">
             <h2>Adaptations</h2>
-            <button id="closeAdaptation">Close</button>
+            <button id="closeAdaptation" class="btn-xs">Close</button>
           </div>
 
           <div class="field">
@@ -119,7 +126,7 @@
           </div>
           <div class="note" id="coachNote"></div>
         </dialog>
-      </main>
+      </div> <!-- layout__main -->
 
       <aside class="layout__side" aria-label="Sidebar">
         <section class="calendar" aria-label="Training calendar">
@@ -148,7 +155,7 @@
         </section>
       </aside>
     </div>
-  </div>
+  </main>
 
   <script defer src="js/app.js"></script>
 </body>

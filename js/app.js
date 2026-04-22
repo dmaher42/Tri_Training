@@ -149,7 +149,7 @@ function durationToMinutes(s) {
   };
 
   if (cleanedParts.length === 1) return parseOne(cleanedParts[0]);
-  return Math.round((parseOne(cleanedParts[0]) + parseOne(cleanedParts[1])) / 2);
+  return Math.max(parseOne(cleanedParts[0]), parseOne(cleanedParts[1]));
 }
 
 function minutesToHHMM(mins) {
@@ -369,29 +369,27 @@ function renderCalendarMonth(plan, weekNum) {
     num.textContent = String(dayNum);
     cell.appendChild(num);
 
-    const bars = document.createElement("div");
-    bars.className = "cal-day__bars";
+    const dots = document.createElement("div");
+    dots.className = "cal-dots";
 
     ["AM", "PM"].forEach((slot, idx) => {
       const session = dayInfo.sessions[idx];
-      const bar = document.createElement("span");
-      bar.className = `cal-bar cal-bar--${slot.toLowerCase()}`;
+      if (!session) return;
+      
+      const isOff = isNonTrainingType(session.type);
+      if (isOff) return; // Don't show dots for off sessions in month view to keep it clean
 
-      if (session) {
-        const isOff = isNonTrainingType(session.type);
-        const isDone = !isOff && !!dayInfo.checks[String(idx)];
-        if (isOff) bar.classList.add("is-off");
-        if (isDone) bar.classList.add("is-done");
-        if (!isOff) {
-          plannedSessions += 1;
-          if (isDone) completedSessions += 1;
-        }
-      }
-
-      bars.appendChild(bar);
+      const dot = document.createElement("span");
+      const isDone = !!dayInfo.checks[String(idx)];
+      dot.className = `cal-dot ${isDone ? "is-done" : ""}`;
+      
+      plannedSessions += 1;
+      if (isDone) completedSessions += 1;
+      
+      dots.appendChild(dot);
     });
 
-    cell.appendChild(bars);
+    cell.appendChild(dots);
     frag.appendChild(cell);
   }
 
@@ -458,32 +456,30 @@ function renderCalendarWeek(plan, weekNum) {
 
     const num = document.createElement("div");
     num.className = "cal-day__num";
-    num.textContent = `${dayName} ${dateObj.getUTCDate()}`;
+    num.textContent = String(dateObj.getUTCDate());
     cell.appendChild(num);
 
-    const bars = document.createElement("div");
-    bars.className = "cal-day__bars";
+    const dots = document.createElement("div");
+    dots.className = "cal-dots";
 
     ["AM", "PM"].forEach((slot, slotIdx) => {
       const session = sessions[slotIdx];
-      const bar = document.createElement("span");
-      bar.className = `cal-bar cal-bar--${slot.toLowerCase()}`;
+      if (!session) return;
 
-      if (session) {
-        const isOff = isNonTrainingType(session.type);
-        const isDone = !isOff && !!weekChecks[String(slotIdx)];
-        if (isOff) bar.classList.add("is-off");
-        if (isDone) bar.classList.add("is-done");
-        if (!isOff) {
-          plannedSessions += 1;
-          if (isDone) completedSessions += 1;
-        }
-      }
+      const isOff = isNonTrainingType(session.type);
+      if (isOff) return;
 
-      bars.appendChild(bar);
+      const dot = document.createElement("span");
+      const isDone = !!weekChecks[String(slotIdx)];
+      dot.className = `cal-dot ${isDone ? "is-done" : ""}`;
+      
+      plannedSessions += 1;
+      if (isDone) completedSessions += 1;
+      
+      dots.appendChild(dot);
     });
 
-    cell.appendChild(bars);
+    cell.appendChild(dots);
     frag.appendChild(cell);
   });
 
@@ -603,6 +599,35 @@ function renderWeeklyProgressCard(w, weekNum) {
 
   const { plannedSessions, completedSessions, plannedMinutes, completedMinutes } = computeWeeklyTotals(w, weekNum);
   const completionPct = plannedSessions ? Math.round((completedSessions / plannedSessions) * 100) : 0;
+  
+  // Sparkline data
+  const weekChecks = getSessionChecks()[String(weekNum)] || {};
+  const dayCompletion = DAYS.map(d => {
+    const daySessions = (w.days[d] || []);
+    if (daySessions.length === 0) return 0;
+    const checks = weekChecks[d] || {};
+    const doneCount = Object.values(checks).filter(v => v === true).length;
+    return (doneCount / daySessions.length);
+  });
+
+  // SVG Sparkline path
+  const width = 200;
+  const height = 30;
+  const points = dayCompletion.map((val, i) => {
+    const x = (i / (DAYS.length - 1)) * width;
+    const y = height - (val * height);
+    return `${x},${y}`;
+  }).join(" ");
+
+  const sparklineMarkup = `
+    <div class="weekly-progress__sparkline">
+      <div class="k">Daily Completion Trend</div>
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+        <polyline points="${points}" fill="none" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 0 ${height} L ${points} L ${width} ${height} Z" fill="rgba(16, 185, 129, 0.1)" stroke="none" />
+      </svg>
+    </div>
+  `;
 
   const barMarkup = plannedSessions ? `
     <div class="weekly-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${completionPct}">
@@ -611,11 +636,17 @@ function renderWeeklyProgressCard(w, weekNum) {
   ` : "";
 
   summaryBox.innerHTML = `
-    <div class="weekly-progress__title"><strong>Weekly progress</strong></div>
-    <div class="weekly-progress__grid">
-      <div><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
-      <div><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
-      <div><div class="k">Completion</div><div class="v">${completionPct}%</div></div>
+    <div class="weekly-progress__meta">
+      <span class="phase-badge">${w.phase}</span>
+      <span class="target-badge">Target: ${w.hoursTarget}</span>
+    </div>
+    <div class="weekly-progress__content">
+      <div class="weekly-progress__grid">
+        <div class="weekly-progress__stat"><div class="k">Planned</div><div class="v">${plannedSessions} sessions • ${minutesToHHMM(plannedMinutes)}</div></div>
+        <div class="weekly-progress__stat"><div class="k">Completed</div><div class="v">${completedSessions} sessions • ${minutesToHHMM(completedMinutes)}</div></div>
+        <div class="weekly-progress__stat"><div class="k">Completion</div><div class="v">${completionPct}%</div></div>
+      </div>
+      ${sparklineMarkup}
     </div>
     ${barMarkup}
   `;
@@ -666,11 +697,22 @@ function flashDayElement(el) {
 function createSessionCard(s, weekNum, dayName, idx, isDone) {
   const box = document.createElement("div");
   const isOff = s.type === "Off";
-  box.className = `session${isDone ? " done" : ""}`;
+  box.className = `session${isDone ? " done" : ""}${isOff ? " is-rest" : ""}`;
   box.dataset.type = s.type;
   box.dataset.slot = s.slot;
 
-  const doneToggle = isOff ? "" : `
+  if (isOff) {
+    box.innerHTML = `
+      <div class="rest-icon">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+      </div>
+      <strong class="session-type">Recovery</strong>
+      <p class="session-details">${s.details || "Full rest day."}</p>
+    `;
+    return box;
+  }
+
+  const doneToggle = `
     <label class="done-toggle">
       <input type="checkbox" data-week="${weekNum}" data-day="${dayName}" data-idx="${idx}" ${isDone ? "checked" : ""}>
       <span>Done</span>
@@ -708,10 +750,7 @@ function renderWeek(plan, weekNum) {
   const missedList = document.getElementById("missedList");
   const weekChecks = getSessionChecks()[String(weekNum)] || {};
 
-  summary.innerHTML = `
-    <div><strong>Phase:</strong> ${w.phase}</div>
-    <div><strong>Target:</strong> ${w.hoursTarget}</div>
-  `;
+  summary.innerHTML = "";
 
   coachNote.textContent = w._coachNote ? `Coach note: ${w._coachNote}` : "";
   renderWeeklyProgressCard(w, weekNum);
@@ -728,11 +767,17 @@ function renderWeek(plan, weekNum) {
 
     const sessions = (w.days[d] || []).slice().sort((a, b) => slotIndex(a.slot) - slotIndex(b.slot));
 
-    sessions.forEach((s, idx) => {
-      const isDone = !!(weekChecks[d] && weekChecks[d][String(idx)]);
-      const box = createSessionCard(s, weekNum, d, idx, isDone);
-      day.appendChild(box);
-    });
+    if (sessions.length === 0) {
+      day.classList.add("is-rest-day");
+      const restCard = createSessionCard({ type: "Off", details: "No sessions scheduled." }, weekNum, d, 0, false);
+      day.appendChild(restCard);
+    } else {
+      sessions.forEach((s, idx) => {
+        const isDone = !!(weekChecks[d] && weekChecks[d][String(idx)]);
+        const box = createSessionCard(s, weekNum, d, idx, isDone);
+        day.appendChild(box);
+      });
+    }
 
     updateDayProgress(day);
     grid.appendChild(day);
