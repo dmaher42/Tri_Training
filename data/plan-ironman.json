@@ -13,102 +13,32 @@
       ],
       "days": {
         "Mon": [
-          {
-            "slot": "AM",
-            "type": "Bike",
-            "duration": "35–45m",
-            "details": "Easy aerobic spin + 15–25m mobility/strength. Hips, glutes, calves, hamstrings and core."
-          },
-          {
-            "slot": "PM",
-            "type": "Swim",
-            "duration": "30m",
-            "details": "Easy technique swim. Relaxed and feel-based."
-          }
+          {"slot":"AM","type":"Bike","duration":"35–45m","details":"Easy aerobic spin + 15–25m mobility/strength. Hips, glutes, calves, hamstrings and core."},
+          {"slot":"PM","type":"Swim","duration":"30m","details":"Easy technique swim. Relaxed and feel-based."}
         ],
         "Tue": [
-          {
-            "slot": "AM",
-            "type": "Bike",
-            "duration": "60m",
-            "details": "15×1m strong / 1m easy after warm-up. Controlled, repeatable, not a race effort."
-          },
-          {
-            "slot": "PM",
-            "type": "Run",
-            "duration": "45m",
-            "details": "Easy aerobic run. Keep it conversational; durability, not pace."
-          }
+          {"slot":"AM","type":"Bike","duration":"60m","details":"15×1m strong / 1m easy after warm-up. Controlled, repeatable, not a race effort."},
+          {"slot":"PM","type":"Run","duration":"45m","details":"Easy aerobic run. Keep it conversational; durability, not pace."}
         ],
         "Wed": [
-          {
-            "slot": "AM",
-            "type": "Off",
-            "duration": "-",
-            "details": "No planned morning session."
-          },
-          {
-            "slot": "PM",
-            "type": "Run",
-            "duration": "45–60m",
-            "details": "Preferred most weeks. Easy run for durability. If tired, swap for an easy 30m swim."
-          }
+          {"slot":"AM","type":"Off","duration":"-","details":"No planned morning session."},
+          {"slot":"PM","type":"Run","duration":"45–60m","details":"Preferred most weeks. Easy run for durability. If tired, swap for an easy 30m swim."}
         ],
         "Thu": [
-          {
-            "slot": "AM",
-            "type": "Bike",
-            "duration": "60m",
-            "details": "5×5m medium effort with easy recoveries. Strong but controlled."
-          },
-          {
-            "slot": "PM",
-            "type": "Swim",
-            "duration": "30m",
-            "details": "Easy to steady swim. Loosen the body after the bike."
-          }
+          {"slot":"AM","type":"Bike","duration":"60m","details":"5×5m medium effort with easy recoveries. Strong but controlled."},
+          {"slot":"PM","type":"Swim","duration":"30m","details":"Easy to steady swim. Loosen the body after the bike."}
         ],
         "Fri": [
-          {
-            "slot": "AM",
-            "type": "Bike",
-            "duration": "35–45m",
-            "details": "Easy recovery spin. Keep it genuinely easy."
-          },
-          {
-            "slot": "PM",
-            "type": "Off",
-            "duration": "-",
-            "details": "Flexible slot: swim 30m, short easy run, or off depending on fatigue and family/work time."
-          }
+          {"slot":"AM","type":"Bike","duration":"35–45m","details":"Easy recovery spin. Keep it genuinely easy."},
+          {"slot":"PM","type":"Off","duration":"-","details":"Flexible slot: swim 30m, short easy run, or off depending on fatigue and family/work time."}
         ],
         "Sat": [
-          {
-            "slot": "AM",
-            "type": "Bike",
-            "duration": "2:30–2:45",
-            "details": "Long aerobic ride. Fuel consistently and keep most of it controlled."
-          },
-          {
-            "slot": "PM",
-            "type": "Run",
-            "duration": "10–15m",
-            "details": "Optional easy brick shuffle. No pace goal; just practise running off the bike."
-          }
+          {"slot":"AM","type":"Bike","duration":"2:30–2:45","details":"Long aerobic ride. Fuel consistently and keep most of it controlled."},
+          {"slot":"PM","type":"Run","duration":"10–15m","details":"Optional easy brick shuffle. No pace goal; just practise running off the bike."}
         ],
         "Sun": [
-          {
-            "slot": "AM",
-            "type": "Run",
-            "duration": "65–70m",
-            "details": "Key long run for Ironman durability. Easy enough to finish feeling like you could continue."
-          },
-          {
-            "slot": "PM",
-            "type": "Off",
-            "duration": "-",
-            "details": "Recovery. Mobility only if needed."
-          }
+          {"slot":"AM","type":"Run","duration":"65–70m","details":"Key long run for Ironman durability. Easy enough to finish feeling like you could continue."},
+          {"slot":"PM","type":"Off","duration":"-","details":"Recovery. Mobility only if needed."}
         ]
       }
     }
