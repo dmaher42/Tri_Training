@@ -1,6 +1,6 @@
 {
   "title": "Build to Ironman 18 October 2026",
-  "startDate": "2026-04-07",
+  "startDate": "2026-04-06",
   "raceDate": "2026-10-18",
   "weeks": [
     {
@@ -1531,109 +1531,110 @@
     },
     {
       "week": 15,
-      "phase": "Specific Build 3",
-      "hoursTarget": "13–14h",
+      "phase": "Block 2 — Race-Specific Durability Week",
+      "hoursTarget": "16–17h",
       "notes": [
-        "Long ride is the centrepiece. Keep most work aerobic.",
-        "Maintain one key bike session, one long ride, one long run."
+        "Final school-holiday week; a planned consolidation week follows when school resumes.",
+        "Focus: aero tolerance, run/lower-back durability, nutrition, swim frequency, hip/trunk work and the long run.",
+        "Targets: Bike 8:45–9:00 • Run 4:40–5:00 • Swim 2:35–2:50 • Total 16–17h, excluding mobility."
       ],
       "days": {
         "Mon": [
           {
             "slot": "AM",
-            "type": "Swim",
-            "duration": "35–50m",
-            "details": "Aerobic swim."
+            "type": "Bike",
+            "duration": "90m",
+            "details": "Very easy recovery ride: light gearing and cadence only; no structured work. Short, non-fatiguing mobility breaks are fine."
           },
           {
             "slot": "PM",
-            "type": "Bike",
-            "duration": "45–60m",
-            "details": "Easy spin."
+            "type": "Swim",
+            "duration": "45–50m",
+            "details": "Easy technique swim. Keep it relaxed and leave the pool feeling better than you started."
           }
         ],
         "Tue": [
           {
             "slot": "AM",
-            "type": "Run",
-            "duration": "50–60m",
-            "details": "Easy aerobic run."
+            "type": "Bike",
+            "duration": "90m",
+            "details": "20m progressive warm-up; 4 × 10m controlled sweet spot in aero (RPE 7/10), 5m upright/easy between; easy cool-down. If the weekend is still in the legs, do 3 × 10m."
           },
           {
             "slot": "PM",
-            "type": "Strength",
-            "duration": "20–30m",
-            "details": "Glute/core/posture maintenance."
+            "type": "Run",
+            "duration": "45–50m",
+            "details": "Easy and flat with a short relaxed stride/cadence check. Then 10–15m hip/trunk work: bridges, bird dogs, side plank and balance."
           }
         ],
         "Wed": [
           {
             "slot": "AM",
             "type": "Swim",
-            "duration": "35–50m",
-            "details": "Steady swim."
+            "duration": "60m",
+            "details": "2,900m endurance swim: 300 easy + 100 build; 6 × 50 closed-fist/normal (15s); 4 × 400 aerobic Ironman-steady with pull buoy (25–30s); 4 × 100 steady; 200 easy."
           },
           {
             "slot": "PM",
-            "type": "Bike",
-            "duration": "60–75m",
-            "details": "Easy to steady."
+            "type": "Run",
+            "duration": "70–75m",
+            "details": "Easy aerobic run. Relax shoulders and stride; monitor hips and lower back without chasing pace."
           }
         ],
         "Thu": [
           {
             "slot": "AM",
             "type": "Bike",
-            "duration": "90–105m",
-            "details": "Controlled medium sustained work."
+            "duration": "90m",
+            "details": "15m warm-up; 30m continuous controlled Ironman effort in aero; 5m upright/easy; 30m continuous aero; easy to finish. No sweet spot—note symptoms and position tolerance."
           },
           {
             "slot": "PM",
             "type": "Run",
-            "duration": "20–30m",
-            "details": "True brick run. Easy."
+            "duration": "20m",
+            "details": "Very easy brick immediately after the bike. Let posture and cadence settle; observe hips and lower back."
           }
         ],
         "Fri": [
           {
             "slot": "AM",
             "type": "Swim",
-            "duration": "30–45m",
-            "details": "Relaxed aerobic swim."
+            "duration": "45–60m",
+            "details": "Technique plus relaxed aerobic swimming. Finish feeling capable, not depleted."
           },
           {
             "slot": "PM",
             "type": "Run",
-            "duration": "45–55m",
-            "details": "Easy continuous run."
+            "duration": "40–50m",
+            "details": "Very relaxed run. Reduce to 30–35m if fatigue is building; mobility only afterwards."
           }
         ],
         "Sat": [
           {
             "slot": "AM",
             "type": "Bike",
-            "duration": "5:15",
-            "details": "Long ride. Fuel consistently."
+            "duration": "4:30",
+            "details": "Primary long ride: controlled Ironman effort with aero blocks and no hard finish. Fuel within 20m, then 75–90g carbohydrate/hour; hydrate and practise race nutrition. Use 4:15 only if midweek work was not absorbed, sleep/appetite/energy is poor, or hips/back are worse."
           },
           {
             "slot": "PM",
-            "type": "Run",
-            "duration": "25–30m",
-            "details": "True brick run. Very easy."
+            "type": "Off",
+            "duration": "-",
+            "details": "No brick run. Record aero tolerance, hips, nutrition, stomach and final-hour energy if useful."
           }
         ],
         "Sun": [
           {
             "slot": "AM",
             "type": "Run",
-            "duration": "1:55",
-            "details": "Long easy run by time."
+            "duration": "1:45",
+            "details": "Start slower than usual and run by form/RPE. Take 40–60g carbohydrate/hour; check the back at 30, 60 and 90m. Short stride, cadence and relaxed posture; reset or walk briefly only if it helps. Do not extend beyond 1:45."
           },
           {
             "slot": "PM",
-            "type": "Bike",
-            "duration": "30–40m",
-            "details": "Recovery spin."
+            "type": "Off",
+            "duration": "-",
+            "details": "Recover and note stiffness, hip response, any adjustments made and how the final 15m of the run felt."
           }
         ]
       }
